@@ -1,0 +1,49 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="LogoImageTheme">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:contentDescription">@string/description_logo_image</item>
+        <item name="android:src">@mipmap/ic_fox_plus_logo_v3</item>
+    </style>
+
+    <style name="CloseButtonTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:contentDescription">@string/description_logo_image</item>
+        <item name="android:src">@mipmap/ic_close_button</item>
+    </style>
+
+    <style name="CommonButtonTheme">
+        <item name="android:layout_width">@dimen/button_login_width</item>
+        <item name="android:layout_height">@dimen/button_login_height</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginBottom">@dimen/button_bottom_margin</item>
+        <item name="android:background">@drawable/btn_login_bg</item>
+        <item name="android:text">@string/action_login</item>
+        <item name="android:textSize">@dimen/button_login_text_size</item>
+    </style>
+
+    <style name="WelcomeLayoutTextViewTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="InfoAppTextViewTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/title_info_app_text_size</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+</resources>

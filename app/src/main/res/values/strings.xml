@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">SimpleLogin</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+
+    <string name="ask_forgot_pass">Forgot your ID or\nPassword?</string>
+    <string name="ask_sign_up">Are you sure to sign up?</string>
+    <string name="ask_already_acc">Already have an account?</string>
+
+    <string name="action_login">Login</string>
+    <string name="action_sign_up">Sign up</string>
+    <string name="action_get_started">Get started</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_view_term">Terms of Use</string>
+    <string name="action_view_policy">Privacy Policy</string>
+
+    <string name="description_close_image">Close</string>
+    <string name="description_logo_image">Fox logo</string>
+
+    <string name="title_welcome">Welcome to</string>
+    <string name="title_introduce_app">Enjoy the best TV series, award-\nwining movies,
+     the biggest live\nsporting events and more.</string>
+    <string name="title_info_app">By submitting your details, you agree to\nFOX+</string>
+    <string name="title_plus">and</string>
+    <string name="title_screen_main">Main</string>
+
+    <string name="error_empty_field">You must enter %1$s</string>
+    <string name="error_invalid_field">%1$s is invalid</string>
+    <string name="error_create_user">Create user account unsuccessfully</string>
+    <string name="error_login_user">Login user account unsuccessfully</string>
+</resources>

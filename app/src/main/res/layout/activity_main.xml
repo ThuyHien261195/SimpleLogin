@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_common_screen_bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="com.example.thuyhien.simplelogin.activity.MainActivity">
+
+    <TextView
+        android:id="@+id/text_screen_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="@dimen/text_screen_main_bottom_padding"
+        android:text="@string/title_screen_main"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/title_screen_main_text_size" />
+
+    <Button
+        android:id="@+id/button_login"
+        android:layout_width="@dimen/button_login_width"
+        android:layout_height="@dimen/button_login_height"
+        android:background="@drawable/btn_login_bg"
+        android:text="@string/action_login"
+        android:textSize="@dimen/button_login_text_size" />
+</LinearLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@android:color/black" />
+
+    <stroke
+        android:width="@dimen/form_login_border_height"
+        android:color="@android:color/white" />
+
+    <corners android:radius="@dimen/form_login_corner" />
+</shape>
