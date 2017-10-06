@@ -62,7 +62,9 @@ public class SignInActivity extends AppCompatActivity {
 
     @OnClick(R.id.button_login)
     public void onClickLoginButton() {
-        if (checkEmailInput() && checkPassInput()) {
+        boolean checkMail = checkEmailInput();
+        boolean checkPass = checkPassInput();
+        if (checkMail && checkPass) {
             User user = new User(editTextEmail.getText().toString(), editTextPassword.getText().toString());
             Call<Profile> call = RetrofitUtils.apiService.signInAccount(RetrofitUtils.AUTH_TOKEN, user);
             call.enqueue(new Callback<Profile>() {
