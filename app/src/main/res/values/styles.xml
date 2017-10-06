@@ -27,7 +27,6 @@
         <item name="android:layout_width">@dimen/button_login_width</item>
         <item name="android:layout_height">@dimen/button_login_height</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:layout_marginBottom">@dimen/button_bottom_margin</item>
         <item name="android:background">@drawable/btn_login_bg</item>
         <item name="android:text">@string/action_login</item>
         <item name="android:textSize">@dimen/button_login_text_size</item>

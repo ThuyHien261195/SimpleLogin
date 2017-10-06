@@ -65,6 +65,7 @@
 
         <Button
             android:id="@+id/button_login"
-            style="@style/CommonButtonTheme" />
+            style="@style/CommonButtonTheme"
+            android:layout_marginBottom="@dimen/button_login_bottom_margin" />
     </LinearLayout>
 </RelativeLayout>

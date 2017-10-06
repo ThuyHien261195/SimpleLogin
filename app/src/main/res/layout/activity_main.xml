@@ -19,10 +19,12 @@
         android:textSize="@dimen/title_screen_main_text_size" />
 
     <Button
+        android:id="@+id/button_sign_up"
+        style="@style/CommonButtonTheme"
+        android:layout_marginBottom="@dimen/button_sign_up_bottom_margin"
+        android:text="@string/action_sign_up" />
+
+    <Button
         android:id="@+id/button_login"
-        android:layout_width="@dimen/button_login_width"
-        android:layout_height="@dimen/button_login_height"
-        android:background="@drawable/btn_login_bg"
-        android:text="@string/action_login"
-        android:textSize="@dimen/button_login_text_size" />
+        style="@style/CommonButtonTheme" />
 </LinearLayout>
