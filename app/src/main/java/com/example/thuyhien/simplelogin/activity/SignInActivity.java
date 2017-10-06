@@ -122,6 +122,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private void startMainActivity() {
         Intent mainIntent = new Intent(this, MainActivity.class);
+        mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(mainIntent);
         this.finish();
     }
