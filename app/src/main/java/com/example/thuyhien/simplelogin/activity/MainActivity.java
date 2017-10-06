@@ -23,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.button_login)
     Button buttonLogin;
 
+    @BindView(R.id.button_sign_up)
+    Button buttonSignUp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(loginIntent);
     }
 
+    @OnClick(R.id.button_sign_up)
+    public void onClickSignUpButton() {
+        Intent loginIntent = new Intent(this, SignUpActivity.class);
+        startActivity(loginIntent);
+    }
+
     private void getDataSharedPreferences() {
         sharedPref = this.getSharedPreferences(SharedPreferencesUtils.PREF_DATA_FILE_NAME, MODE_PRIVATE);
         signedUpEmail = SharedPreferencesUtils.getSignedUpEmail(sharedPref);
@@ -48,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         if (!signedUpEmail.equals("")) {
             buttonLogin.setVisibility(View.GONE);
+            buttonSignUp.setVisibility(View.GONE);
         }
     }
 
