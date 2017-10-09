@@ -1,4 +1,4 @@
-package com.example.thuyhien.simplelogin.model;
+package com.example.thuyhien.simplelogin.data.database;
 
 /**
  * Created by thuyhien on 10/6/17.

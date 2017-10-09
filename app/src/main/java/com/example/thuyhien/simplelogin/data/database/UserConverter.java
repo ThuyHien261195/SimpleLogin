@@ -1,4 +1,4 @@
-package com.example.thuyhien.simplelogin.model;
+package com.example.thuyhien.simplelogin.data.database;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;

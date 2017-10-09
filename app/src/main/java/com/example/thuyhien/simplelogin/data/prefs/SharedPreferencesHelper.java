@@ -1,14 +1,14 @@
-package com.example.thuyhien.simplelogin.utils;
+package com.example.thuyhien.simplelogin.data.prefs;
 
 import android.content.SharedPreferences;
 
-import com.example.thuyhien.simplelogin.model.User;
+import com.example.thuyhien.simplelogin.data.database.User;
 
 /**
  * Created by thuyhien on 10/5/17.
  */
 
-public class SharedPreferencesUtils {
+public class SharedPreferencesHelper {
     public static final String PREF_DATA_FILE_NAME = "FoxSharedPreferData";
     public static final String PREF_FIRST_OPEN_APP = "FirstOpenApp";
     public static final String PREF_SIGNED_UP_EMAIL = "SignedUpEmail";
