@@ -1,101 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_common_screen_bg"
+    android:orientation="vertical"
     android:padding="@dimen/activity_padding"
     tools:context="com.example.thuyhien.simplelogin.activity.WelcomeActivity">
 
-
-    <ImageButton
-        android:id="@+id/button_close"
-        style="@style/CloseButtonTheme" />
-
-    <TextView
-        android:id="@+id/text_welcome"
-        style="@style/WelcomeLayoutTextViewTheme"
-        android:layout_below="@id/button_close"
-        android:layout_marginTop="@dimen/title_welcome_vertical_margin"
-        android:text="@string/title_welcome"
-        android:textSize="@dimen/title_welcome_text_size" />
-
-    <ImageView
-        android:id="@+id/image_logo"
-        style="@style/LogoImageTheme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/text_welcome"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/image_logo_vertical_margin"
-        android:layout_marginTop="@dimen/image_logo_vertical_margin" />
-
-    <TextView
-        android:id="@+id/text_introduce_app"
-        style="@style/WelcomeLayoutTextViewTheme"
-        android:layout_below="@id/image_logo"
-        android:layout_marginTop="@dimen/title_introduce_vertical_margin"
-        android:text="@string/title_introduce_app"
-        android:textSize="@dimen/title_introduce_app_text_size" />
-
-    <Button
-        android:id="@+id/button_get_started"
-        style="@style/CommonButtonTheme"
-        android:layout_below="@id/text_introduce_app"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/button_get_started_vertical_margin"
-        android:layout_marginTop="@dimen/button_get_started_vertical_margin"
-        android:text="@string/action_get_started" />
-
-    <TextView
-        android:id="@+id/text_already_acc"
-        style="@style/WelcomeLayoutTextViewTheme"
-        android:layout_below="@id/button_get_started"
-        android:layout_marginTop="@dimen/title_already_vertical_margin"
-        android:text="@string/ask_already_acc"
-        android:textSize="@dimen/title_already_acc_text_size" />
-
-    <Button
-        android:id="@+id/button_sign_in"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/text_already_acc"
-        android:layout_centerHorizontal="true"
-        android:background="@android:color/transparent"
-        android:text="@string/action_sign_in"
-        android:textColor="@color/color_button_sign_in_text"
-        android:textSize="@dimen/title_already_acc_text_size" />
-
-    <TextView
-        android:id="@+id/text_info_app"
-        style="@style/WelcomeLayoutTextViewTheme"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:text="@string/title_info_app"
-        android:textSize="@dimen/title_info_app_text_size" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/button_close"
+            style="@style/CloseButtonTheme"
+            android:layout_gravity="end" />
 
         <TextView
-            android:id="@+id/text_view_term"
-            style="@style/InfoAppTextViewTheme"
-            android:layout_marginRight="@dimen/title_info_app_right_margin"
-            android:text="@string/action_view_term" />
+            android:id="@+id/text_welcome"
+            style="@style/WelcomeTextViewTheme"
+            android:layout_marginTop="@dimen/title_welcome_vertical_margin"
+            android:text="@string/title_welcome"
+            android:textSize="@dimen/title_welcome_text_size" />
+
+        <ImageView
+            android:id="@+id/image_logo"
+            style="@style/LogoImageTheme"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/image_logo_vertical_margin" />
 
         <TextView
-            android:id="@+id/text_plus"
-            style="@style/InfoAppTextViewTheme"
-            android:layout_marginRight="@dimen/title_info_app_right_margin"
-            android:text="@string/title_plus" />
+            android:id="@+id/text_introduce_app"
+            style="@style/WelcomeTextViewTheme"
+            android:layout_marginTop="@dimen/title_introduce_vertical_margin"
+            android:text="@string/title_introduce_app"
+            android:textSize="@dimen/title_introduce_app_text_size" />
+
+        <Button
+            android:id="@+id/button_get_started"
+            style="@style/CommonButtonTheme"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/button_get_started_vertical_margin"
+            android:layout_marginTop="@dimen/button_get_started_vertical_margin"
+            android:text="@string/action_get_started" />
 
         <TextView
-            android:id="@+id/text_view_policy"
-            style="@style/InfoAppTextViewTheme"
-            android:text="@string/action_view_policy" />
+            android:id="@+id/text_already_acc"
+            style="@style/WelcomeTextViewTheme"
+            android:layout_marginTop="@dimen/title_already_vertical_margin"
+            android:text="@string/ask_already_acc"
+            android:textSize="@dimen/title_already_acc_text_size" />
+
+        <Button
+            android:id="@+id/button_sign_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:text="@string/action_sign_in"
+            android:textColor="@color/color_button_sign_in_text"
+            android:textSize="@dimen/title_already_acc_text_size" />
     </LinearLayout>
-</RelativeLayout>
+
+    <TextView
+        android:id="@+id/text_submit_your_details"
+        style="@style/WelcomeTextViewTheme"
+        android:text="@string/title_submit_your_details"
+        android:textSize="@dimen/title_info_app_text_size" />
+
+    <TextView
+        android:id="@+id/text_view_info_app"
+        style="@style/WelcomeTextViewTheme"
+        android:text="@string/title_plus"
+        android:textSize="@dimen/title_info_app_text_size" />
+</LinearLayout>

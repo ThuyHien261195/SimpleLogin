@@ -10,12 +10,9 @@
 
     <TextView
         android:id="@+id/text_screen_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+        style="@style/WelcomeTextViewTheme"
         android:paddingBottom="@dimen/text_screen_main_bottom_padding"
         android:text="@string/title_screen_main"
-        android:textColor="@android:color/white"
         android:textSize="@dimen/title_screen_main_text_size" />
 
     <Button
@@ -26,5 +23,6 @@
 
     <Button
         android:id="@+id/button_login"
-        style="@style/CommonButtonTheme" />
+        style="@style/CommonButtonTheme"
+        android:text="@string/action_sign_in" />
 </LinearLayout>
