@@ -18,6 +18,6 @@ public class AuthenticationUtils {
     }
 
     public static boolean checkValidPass(String inputText) {
-        return (inputText.length() >= 6);
+        return (inputText != null && inputText.length() >= 6);
     }
 }
