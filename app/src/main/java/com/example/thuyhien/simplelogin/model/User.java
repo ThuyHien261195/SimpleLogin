@@ -1,20 +1,19 @@
 package com.example.thuyhien.simplelogin.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by thuyhien on 10/6/17.
  */
 
-public class Profile {
+public class User {
 
     private String accountEmail;
     private String token;
+    private String refreshToken;
 
-    public Profile() {
+    public User() {
         accountEmail = null;
         token = null;
+        refreshToken = null;
     }
 
     public String getAccountEmail() {
@@ -33,11 +32,11 @@ public class Profile {
         this.token = token;
     }
 
-    // TODO Update model User, Profile, AccountRequest
-    // TODO Update layout, style css, dimen
-    // TODO No action bar
-    // TODO Check isSignUpEmail
-    // Check string input != null
-    // Application for global variable
-    // Update share preferences pass Model
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
 }
