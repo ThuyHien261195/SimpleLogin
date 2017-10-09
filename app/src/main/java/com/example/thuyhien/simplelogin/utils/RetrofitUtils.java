@@ -1,8 +1,8 @@
 package com.example.thuyhien.simplelogin.utils;
 
-import com.example.thuyhien.simplelogin.model.User;
-import com.example.thuyhien.simplelogin.model.UserConverter;
-import com.example.thuyhien.simplelogin.network.AuthenticationEndpointInterface;
+import com.example.thuyhien.simplelogin.data.database.User;
+import com.example.thuyhien.simplelogin.data.database.UserConverter;
+import com.example.thuyhien.simplelogin.data.network.AuthenticationEndpointInterface;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
