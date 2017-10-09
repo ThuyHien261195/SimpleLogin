@@ -1,4 +1,4 @@
-package com.example.thuyhien.simplelogin.network;
+package com.example.thuyhien.simplelogin.data.network;
 
 /**
  * Created by thuyhien on 10/5/17.
