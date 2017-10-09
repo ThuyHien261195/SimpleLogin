@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="activity_padding">20dp</dimen>
+    <dimen name="small_space">5dp</dimen>
+    <dimen name="medium_space">10dp</dimen>
+    <dimen name="large_space">20dp</dimen>
+    <dimen name="x_large_space">30dp</dimen>
+    <dimen name="xx_large_space">40dp</dimen>
 
-    <dimen name="form_login_vertical_margin">30dp</dimen>
-    <dimen name="form_login_horizontal_margin">10dp</dimen>
+    <dimen name="activity_padding">@dimen/large_space</dimen>
+
+    <dimen name="form_login_vertical_margin">@dimen/large_space</dimen>
+    <dimen name="form_login_horizontal_margin">@dimen/medium_space</dimen>
     <dimen name="form_login_padding">16dp</dimen>
     <dimen name="form_login_border_height">2dp</dimen>
-    <dimen name="form_login_corner">10dp</dimen>
+    <dimen name="form_login_corner">@dimen/medium_space</dimen>
 
-    <dimen name="button_login_corner">20dp</dimen>
-    <dimen name="button_login_height">40dp</dimen>
+    <dimen name="logo_vertical_margin">@dimen/xx_large_space</dimen>
+
+    <dimen name="login_edit_text_vertical_padding">@dimen/x_large_space</dimen>
+    <dimen name="title_ask_forgot_vertical_padding">@dimen/large_space</dimen>
+
+    <dimen name="button_login_corner">@dimen/activity_padding</dimen>
+    <dimen name="button_login_height">@dimen/xx_large_space</dimen>
     <dimen name="button_login_width">170dp</dimen>
     <dimen name="button_login_bottom_margin">60dp</dimen>
     <dimen name="button_login_text_size">20sp</dimen>
@@ -21,15 +32,15 @@
     <dimen name="title_already_acc_text_size">18sp</dimen>
     <dimen name="title_info_app_text_size">14sp</dimen>
 
-    <dimen name="text_screen_main_bottom_padding">20dp</dimen>
+    <dimen name="text_screen_main_bottom_padding">@dimen/large_space</dimen>
 
-    <dimen name="title_welcome_vertical_margin">30dp</dimen>
-    <dimen name="image_logo_vertical_margin">10dp</dimen>
-    <dimen name="button_sign_up_bottom_margin">20dp</dimen>
-    <dimen name="button_get_started_vertical_margin">30dp</dimen>
-    <dimen name="title_introduce_vertical_margin">10dp</dimen>
-    <dimen name="title_already_vertical_margin">10dp</dimen>
+    <dimen name="title_welcome_vertical_margin">@dimen/x_large_space</dimen>
+    <dimen name="image_logo_vertical_margin">@dimen/large_space</dimen>
+    <dimen name="button_sign_up_bottom_margin">@dimen/large_space</dimen>
+    <dimen name="button_get_started_vertical_margin">@dimen/xx_large_space</dimen>
+    <dimen name="title_introduce_vertical_margin">@dimen/medium_space</dimen>
+    <dimen name="title_already_vertical_margin">@dimen/medium_space</dimen>
     <dimen name="title_info_app_right_margin">3dp</dimen>
-    <dimen name="title_info_app_vertical_margin">10dp</dimen>
-    <dimen name="layout_more_info_app_vertical_margin">5dp</dimen>
+    <dimen name="title_info_app_vertical_margin">@dimen/medium_space</dimen>
+    <dimen name="layout_more_info_app_vertical_margin">@dimen/small_space</dimen>
 </resources>

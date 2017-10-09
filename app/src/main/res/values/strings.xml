@@ -11,8 +11,6 @@
     <string name="action_sign_up">Sign up</string>
     <string name="action_get_started">Get started</string>
     <string name="action_sign_in">Sign in</string>
-    <string name="action_view_term">Terms of Use</string>
-    <string name="action_view_policy">Privacy Policy</string>
 
     <string name="description_close_image">Close</string>
     <string name="description_logo_image">Fox logo</string>
@@ -20,9 +18,11 @@
     <string name="title_welcome">Welcome to</string>
     <string name="title_introduce_app">Enjoy the best TV series, award-\nwining movies,
      the biggest live\nsporting events and more.</string>
-    <string name="title_info_app">By submitting your details, you agree to\nFOX+</string>
-    <string name="title_plus">and</string>
+    <string name="title_submit_your_details">By submitting your details, you agree to\nFOX+</string>
     <string name="title_screen_main">Main</string>
+    <string name="title_plus">\u0020and\u0020</string>
+    <string name="title_privacy_policy">Privacy Policy</string>
+    <string name="title_view_terms">Terms of Use</string>
 
     <string name="error_empty_field">You must enter %1$s</string>
     <string name="error_invalid_field">%1$s is invalid</string>
