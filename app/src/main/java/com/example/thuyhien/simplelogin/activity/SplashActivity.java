@@ -3,11 +3,9 @@ package com.example.thuyhien.simplelogin.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.utils.RetrofitUtils;
 import com.example.thuyhien.simplelogin.utils.SharedPreferencesUtils;
 
 public class SplashActivity extends AppCompatActivity {
@@ -19,7 +17,6 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        hideActionBar();
         createWaitThread();
     }
 
@@ -42,10 +39,9 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void startMainApp() {
-        RetrofitUtils.createRetrofit();
         SharedPreferences sharedPref = this.getSharedPreferences(SharedPreferencesUtils.PREF_DATA_FILE_NAME, MODE_PRIVATE);
         if (SharedPreferencesUtils.getFirstOpenAppFlag(sharedPref)) {
-            SharedPreferencesUtils.updateFirstOpenAppFlag(sharedPref);
+            SharedPreferencesUtils.saveFirstOpenAppFlag(sharedPref);
             Intent welcomeIntent = new Intent(this, WelcomeActivity.class);
             startActivity(welcomeIntent);
         } else {
@@ -53,12 +49,5 @@ public class SplashActivity extends AppCompatActivity {
             startActivity(mainIntent);
         }
         this.finish();
-    }
-
-    private void hideActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
     }
 }
