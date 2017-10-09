@@ -6,7 +6,7 @@
     android:background="@color/color_common_screen_bg"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.example.thuyhien.simplelogin.activity.MainActivity">
+    tools:context="com.example.thuyhien.simplelogin.ui.main.MainActivity">
 
     <TextView
         android:id="@+id/text_screen_main"

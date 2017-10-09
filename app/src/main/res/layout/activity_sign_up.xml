@@ -6,7 +6,7 @@
     android:background="@color/color_common_screen_bg"
     android:orientation="vertical"
     android:padding="@dimen/activity_padding"
-    tools:context="com.example.thuyhien.simplelogin.activity.SignInActivity">
+    tools:context="com.example.thuyhien.simplelogin.ui.signup.SignUpActivity">
 
     <ImageButton
         android:id="@+id/button_close"
