@@ -1,10 +1,15 @@
 package com.example.thuyhien.simplelogin.activity;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.URLSpan;
 import android.widget.TextView;
 
 import com.example.thuyhien.simplelogin.R;
@@ -15,11 +20,8 @@ import butterknife.OnClick;
 
 public class WelcomeActivity extends AppCompatActivity {
 
-    @BindView(R.id.text_view_term)
-    TextView textViewTerm;
-
-    @BindView(R.id.text_view_policy)
-    TextView textViewPolicy;
+    @BindView(R.id.text_view_info_app)
+    TextView textViewInfoApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,6 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
         ButterKnife.bind(this);
 
-        hideActionBar();
         initViews();
     }
 
@@ -49,14 +50,22 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        textViewTerm.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-        textViewPolicy.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        textViewInfoApp.setText(createSpannableStringInfoApp());
     }
 
-    private void hideActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
+    private SpannableString createSpannableStringInfoApp() {
+        SpannableString termsText = new SpannableString(getText(R.string.title_view_terms));
+        termsText.setSpan(new URLSpan(""), 0, termsText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        termsText.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, android.R.color.white)),
+                0, termsText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        SpannableString privacyPolicyText = new SpannableString(getText(R.string.title_privacy_policy));
+        privacyPolicyText.setSpan(new URLSpan(""), 0, privacyPolicyText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        privacyPolicyText.setSpan(new ForegroundColorSpan(
+                        ContextCompat.getColor(this, android.R.color.white)), 0,
+                privacyPolicyText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        CharSequence infoText = TextUtils.concat(termsText, getText(R.string.title_plus), privacyPolicyText);
+        return new SpannableString(infoText);
     }
 }
