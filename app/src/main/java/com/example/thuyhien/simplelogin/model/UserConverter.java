@@ -1,6 +1,6 @@
 package com.example.thuyhien.simplelogin;
 
-import com.example.thuyhien.simplelogin.model.Profile;
+import com.example.thuyhien.simplelogin.model.User;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -14,10 +14,10 @@ import java.lang.reflect.Type;
  * Created by thuyhien on 10/6/17.
  */
 
-public class ProfileConverter implements JsonDeserializer<Profile> {
+public class UserConverter implements JsonDeserializer<User> {
     @Override
-    public Profile deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        Profile profile = new Profile();
+    public User deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        User profile = new User();
         if (json != null && json.isJsonObject()) {
 
             JsonObject jsonObject = json.getAsJsonObject();

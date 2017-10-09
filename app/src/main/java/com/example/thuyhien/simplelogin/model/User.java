@@ -1,34 +1,43 @@
 package com.example.thuyhien.simplelogin.model;
 
-import com.google.gson.annotations.SerializedName;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by thuyhien on 10/5/17.
+ * Created by thuyhien on 10/6/17.
  */
 
-public class User {
-    private String email;
-    private String password;
+public class Profile {
 
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
+    private String accountEmail;
+    private String token;
+
+    public Profile() {
+        accountEmail = null;
+        token = null;
     }
 
-    public String getEmail() {
-        return email;
+    public String getAccountEmail() {
+        return accountEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAccountEmail(String accountEmail) {
+        this.accountEmail = accountEmail;
     }
 
-    public String getPassword() {
-        return password;
+    public String getToken() {
+        return token;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setToken(String token) {
+        this.token = token;
     }
 
+    // TODO Update model User, Profile, AccountRequest
+    // TODO Update layout, style css, dimen
+    // TODO No action bar
+    // TODO Check isSignUpEmail
+    // Check string input != null
+    // Application for global variable
+    // Update share preferences pass Model
 }
