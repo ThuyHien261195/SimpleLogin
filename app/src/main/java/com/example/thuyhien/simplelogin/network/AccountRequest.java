@@ -1,6 +1,4 @@
-package com.example.thuyhien.simplelogin.model;
-
-import com.google.gson.annotations.SerializedName;
+package com.example.thuyhien.simplelogin.network;
 
 /**
  * Created by thuyhien on 10/5/17.
