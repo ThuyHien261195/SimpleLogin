@@ -3,14 +3,13 @@ package com.example.thuyhien.simplelogin.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.model.Profile;
 import com.example.thuyhien.simplelogin.model.User;
+import com.example.thuyhien.simplelogin.network.AccountRequest;
 import com.example.thuyhien.simplelogin.utils.AuthenticationUtils;
 import com.example.thuyhien.simplelogin.utils.RetrofitUtils;
 import com.example.thuyhien.simplelogin.utils.SharedPreferencesUtils;
@@ -49,10 +48,8 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_sign_in);
         ButterKnife.bind(this);
-
-        hideActionBar();
     }
 
     @OnClick(R.id.text_forgot_password)
@@ -65,13 +62,15 @@ public class SignInActivity extends AppCompatActivity {
         boolean checkMail = checkEmailInput();
         boolean checkPass = checkPassInput();
         if (checkMail && checkPass) {
-            User user = new User(editTextEmail.getText().toString(), editTextPassword.getText().toString());
-            Call<Profile> call = RetrofitUtils.apiService.signInAccount(RetrofitUtils.AUTH_TOKEN, user);
-            call.enqueue(new Callback<Profile>() {
+            AccountRequest accountRequest = new AccountRequest(editTextEmail.getText().toString(),
+                    editTextPassword.getText().toString());
+            Call<User> call = RetrofitUtils.getApiService()
+                    .signInAccount(RetrofitUtils.AUTH_TOKEN, accountRequest);
+            call.enqueue(new Callback<User>() {
                 @Override
-                public void onResponse(Call<Profile> call, Response<Profile> response) {
+                public void onResponse(Call<User> call, Response<User> response) {
                     if (response.isSuccessful() && response.body() != null) {
-                        updateSignUpEmail(response.body().getAccountEmail());
+                        updateSignUpEmail(response.body());
                         startMainActivity();
                     } else {
                         showToastErrorSignUp(response.errorBody());
@@ -79,7 +78,7 @@ public class SignInActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<Profile> call, Throwable t) {
+                public void onFailure(Call<User> call, Throwable t) {
                     showToastErrorSignUp(null);
                     t.printStackTrace();
                 }
@@ -116,10 +115,10 @@ public class SignInActivity extends AppCompatActivity {
         return true;
     }
 
-    private void updateSignUpEmail(String email) {
+    private void updateSignUpEmail(User user) {
         SharedPreferences sharedPref =
                 this.getSharedPreferences(SharedPreferencesUtils.PREF_DATA_FILE_NAME, MODE_PRIVATE);
-        SharedPreferencesUtils.updateSignedUpEmail(sharedPref, email);
+        SharedPreferencesUtils.saveSignedUpEmail(sharedPref, user);
     }
 
     private void startMainActivity() {
@@ -127,13 +126,6 @@ public class SignInActivity extends AppCompatActivity {
         mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(mainIntent);
         this.finish();
-    }
-
-    private void hideActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
     }
 
     private void showToastErrorSignUp(ResponseBody responseBody) {
