@@ -1,7 +1,7 @@
-package com.example.thuyhien.simplelogin.data.network;
+package com.example.thuyhien.simplelogin.data.network.interactor;
 
+import com.example.thuyhien.simplelogin.data.network.listener.OnAuthenticateAccountListener;
 import com.example.thuyhien.simplelogin.data.network.model.AccountRequest;
-import com.example.thuyhien.simplelogin.listener.OnAuthenticateAccountListener;
 
 /**
  * Created by thuyhien on 10/9/17.

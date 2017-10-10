@@ -1,6 +1,6 @@
-package com.example.thuyhien.simplelogin.data.network;
+package com.example.thuyhien.simplelogin.data.network.retrofit;
 
-import com.example.thuyhien.simplelogin.data.database.User;
+import com.example.thuyhien.simplelogin.data.database.model.User;
 import com.example.thuyhien.simplelogin.data.network.model.AccountRequest;
 
 import retrofit2.Call;
