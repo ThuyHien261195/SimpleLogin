@@ -1,4 +1,4 @@
-package com.example.thuyhien.simplelogin.ui.welcome;
+package com.example.thuyhien.simplelogin.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +12,6 @@ import android.text.style.URLSpan;
 import android.widget.TextView;
 
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.ui.signin.SignInActivity;
-import com.example.thuyhien.simplelogin.ui.signup.SignUpActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
