@@ -1,10 +1,11 @@
-package com.example.thuyhien.simplelogin.data.network.interactor.impl;
+package com.example.thuyhien.simplelogin.data.interactor.impl;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
-import com.example.thuyhien.simplelogin.data.database.model.User;
+import com.example.thuyhien.simplelogin.data.network.exception.UnKnowException;
+import com.example.thuyhien.simplelogin.model.User;
 import com.example.thuyhien.simplelogin.data.network.exception.AuthenticationException;
-import com.example.thuyhien.simplelogin.data.network.interactor.AuthenticationInteractor;
-import com.example.thuyhien.simplelogin.data.network.listener.OnAuthenticateAccountListener;
+import com.example.thuyhien.simplelogin.data.interactor.AuthenticationInteractor;
+import com.example.thuyhien.simplelogin.data.interactor.listener.OnAuthenticateAccountListener;
 import com.example.thuyhien.simplelogin.data.network.model.AccountRequest;
 import com.example.thuyhien.simplelogin.utils.RetrofitUtils;
 
@@ -72,6 +73,6 @@ public class RetrofitAuthenticationInteractor implements AuthenticationInteracto
                 return e;
             }
         }
-        return null;
+        return new UnKnowException();
     }
 }
