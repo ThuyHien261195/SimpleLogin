@@ -24,7 +24,7 @@ public class RetrofitAuthenticationInteractor implements AuthenticationInteracto
 
     @Override
     public void signIn(AccountRequest accountRequest, final OnAuthenticateAccountListener listener) {
-        Call<User> call = FoxApplication.getInstance().getApiService()
+        Call<User> call = FoxApplication.getInstance().getAuthenApiService()
                 .signInAccount(RetrofitUtils.AUTH_TOKEN, accountRequest);
         call.enqueue(new Callback<User>() {
             @Override
@@ -45,7 +45,7 @@ public class RetrofitAuthenticationInteractor implements AuthenticationInteracto
 
     @Override
     public void signUp(AccountRequest accountRequest, final OnAuthenticateAccountListener listener) {
-        Call<User> call = FoxApplication.getInstance().getApiService()
+        Call<User> call = FoxApplication.getInstance().getAuthenApiService()
                 .signUpAccount(RetrofitUtils.AUTH_TOKEN, accountRequest);
         call.enqueue(new Callback<User>() {
             @Override
