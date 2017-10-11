@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/nav_logged_in_header_height"
+    android:background="@drawable/nav_header_bg"
+    android:orientation="vertical"
+    android:padding="@dimen/nav_header_padding">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/description_account_image"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/title_email_vertical_padding"
+        android:text="Email"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/title_email_text_size" />
+</LinearLayout>
