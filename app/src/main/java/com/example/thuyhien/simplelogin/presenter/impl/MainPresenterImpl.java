@@ -1,8 +1,8 @@
-package com.example.thuyhien.simplelogin.ui.presenter.impl;
+package com.example.thuyhien.simplelogin.presenter.impl;
 
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
-import com.example.thuyhien.simplelogin.ui.presenter.MainPresenter;
-import com.example.thuyhien.simplelogin.ui.view.MainView;
+import com.example.thuyhien.simplelogin.presenter.MainPresenter;
+import com.example.thuyhien.simplelogin.view.MainView;
 
 import java.lang.ref.WeakReference;
 
@@ -23,7 +23,9 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void checkIsLoggedIn() {
         if (userManager.isLoggedIn()) {
-            getMainView().showLoggedInView();
+            if (getMainView() != null) {
+                getMainView().showLoggedInView();
+            }
         }
     }
 

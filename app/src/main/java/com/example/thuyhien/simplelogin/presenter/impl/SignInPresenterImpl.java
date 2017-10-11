@@ -1,13 +1,14 @@
-package com.example.thuyhien.simplelogin.ui.presenter.impl;
+package com.example.thuyhien.simplelogin.presenter.impl;
 
-import com.example.thuyhien.simplelogin.data.database.model.User;
+import com.example.thuyhien.simplelogin.data.network.exception.AuthenticationException;
+import com.example.thuyhien.simplelogin.model.User;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
-import com.example.thuyhien.simplelogin.data.network.interactor.AuthenticationInteractor;
-import com.example.thuyhien.simplelogin.data.network.listener.OnAuthenticateAccountListener;
+import com.example.thuyhien.simplelogin.data.interactor.AuthenticationInteractor;
+import com.example.thuyhien.simplelogin.data.interactor.listener.OnAuthenticateAccountListener;
 import com.example.thuyhien.simplelogin.data.network.model.AccountRequest;
 import com.example.thuyhien.simplelogin.ui.exception.InvalidInputException;
-import com.example.thuyhien.simplelogin.ui.presenter.AuthenticatePresenter;
-import com.example.thuyhien.simplelogin.ui.view.AuthenticationView;
+import com.example.thuyhien.simplelogin.presenter.AuthenticatePresenter;
+import com.example.thuyhien.simplelogin.view.AuthenticationView;
 import com.example.thuyhien.simplelogin.utils.AuthenticationUtils;
 
 import java.lang.ref.WeakReference;
@@ -37,13 +38,17 @@ public class SignInPresenterImpl implements AuthenticatePresenter, OnAuthenticat
         try {
             validEmail = validateEmail(email);
         } catch (InvalidInputException ex) {
-            getSignInView().showUsernameError(ex.getErrorCode());
+            if (getSignInView() != null) {
+                getSignInView().showUsernameError(ex.getErrorCode());
+            }
         }
 
         try {
             validPassword = validatePassword(password);
         } catch (InvalidInputException ex) {
-            getSignInView().showPasswordError(ex.getErrorCode());
+            if (getSignInView() != null) {
+                getSignInView().showPasswordError(ex.getErrorCode());
+            }
         }
 
         AccountRequest accountRequest = new AccountRequest(email, password);
@@ -55,13 +60,22 @@ public class SignInPresenterImpl implements AuthenticatePresenter, OnAuthenticat
     @Override
     public void onAuthenticateSuccess(User user) {
         userManager.saveUser(user);
-        getSignInView().navigateToMain();
+        if (getSignInView() != null) {
+            getSignInView().navigateToMain();
+        }
     }
 
     @Override
     public void onAuthenticateFail(Exception ex) {
-        getSignInView().showMessage(ex.getMessage());
+        if (getSignInView() != null) {
+            if (ex != null && ex instanceof AuthenticationException) {
+                getSignInView().showMessage(ex.getMessage());
+            } else {
+                getSignInView().showMessage("");
+            }
+        }
     }
+
 
     private boolean validateEmail(String email) throws InvalidInputException {
         if (!AuthenticationUtils.checkNotEmptyInput(email)) {

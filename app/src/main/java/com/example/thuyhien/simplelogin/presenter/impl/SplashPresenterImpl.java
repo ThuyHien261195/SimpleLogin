@@ -1,8 +1,8 @@
-package com.example.thuyhien.simplelogin.ui.presenter.impl;
+package com.example.thuyhien.simplelogin.presenter.impl;
 
 import com.example.thuyhien.simplelogin.data.manager.AppManager;
-import com.example.thuyhien.simplelogin.ui.presenter.SplashPresenter;
-import com.example.thuyhien.simplelogin.ui.view.SplashView;
+import com.example.thuyhien.simplelogin.presenter.SplashPresenter;
+import com.example.thuyhien.simplelogin.view.SplashView;
 
 import java.lang.ref.WeakReference;
 
@@ -38,10 +38,14 @@ public class SplashPresenterImpl implements SplashPresenter {
 
     private void checkFirstOpenApp() {
         if (appManager.isAlreadyUsedApp()) {
-            getSplashView().openMainScreen();
+            if (getSplashView() != null) {
+                getSplashView().openMainScreen();
+            }
         } else {
-            appManager.setAlreadyUsedApp();
-            getSplashView().openWelcomeScreen();
+            if (getSplashView() != null) {
+                appManager.setAlreadyUsedApp();
+                getSplashView().openWelcomeScreen();
+            }
         }
     }
 
