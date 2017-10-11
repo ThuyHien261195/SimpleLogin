@@ -10,9 +10,9 @@ import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.data.manager.impl.SharedPreferencesUserManager;
-import com.example.thuyhien.simplelogin.ui.presenter.MainPresenter;
-import com.example.thuyhien.simplelogin.ui.presenter.impl.MainPresenterImpl;
-import com.example.thuyhien.simplelogin.ui.view.MainView;
+import com.example.thuyhien.simplelogin.presenter.MainPresenter;
+import com.example.thuyhien.simplelogin.presenter.impl.MainPresenterImpl;
+import com.example.thuyhien.simplelogin.view.MainView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,14 +41,14 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @OnClick(R.id.button_login)
     public void onClickLoginButton() {
-        Intent loginIntent = new Intent(this, SignInActivity.class);
-        startActivity(loginIntent);
+        Intent signInIntent = new Intent(this, SignInActivity.class);
+        startActivity(signInIntent);
     }
 
     @OnClick(R.id.button_sign_up)
     public void onClickSignUpButton() {
-        Intent loginIntent = new Intent(this, SignUpActivity.class);
-        startActivity(loginIntent);
+        Intent signUpIntent = new Intent(this, SignUpActivity.class);
+        startActivity(signUpIntent);
     }
 
     @Override
