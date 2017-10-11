@@ -3,8 +3,8 @@ package com.example.thuyhien.simplelogin;
 import android.app.Application;
 import android.content.SharedPreferences;
 
-import com.example.thuyhien.simplelogin.data.database.model.User;
-import com.example.thuyhien.simplelogin.data.database.model.converter.UserConverter;
+import com.example.thuyhien.simplelogin.model.User;
+import com.example.thuyhien.simplelogin.data.network.converter.UserConverter;
 import com.example.thuyhien.simplelogin.data.network.retrofit.AuthenticationEndpointInterface;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,16 +43,8 @@ public class FoxApplication extends Application {
         return sharedPref;
     }
 
-    public void setSharedPref(SharedPreferences sharedPref) {
-        this.sharedPref = sharedPref;
-    }
-
     public AuthenticationEndpointInterface getApiService() {
         return apiService;
-    }
-
-    public void setApiService(AuthenticationEndpointInterface apiService) {
-        this.apiService = apiService;
     }
 
     private void createRetrofit() {
