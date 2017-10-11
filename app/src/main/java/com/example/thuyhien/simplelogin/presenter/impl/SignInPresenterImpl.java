@@ -46,8 +46,8 @@ public class SignInPresenterImpl implements AuthenticatePresenter, OnAuthenticat
             getSignInView().showPasswordError(ex.getErrorCode());
         }
 
+        AccountRequest accountRequest = new AccountRequest(email, password);
         if (validEmail && validPassword) {
-            AccountRequest accountRequest = new AccountRequest(email, password);
             signInInteractor.signIn(accountRequest, this);
         }
     }
