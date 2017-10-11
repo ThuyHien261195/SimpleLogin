@@ -1,6 +1,6 @@
 package com.example.thuyhien.simplelogin.data.manager;
 
-import com.example.thuyhien.simplelogin.data.database.model.User;
+import com.example.thuyhien.simplelogin.model.User;
 
 /**
  * Created by thuyhien on 10/10/17.

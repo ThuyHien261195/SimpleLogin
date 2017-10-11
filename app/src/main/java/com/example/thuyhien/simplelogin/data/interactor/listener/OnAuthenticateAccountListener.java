@@ -1,6 +1,6 @@
-package com.example.thuyhien.simplelogin.data.network.listener;
+package com.example.thuyhien.simplelogin.data.interactor.listener;
 
-import com.example.thuyhien.simplelogin.data.database.model.User;
+import com.example.thuyhien.simplelogin.model.User;
 
 /**
  * Created by thuyhien on 10/9/17.

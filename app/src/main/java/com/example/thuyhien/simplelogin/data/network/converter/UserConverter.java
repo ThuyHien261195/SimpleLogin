@@ -1,6 +1,6 @@
-package com.example.thuyhien.simplelogin.data.database.model.converter;
+package com.example.thuyhien.simplelogin.data.network.converter;
 
-import com.example.thuyhien.simplelogin.data.database.model.User;
+import com.example.thuyhien.simplelogin.model.User;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;

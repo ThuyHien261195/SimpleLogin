@@ -1,4 +1,4 @@
-package com.example.thuyhien.simplelogin.ui.presenter;
+package com.example.thuyhien.simplelogin.presenter;
 
 /**
  * Created by thuyhien on 10/9/17.

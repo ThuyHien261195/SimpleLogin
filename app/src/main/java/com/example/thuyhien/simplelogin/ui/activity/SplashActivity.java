@@ -8,9 +8,9 @@ import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.data.manager.AppManager;
 import com.example.thuyhien.simplelogin.data.manager.impl.SharedPreferencesAppManager;
-import com.example.thuyhien.simplelogin.ui.presenter.SplashPresenter;
-import com.example.thuyhien.simplelogin.ui.presenter.impl.SplashPresenterImpl;
-import com.example.thuyhien.simplelogin.ui.view.SplashView;
+import com.example.thuyhien.simplelogin.presenter.SplashPresenter;
+import com.example.thuyhien.simplelogin.presenter.impl.SplashPresenterImpl;
+import com.example.thuyhien.simplelogin.view.SplashView;
 
 public class SplashActivity extends AppCompatActivity implements SplashView {
 
