@@ -4,14 +4,13 @@ import android.app.Application;
 import android.content.SharedPreferences;
 
 import com.example.thuyhien.simplelogin.data.network.converter.FeedPostListConverter;
-import com.example.thuyhien.simplelogin.data.network.converter.PageConverter;
 import com.example.thuyhien.simplelogin.data.network.converter.PageListConverter;
+import com.example.thuyhien.simplelogin.data.network.converter.UserConverter;
+import com.example.thuyhien.simplelogin.data.network.retrofit.AuthenticationEndpointInterface;
 import com.example.thuyhien.simplelogin.data.network.retrofit.DataEndpointInterface;
 import com.example.thuyhien.simplelogin.model.FeedPost;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.model.User;
-import com.example.thuyhien.simplelogin.data.network.converter.UserConverter;
-import com.example.thuyhien.simplelogin.data.network.retrofit.AuthenticationEndpointInterface;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -34,6 +33,7 @@ public class FoxApplication extends Application {
     private static FoxApplication instance;
     private SharedPreferences sharedPref;
     private AuthenticationEndpointInterface authenApiService;
+
     private DataEndpointInterface dataApiService;
 
     @Override
@@ -57,6 +57,10 @@ public class FoxApplication extends Application {
         return authenApiService;
     }
 
+    public DataEndpointInterface getDataApiService() {
+        return dataApiService;
+    }
+
     private void createAuthenticationRetrofit() {
         Type profileType = new TypeToken<User>() {
         }.getType();
@@ -72,8 +76,10 @@ public class FoxApplication extends Application {
     }
 
     private void createDataRetrofit() {
-        Type feedListType = new TypeToken<List<FeedPost>>(){}.getType();
-        Type pageListType = new TypeToken<List<Page>>(){}.getType();
+        Type feedListType = new TypeToken<List<FeedPost>>() {
+        }.getType();
+        Type pageListType = new TypeToken<List<Page>>() {
+        }.getType();
         GsonBuilder gsonBuilder = new GsonBuilder()
                 .registerTypeAdapter(pageListType, new PageListConverter())
                 .registerTypeAdapter(feedListType, new FeedPostListConverter());
