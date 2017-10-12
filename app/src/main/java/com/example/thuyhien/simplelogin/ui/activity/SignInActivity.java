@@ -8,13 +8,13 @@ import android.widget.Toast;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.data.manager.UserManager;
-import com.example.thuyhien.simplelogin.data.manager.impl.SharedPreferencesUserManager;
 import com.example.thuyhien.simplelogin.data.interactor.AuthenticationInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.impl.RetrofitAuthenticationInteractor;
-import com.example.thuyhien.simplelogin.ui.exception.InvalidInputException;
+import com.example.thuyhien.simplelogin.data.manager.UserManager;
+import com.example.thuyhien.simplelogin.data.manager.impl.SharedPreferencesUserManager;
 import com.example.thuyhien.simplelogin.presenter.AuthenticatePresenter;
 import com.example.thuyhien.simplelogin.presenter.impl.SignInPresenterImpl;
+import com.example.thuyhien.simplelogin.ui.exception.InvalidInputException;
 import com.example.thuyhien.simplelogin.view.AuthenticationView;
 
 import butterknife.BindString;
