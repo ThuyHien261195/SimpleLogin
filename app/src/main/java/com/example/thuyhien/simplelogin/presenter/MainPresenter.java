@@ -6,4 +6,6 @@ package com.example.thuyhien.simplelogin.presenter;
 
 public interface MainPresenter {
     void checkIsLoggedIn();
+
+    void loadPageList();
 }
