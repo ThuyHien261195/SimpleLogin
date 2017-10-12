@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="@dimen/item_post_section_height"
-    app:contentPadding="@dimen/item_section_padding"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/item_section_height"
+    android:layout_margin="@dimen/item_section_vertical_margin"
+    android:orientation="vertical"
     app:cardCornerRadius="@dimen/item_section_radius"
-    android:layout_margin="@dimen/item_section_vertical_margin">
+    app:contentPadding="@dimen/item_section_padding">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,17 +17,17 @@
             android:id="@+id/text_title_section"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Title"
-            android:textSize="@dimen/title_section_text_size"
-            android:textColor="@android:color/black"
+            android:ellipsize="end"
             android:maxLines="1"
-            android:ellipsize="end"/>
+            android:text="Title"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/title_section_text_size" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_poster"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginTop="@dimen/recycler_view_poster_vertical_margin"/>
+            android:layout_marginTop="@dimen/recycler_view_poster_vertical_margin"
+            android:layout_weight="1" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

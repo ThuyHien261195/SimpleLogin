@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="@dimen/item_image_feed_width"
-    android:layout_height="@dimen/item_image_feed_height">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/item_poster_width"
+    android:layout_height="@dimen/item_poster_height"
+    android:orientation="vertical"
+    android:layout_marginRight="@dimen/item_poster_horizontal_margin">
 
     <ImageView
+        android:id="@+id/image_poster"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/image_poster"
-        android:contentDescription="@string/description_poster_image"/>
-</LinearLayout>
+        android:contentDescription="@string/description_poster_image"
+        android:src="@mipmap/ic_launcher"
+        android:background="@drawable/image_poster_bg" />
+</android.support.v7.widget.CardView>
