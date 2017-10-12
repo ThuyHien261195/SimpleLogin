@@ -16,15 +16,14 @@ import butterknife.ButterKnife;
  * Created by thuyhien on 10/11/17.
  */
 
-public class SectionViewHolder extends RecyclerView.ViewHolder{
+public class SectionViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.text_title_section)
     TextView textViewTitleSection;
 
-    @BindView(R.id.recycler_view_section)
+    @BindView(R.id.recycler_view_poster)
     RecyclerView recyclerViewPoster;
 
-    private Section section;
     private LinearLayoutManager linearLayoutManager;
 
     public SectionViewHolder(View itemView) {
@@ -36,7 +35,6 @@ public class SectionViewHolder extends RecyclerView.ViewHolder{
     }
 
     public void bindContentSection(Section section) {
-        this.section = section;
         textViewTitleSection.setText(section.getMultiLangSectionName().getEnglishName());
         recyclerViewPoster.setLayoutManager(linearLayoutManager);
         PosterAdapter posterAdapter = new PosterAdapter(section.getFeedPostList());
