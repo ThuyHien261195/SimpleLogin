@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:text="@string/action_login"
         style="@style/LogInTextViewTheme"
+        android:paddingTop="@dimen/nav_header_padding"
         android:textSize="@dimen/title_login_text_size"
-        android:textAllCaps="true"/>
+        android:textAllCaps="true" />
 </LinearLayout>
