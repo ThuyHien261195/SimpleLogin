@@ -1,15 +1,15 @@
 package com.example.thuyhien.simplelogin.presenter.impl;
 
-import com.example.thuyhien.simplelogin.data.network.exception.AuthenticationException;
-import com.example.thuyhien.simplelogin.model.User;
-import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.data.interactor.AuthenticationInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.OnAuthenticateAccountListener;
+import com.example.thuyhien.simplelogin.data.manager.UserManager;
+import com.example.thuyhien.simplelogin.data.network.exception.AuthenticationException;
 import com.example.thuyhien.simplelogin.data.network.model.AccountRequest;
-import com.example.thuyhien.simplelogin.ui.exception.InvalidInputException;
+import com.example.thuyhien.simplelogin.model.User;
 import com.example.thuyhien.simplelogin.presenter.AuthenticatePresenter;
-import com.example.thuyhien.simplelogin.view.AuthenticationView;
+import com.example.thuyhien.simplelogin.ui.exception.InvalidInputException;
 import com.example.thuyhien.simplelogin.utils.AuthenticationUtils;
+import com.example.thuyhien.simplelogin.view.AuthenticationView;
 
 import java.lang.ref.WeakReference;
 

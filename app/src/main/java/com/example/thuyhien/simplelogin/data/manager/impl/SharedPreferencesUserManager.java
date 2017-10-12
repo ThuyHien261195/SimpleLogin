@@ -2,8 +2,8 @@ package com.example.thuyhien.simplelogin.data.manager.impl;
 
 import android.content.SharedPreferences;
 
-import com.example.thuyhien.simplelogin.model.User;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
+import com.example.thuyhien.simplelogin.model.User;
 
 /**
  * Created by thuyhien on 10/10/17.

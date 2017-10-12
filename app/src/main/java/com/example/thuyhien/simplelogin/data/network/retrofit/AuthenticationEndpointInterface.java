@@ -1,7 +1,7 @@
 package com.example.thuyhien.simplelogin.data.network.retrofit;
 
-import com.example.thuyhien.simplelogin.model.User;
 import com.example.thuyhien.simplelogin.data.network.model.AccountRequest;
+import com.example.thuyhien.simplelogin.model.User;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
