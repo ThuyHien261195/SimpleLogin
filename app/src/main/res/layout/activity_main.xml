@@ -9,10 +9,7 @@
     tools:context="com.example.thuyhien.simplelogin.ui.activity.MainActivity"
     tools:openDrawer="start">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager_post"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <include layout="@layout/partial_content_main" />
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view_main"
@@ -20,6 +17,5 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_logged_in_header_main"
         app:menu="@menu/nav_header_main" />
 </android.support.v4.widget.DrawerLayout>
