@@ -16,7 +16,7 @@ public class FeedPost {
         this.guid = "";
         this.title = "";
         this.description = "";
-        this.poster = null;
+        this.poster = new ImagePost();
     }
 
     public String getId() {

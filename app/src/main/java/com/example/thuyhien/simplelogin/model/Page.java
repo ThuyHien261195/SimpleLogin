@@ -1,5 +1,6 @@
 package com.example.thuyhien.simplelogin.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,8 +14,8 @@ public class Page {
 
     public Page() {
         this.id = "";
-        this.multiLangSectionName = null;
-        this.sectionList = null;
+        this.multiLangSectionName = new MultiLangSectionName();
+        this.sectionList = new ArrayList<>();
     }
 
     public String getId() {
