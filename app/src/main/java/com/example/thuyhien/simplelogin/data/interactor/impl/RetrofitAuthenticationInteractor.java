@@ -1,17 +1,12 @@
 package com.example.thuyhien.simplelogin.data.interactor.impl;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
-import com.example.thuyhien.simplelogin.data.network.exception.UnKnowException;
-import com.example.thuyhien.simplelogin.model.User;
-import com.example.thuyhien.simplelogin.data.network.exception.AuthenticationException;
 import com.example.thuyhien.simplelogin.data.interactor.AuthenticationInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.OnAuthenticateAccountListener;
 import com.example.thuyhien.simplelogin.data.network.model.AccountRequest;
+import com.example.thuyhien.simplelogin.model.User;
 import com.example.thuyhien.simplelogin.utils.RetrofitUtils;
 
-import org.json.JSONObject;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,7 +27,8 @@ public class RetrofitAuthenticationInteractor implements AuthenticationInteracto
                 if (response.isSuccessful() && response.body() != null) {
                     listener.onAuthenticateSuccess(response.body());
                 } else {
-                    listener.onAuthenticateFail(createNewAuthenException(response.errorBody()));
+                    listener.onAuthenticateFail(
+                            RetrofitUtils.createAuthenException(response.errorBody()));
                 }
             }
 
@@ -53,7 +49,8 @@ public class RetrofitAuthenticationInteractor implements AuthenticationInteracto
                 if (response.isSuccessful() && response.body() != null) {
                     listener.onAuthenticateSuccess(response.body());
                 } else {
-                    listener.onAuthenticateFail(createNewAuthenException(response.errorBody()));
+                    listener.onAuthenticateFail(
+                            RetrofitUtils.createAuthenException(response.errorBody()));
                 }
             }
 
@@ -62,17 +59,5 @@ public class RetrofitAuthenticationInteractor implements AuthenticationInteracto
                 listener.onAuthenticateFail(new Exception(t));
             }
         });
-    }
-
-    private Exception createNewAuthenException(ResponseBody responseBody) {
-        if (responseBody != null) {
-            try {
-                JSONObject jsonError = new JSONObject(responseBody.string());
-                return new AuthenticationException(jsonError.getString("message"));
-            } catch (Exception e) {
-                return e;
-            }
-        }
-        return new UnKnowException();
     }
 }
