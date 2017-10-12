@@ -20,8 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.SignInActivity" />
-        <activity android:name=".ui.activity.MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
+        <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.WelcomeActivity" />
         <activity android:name=".ui.activity.SignUpActivity" />
     </application>

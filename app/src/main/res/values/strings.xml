@@ -16,6 +16,7 @@
     <string name="description_logo_image">Fox logo</string>
     <string name="description_account_image">Account Image</string>
     <string name="description_poster_image">Poster Image</string>
+    <string name="description_sliding_menu_image">Menu</string>
 
     <string name="title_welcome">Welcome to</string>
     <string name="title_introduce_app">Enjoy the best TV series, award-\nwining movies,
@@ -30,6 +31,7 @@
     <string name="error_invalid_field">%1$s is invalid</string>
     <string name="error_create_user">Create user account unsuccessfully</string>
     <string name="error_login_user">Login user account unsuccessfully</string>
+    <string name="error_unknow">Unknow error</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

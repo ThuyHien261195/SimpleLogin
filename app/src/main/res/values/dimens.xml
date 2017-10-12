@@ -45,15 +45,15 @@
     <dimen name="layout_more_info_app_vertical_margin">@dimen/small_space</dimen>
 
     <!-- Navigation header main properties. -->
-    <dimen name="nav_logged_in_header_height">120dp</dimen>
-    <dimen name="nav_no_acc_header_height">60dp</dimen>
+    <dimen name="nav_logged_in_header_height">140dp</dimen>
+    <dimen name="nav_no_acc_header_height">80dp</dimen>
     <dimen name="nav_header_padding">16dp</dimen>
     <dimen name="title_email_text_size">16sp</dimen>
     <dimen name="title_email_vertical_padding">15dp</dimen>
     <dimen name="title_login_text_size">20sp</dimen>
 
     <!-- Card view post properties. -->
-    <dimen name="item_section_height">160dp</dimen>
+    <dimen name="item_section_height">180dp</dimen>
     <dimen name="item_section_padding">@dimen/medium_space</dimen>
     <dimen name="item_section_radius">4dp</dimen>
     <dimen name="item_section_vertical_margin">@dimen/small_space</dimen>
@@ -63,4 +63,7 @@
     <!-- Item image feed in section. -->
     <dimen name="item_poster_height">120dp</dimen>
     <dimen name="item_poster_width">100dp</dimen>
+    <dimen name="image_poster_border_width">2dp</dimen>
+    <dimen name="image_poster_corner_radius">4dp</dimen>
+    <dimen name="item_poster_horizontal_margin">@dimen/small_space</dimen>
 </resources>
