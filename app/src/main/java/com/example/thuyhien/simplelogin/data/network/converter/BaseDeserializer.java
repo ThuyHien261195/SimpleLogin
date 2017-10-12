@@ -2,7 +2,6 @@ package com.example.thuyhien.simplelogin.data.network.converter;
 
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 /**
  * Created by thuyhien on 10/11/17.
@@ -12,7 +11,7 @@ public abstract class BaseDeserializer<T> implements JsonDeserializer<T> {
 
     protected boolean getBooleanValue(JsonElement jsonElement, boolean defaultValue) {
         boolean returnedValue = defaultValue;
-        if(jsonElement != null && !jsonElement.isJsonNull()) {
+        if (jsonElement != null && !jsonElement.isJsonNull()) {
             returnedValue = jsonElement.getAsBoolean();
         }
         return returnedValue;
@@ -44,7 +43,7 @@ public abstract class BaseDeserializer<T> implements JsonDeserializer<T> {
 
     protected String getStringValue(JsonElement jsonElement, String defaultValue) {
         String returnedValue = defaultValue;
-        if(jsonElement != null && !jsonElement.isJsonNull()) {
+        if (jsonElement != null && !jsonElement.isJsonNull()) {
             returnedValue = jsonElement.getAsString();
         }
         return returnedValue;

@@ -19,9 +19,10 @@ import java.util.List;
 public class PageListConverter extends BaseDeserializer<List<Page>> {
     @Override
     public List<Page> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        if(checkValidJsonArray(json)) {
+        if (checkValidJsonArray(json)) {
             JsonArray jsonArray = json.getAsJsonArray();
-            Type type = new TypeToken<List<Page>>(){}.getType();
+            Type type = new TypeToken<List<Page>>() {
+            }.getType();
             GsonBuilder gsonBuilder = new GsonBuilder()
                     .registerTypeAdapter(Page.class, new PageConverter());
             Gson gson = gsonBuilder.create();

@@ -13,11 +13,11 @@ import java.lang.reflect.Type;
  * Created by thuyhien on 10/11/17.
  */
 
-public class SectionConverter extends BaseDeserializer<Section>{
+public class SectionConverter extends BaseDeserializer<Section> {
     @Override
     public Section deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         Section section = null;
-        if(checkValidJsonObject(json)) {
+        if (checkValidJsonObject(json)) {
             section = new Section();
             JsonObject jsonObject = json.getAsJsonObject();
             section.setId(getStringValue(jsonObject.get("id"), ""));
@@ -25,7 +25,7 @@ public class SectionConverter extends BaseDeserializer<Section>{
             section.setType(getStringValue(jsonObject.get("type"), ""));
 
             JsonElement jsonElement = jsonObject.get("names");
-            if(checkValidJsonObject(jsonElement)) {
+            if (checkValidJsonObject(jsonElement)) {
                 jsonObject = jsonElement.getAsJsonObject();
                 MultiLangSectionName multiLangSectionName = new MultiLangSectionName();
                 multiLangSectionName.setZhHantName(getStringValue(jsonObject.get("zh-hant"), ""));

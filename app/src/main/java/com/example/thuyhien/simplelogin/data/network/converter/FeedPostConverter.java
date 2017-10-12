@@ -17,7 +17,7 @@ public class FeedPostConverter extends BaseDeserializer<FeedPost> {
     @Override
     public FeedPost deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         FeedPost feedPost = null;
-        if(checkValidJsonObject(json)) {
+        if (checkValidJsonObject(json)) {
             feedPost = new FeedPost();
             JsonObject jsonObject = json.getAsJsonObject();
             feedPost.setId(getStringValue(jsonObject.get("id"), ""));
@@ -26,10 +26,10 @@ public class FeedPostConverter extends BaseDeserializer<FeedPost> {
             feedPost.setDescription(getStringValue(jsonObject.get("description"), ""));
 
             JsonElement jsonElement = jsonObject.get("thumbnails");
-            if(checkValidJsonObject(jsonElement)) {
+            if (checkValidJsonObject(jsonElement)) {
                 jsonObject = jsonElement.getAsJsonObject();
-                jsonElement = jsonObject.get("tw S07-1920x1440");
-                if(checkValidJsonObject(jsonElement)) {
+                jsonElement = jsonObject.get("Default-464x633");
+                if (checkValidJsonObject(jsonElement)) {
                     jsonObject = jsonElement.getAsJsonObject();
                     ImagePost imagePost = new ImagePost();
                     imagePost.setImageUrl(getStringValue(jsonObject.get("url"), ""));

@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
@@ -33,20 +32,21 @@ public class PageConverter extends BaseDeserializer<Page> {
             page.setId(getStringValue(jsonObject.get("id"), ""));
 
             JsonElement jsonElement = jsonObject.get("names");
-            if(checkValidJsonObject(json)) {
-                jsonObject = jsonElement.getAsJsonObject();
+            if (checkValidJsonObject(jsonElement)) {
+                JsonObject jsonNames = jsonElement.getAsJsonObject();
                 MultiLangSectionName multiLangSectionName = new MultiLangSectionName();
-                multiLangSectionName.setZhHantName(getStringValue(jsonObject.get("zh-hant"), ""));
-                multiLangSectionName.setZhHansName(getStringValue(jsonObject.get("zh-hans"), ""));
-                multiLangSectionName.setEnglishName(getStringValue(jsonObject.get("en"), ""));
-                multiLangSectionName.setAtVNName(getStringValue(jsonObject.get("at-vn"), ""));
+                multiLangSectionName.setZhHantName(getStringValue(jsonNames.get("zh-hant"), ""));
+                multiLangSectionName.setZhHansName(getStringValue(jsonNames.get("zh-hans"), ""));
+                multiLangSectionName.setEnglishName(getStringValue(jsonNames.get("en"), ""));
+                multiLangSectionName.setAtVNName(getStringValue(jsonNames.get("at-vn"), ""));
                 page.setMultiLangSectionName(multiLangSectionName);
             }
 
             jsonElement = jsonObject.get("sections");
-            if(checkValidJsonArray(jsonElement)) {
+            if (checkValidJsonArray(jsonElement)) {
                 JsonArray jsonArray = jsonElement.getAsJsonArray();
-                Type type = new TypeToken<List<Section>>(){}.getType();
+                Type type = new TypeToken<List<Section>>() {
+                }.getType();
                 GsonBuilder gsonBuilder = new GsonBuilder()
                         .registerTypeAdapter(Section.class, new SectionConverter());
                 Gson gson = gsonBuilder.create();
