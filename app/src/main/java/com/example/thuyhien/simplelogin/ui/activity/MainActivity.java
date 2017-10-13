@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
@@ -52,6 +53,9 @@ public class MainActivity extends AppCompatActivity implements MainView,
     @BindView(R.id.view_pager_post)
     ViewPager viewPagerPost;
 
+    @BindView(R.id.text_title_page)
+    TextView textViewTitlePage;
+
     private View loggedInHeaderView, notLogHeaderView;
 
     @Override
@@ -71,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
     public void onBackPressed() {
         if (drawerLayoutMain.isDrawerOpen(GravityCompat.START)) {
             drawerLayoutMain.closeDrawer(GravityCompat.START);
-        } else {
+        }  else {
             super.onBackPressed();
         }
     }
@@ -93,7 +97,10 @@ public class MainActivity extends AppCompatActivity implements MainView,
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         viewPagerPost.setCurrentItem(id);
-        setTitle(viewPagerPost.getAdapter().getPageTitle(id));
+        textViewTitlePage.setText(viewPagerPost.getAdapter().getPageTitle(id));
+        if (drawerLayoutMain.isDrawerOpen(GravityCompat.START)) {
+            drawerLayoutMain.closeDrawer(GravityCompat.START);
+        }
         return true;
     }
 
@@ -142,14 +149,14 @@ public class MainActivity extends AppCompatActivity implements MainView,
         loggedInHeaderView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigateToLoginScreen();
+                navigateToAccountScreen();
             }
         });
 
         notLogHeaderView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigateToAccountScreen();
+                navigateToLoginScreen();
             }
         });
     }
@@ -177,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
         viewPagerPost.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                setTitle(viewPagerPost.getAdapter().getPageTitle(position));
+                textViewTitlePage.setText(viewPagerPost.getAdapter().getPageTitle(position));
             }
 
             @Override
