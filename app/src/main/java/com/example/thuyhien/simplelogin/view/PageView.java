@@ -8,8 +8,6 @@ import java.util.List;
  * Created by thuyhien on 10/12/17.
  */
 
-public interface PageView extends BaseView {
-//    void getFeedList(List<FeedPost> feedPostList, int sectionIndex);
-
+public interface PageView {
     void showAllFeedList(List<Section> sectionList);
 }

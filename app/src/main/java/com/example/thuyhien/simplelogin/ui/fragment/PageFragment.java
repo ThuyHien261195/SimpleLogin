@@ -78,12 +78,6 @@ public class PageFragment extends Fragment implements PageView {
         initViews(sectionList);
     }
 
-    @Override
-    public void showMessageError(Exception ex) {
-        // TODO
-        Log.e("Page error", "page");
-    }
-
     private void initViews(List<Section> sectionList) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerViewSection.setLayoutManager(linearLayoutManager);
