@@ -25,6 +25,14 @@
                 android:contentDescription="@string/description_sliding_menu_image"
                 android:src="@mipmap/ic_menu" />
 
+            <TextView
+                android:id="@+id/text_title_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:layout_marginLeft="@dimen/title_page_horizontal_spacing"
+                android:textAllCaps="true"/>
+
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
@@ -32,5 +40,6 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager_post"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:padding="@dimen/view_pager_padding" />
 </LinearLayout>
