@@ -1,6 +1,5 @@
 package com.example.thuyhien.simplelogin.model;
 
-import android.media.Image;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -8,7 +7,7 @@ import android.os.Parcelable;
  * Created by thuyhien on 10/11/17.
  */
 
-public class ImagePost implements Parcelable{
+public class ImagePost implements Parcelable {
 
     public static final Parcelable.Creator<ImagePost> CREATOR =
             new Parcelable.Creator<ImagePost>() {

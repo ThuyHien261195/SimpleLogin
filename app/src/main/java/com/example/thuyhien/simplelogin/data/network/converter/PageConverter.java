@@ -43,7 +43,7 @@ public class PageConverter extends BaseDeserializer<Page> {
             }
 
             List<Section> sectionList = getSectionList(jsonObject.get("sections"));
-            if(sectionList != null) {
+            if (sectionList != null) {
                 page.setSectionList(sectionList);
             }
         }

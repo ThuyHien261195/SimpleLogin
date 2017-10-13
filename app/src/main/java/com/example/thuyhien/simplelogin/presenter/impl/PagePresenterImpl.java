@@ -1,7 +1,5 @@
 package com.example.thuyhien.simplelogin.presenter.impl;
 
-import android.util.Log;
-
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.OnLoadFeedListener;
 import com.example.thuyhien.simplelogin.model.FeedPost;

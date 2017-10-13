@@ -1,7 +1,5 @@
 package com.example.thuyhien.simplelogin.data.network.converter;
 
-import android.media.Image;
-
 import com.example.thuyhien.simplelogin.model.FeedPost;
 import com.example.thuyhien.simplelogin.model.ImagePost;
 import com.google.gson.Gson;
@@ -33,7 +31,7 @@ public class FeedPostConverter extends BaseDeserializer<FeedPost> {
             feedPost.setDescription(getStringValue(jsonObject.get("description"), ""));
 
             ImagePost imagePost = getImagePost(jsonObject.get("thumbnails"));
-            if(imagePost != null) {
+            if (imagePost != null) {
                 feedPost.setPoster(imagePost);
             }
         }

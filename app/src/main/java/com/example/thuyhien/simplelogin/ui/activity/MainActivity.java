@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
     public void onBackPressed() {
         if (drawerLayoutMain.isDrawerOpen(GravityCompat.START)) {
             drawerLayoutMain.closeDrawer(GravityCompat.START);
-        }  else {
+        } else {
             super.onBackPressed();
         }
     }

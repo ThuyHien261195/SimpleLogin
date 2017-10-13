@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.impl.RetrofitLoadDataInteractor;
+import com.example.thuyhien.simplelogin.model.FeedPost;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.presenter.PagePresenter;
@@ -20,8 +21,6 @@ import com.example.thuyhien.simplelogin.presenter.impl.PagePresenterImpl;
 import com.example.thuyhien.simplelogin.ui.adapter.SectionAdapter;
 import com.example.thuyhien.simplelogin.view.PageView;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -86,7 +85,7 @@ public class PageFragment extends Fragment implements PageView {
     }
 
     private void getSectionBundle() {
-        if(getArguments() != null) {
+        if (getArguments() != null) {
             page = getArguments().getParcelable(BUNDLE_PAGE);
         }
     }
