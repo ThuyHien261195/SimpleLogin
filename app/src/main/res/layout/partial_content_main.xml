@@ -31,7 +31,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:layout_marginLeft="@dimen/title_page_horizontal_spacing"
-                android:textAllCaps="true"/>
+                android:textAllCaps="true"
+                android:textSize="@dimen/title_page_text_size" />
 
         </android.support.v7.widget.Toolbar>
 
