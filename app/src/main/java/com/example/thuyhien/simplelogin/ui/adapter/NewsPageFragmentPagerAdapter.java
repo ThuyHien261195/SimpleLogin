@@ -26,12 +26,7 @@ public class NewsPageFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        List<Section> sectionList = pageList.get(position).getSectionList();
-        ArrayList<Section> sectionArrayList = new ArrayList<>();
-        if (sectionList != null) {
-            sectionArrayList.addAll(sectionList);
-        }
-        return PageFragment.newInstance(sectionArrayList);
+        return PageFragment.newInstance(pageList.get(position));
     }
 
     @Override
