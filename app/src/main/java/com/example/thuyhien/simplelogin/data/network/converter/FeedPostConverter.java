@@ -4,6 +4,7 @@ import com.example.thuyhien.simplelogin.model.FeedPost;
 import com.example.thuyhien.simplelogin.model.ImagePost;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -12,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,16 +41,25 @@ public class FeedPostConverter extends BaseDeserializer<FeedPost> {
     }
 
     private ImagePost getImagePost(JsonElement jsonElement) {
+        GsonBuilder gsonBuilder = new GsonBuilder()
+                .registerTypeAdapter(ImagePost.class, new ImagePostConverter());
+        Gson gson = gsonBuilder.create();
+        Type thumbnailType;
         if (checkValidJsonObject(jsonElement)) {
-            GsonBuilder gsonBuilder = new GsonBuilder()
-                    .registerTypeAdapter(ImagePost.class, new ImagePostConverter());
-            Gson gson = gsonBuilder.create();
-            Type thumbnailType = new TypeToken<HashMap<String, ImagePost>>() {
+            thumbnailType = new TypeToken<HashMap<String, ImagePost>>() {
             }.getType();
             HashMap<String, ImagePost> thumbnails = gson.fromJson(jsonElement, thumbnailType);
             if (thumbnails != null && thumbnails.size() != 0) {
                 Map.Entry<String, ImagePost> thumbnailsEntry = thumbnails.entrySet().iterator().next();
                 return thumbnailsEntry.getValue();
+            }
+        } else if (checkValidJsonArray(jsonElement)) {
+            JsonArray jsonArray = jsonElement.getAsJsonArray();
+            thumbnailType = new TypeToken<List<ImagePost>>() {
+            }.getType();
+            List<ImagePost> imagePostList = gson.fromJson(jsonArray, thumbnailType);
+            if (imagePostList != null && imagePostList.size() != 0) {
+                return imagePostList.get(0);
             }
         }
         return null;
