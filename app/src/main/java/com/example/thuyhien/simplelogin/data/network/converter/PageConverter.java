@@ -42,18 +42,24 @@ public class PageConverter extends BaseDeserializer<Page> {
                 page.setMultiLangSectionName(multiLangSectionName);
             }
 
-            jsonElement = jsonObject.get("sections");
-            if (checkValidJsonArray(jsonElement)) {
-                JsonArray jsonArray = jsonElement.getAsJsonArray();
-                Type type = new TypeToken<List<Section>>() {
-                }.getType();
-                GsonBuilder gsonBuilder = new GsonBuilder()
-                        .registerTypeAdapter(Section.class, new SectionConverter());
-                Gson gson = gsonBuilder.create();
-                List<Section> sectionList = gson.fromJson(jsonArray, type);
+            List<Section> sectionList = getSectionList(jsonObject.get("sections"));
+            if(sectionList != null) {
                 page.setSectionList(sectionList);
             }
         }
         return page;
+    }
+
+    private List<Section> getSectionList(JsonElement jsonElement) {
+        if (checkValidJsonArray(jsonElement)) {
+            JsonArray jsonArray = jsonElement.getAsJsonArray();
+            Type type = new TypeToken<List<Section>>() {
+            }.getType();
+            GsonBuilder gsonBuilder = new GsonBuilder()
+                    .registerTypeAdapter(Section.class, new SectionConverter());
+            Gson gson = gsonBuilder.create();
+            return gson.fromJson(jsonArray, type);
+        }
+        return null;
     }
 }
