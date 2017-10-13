@@ -1,7 +1,6 @@
 package com.example.thuyhien.simplelogin.data.interactor.impl;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
@@ -9,7 +8,9 @@ import com.example.thuyhien.simplelogin.data.interactor.listener.OnLoadFeedListe
 import com.example.thuyhien.simplelogin.data.interactor.listener.OnLoadImageListener;
 import com.example.thuyhien.simplelogin.data.interactor.listener.OnLoadPageListListener;
 import com.example.thuyhien.simplelogin.model.FeedPost;
+import com.example.thuyhien.simplelogin.model.ImagePost;
 import com.example.thuyhien.simplelogin.model.Page;
+import com.example.thuyhien.simplelogin.utils.ImageUtils;
 import com.example.thuyhien.simplelogin.utils.RetrofitUtils;
 
 import java.io.InputStream;
@@ -69,14 +70,17 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
     }
 
     @Override
-    public void getPoster(String imageUrl, final OnLoadImageListener listener) {
-        Call<ResponseBody> call = FoxApplication.getInstance().getDataApiService().getImagePost(imageUrl);
+    public void getPoster(final ImagePost imagePost, final OnLoadImageListener listener) {
+        Call<ResponseBody> call = FoxApplication.getInstance().getDataApiService()
+                .getImagePost(imagePost.getImageUrl());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     InputStream inputStream = response.body().byteStream();
-                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    Bitmap bitmap = ImageUtils.decodeBitMapFromInputStream(inputStream,
+                            imagePost.getWidth(),
+                            imagePost.getHeight());
                     listener.onLoadDataSuccess(bitmap);
                 } else {
                     listener.onLoadDataFail(RetrofitUtils.createAuthenException(response.errorBody()));
@@ -89,4 +93,6 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
             }
         });
     }
+
+
 }
