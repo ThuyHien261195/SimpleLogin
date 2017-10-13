@@ -67,5 +67,8 @@
     <dimen name="image_poster_border_width">2dp</dimen>
     <dimen name="image_poster_corner_radius">4dp</dimen>
     <dimen name="item_poster_horizontal_margin">@dimen/small_space</dimen>
+
+    <!-- Title action bar -->
     <dimen name="title_page_horizontal_spacing">@dimen/large_space</dimen>
+    <dimen name="title_page_text_size">18sp</dimen>
 </resources>
