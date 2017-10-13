@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.OnLoadImageListener;
+import com.example.thuyhien.simplelogin.model.ImagePost;
 import com.example.thuyhien.simplelogin.presenter.PosterPresenter;
 import com.example.thuyhien.simplelogin.view.PosterView;
 
@@ -24,8 +25,8 @@ public class PosterPresenterImpl implements PosterPresenter, OnLoadImageListener
     }
 
     @Override
-    public void loadPoster(String imageUrl) {
-        loadDataInteractor.getPoster(imageUrl, this);
+    public void loadPoster(ImagePost imagePost) {
+        loadDataInteractor.getPoster(imagePost, this);
     }
 
     @Override

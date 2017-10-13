@@ -49,7 +49,7 @@ public class PosterViewHolder extends RecyclerView.ViewHolder implements PosterV
 
     public void bindImagePoster(ImagePost imagePost) {
         if (imagePost != null && !imagePost.getImageUrl().equals("")) {
-            posterPresenter.loadPoster(imagePost.getImageUrl());
+            posterPresenter.loadPoster(imagePost);
         }
     }
 
