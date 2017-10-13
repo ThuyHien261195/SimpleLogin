@@ -44,8 +44,8 @@ public class PosterViewHolder extends RecyclerView.ViewHolder implements PosterV
 
     @Override
     public void showErrorLoadPoster(Exception ex) {
+        // Keep default image
         // TODO
-        Log.e("Poster error", ex.getMessage());
     }
 
     public void bindImagePoster(ImagePost imagePost) {

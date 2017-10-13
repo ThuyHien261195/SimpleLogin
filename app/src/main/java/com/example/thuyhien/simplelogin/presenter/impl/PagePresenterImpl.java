@@ -46,8 +46,6 @@ public class PagePresenterImpl implements PagePresenter, OnLoadFeedListener {
 
     @Override
     public void onLoadDataFail(Exception ex) {
-        // TODO
-        Log.e("Feed error", String.valueOf(position));
         if (sectionList != null) {
             position += 1;
             getFeedListEachSection(position);
