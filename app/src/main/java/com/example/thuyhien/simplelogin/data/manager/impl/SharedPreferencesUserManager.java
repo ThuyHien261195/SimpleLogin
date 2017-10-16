@@ -32,4 +32,9 @@ public class SharedPreferencesUserManager implements UserManager {
         String email = sharedPref.getString(PREF_SIGNED_UP_EMAIL, "");
         return !email.equals("");
     }
+
+    @Override
+    public String getEmail() {
+        return sharedPref.getString(PREF_SIGNED_UP_EMAIL, "");
+    }
 }

@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public interface MainView extends BaseView {
-    void showLoggedInView();
+    void showLoggedInView(String email);
 
     void showNotLogInView();
 

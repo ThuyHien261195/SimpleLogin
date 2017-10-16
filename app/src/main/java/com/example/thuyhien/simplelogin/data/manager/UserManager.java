@@ -12,4 +12,6 @@ public interface UserManager {
     void clearUser();
 
     boolean isLoggedIn();
+
+    String getEmail();
 }

@@ -3,6 +3,7 @@ package com.example.thuyhien.simplelogin.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -27,7 +28,7 @@ import com.example.thuyhien.simplelogin.data.network.retrofit.DataEndpointInterf
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.presenter.MainPresenter;
 import com.example.thuyhien.simplelogin.presenter.impl.MainPresenterImpl;
-import com.example.thuyhien.simplelogin.ui.adapter.NewsPageFragmentPagerAdapter;
+import com.example.thuyhien.simplelogin.ui.adapter.MediaFragmentPagerAdapter;
 import com.example.thuyhien.simplelogin.view.MainView;
 
 import java.util.List;
@@ -52,6 +53,10 @@ public class MainActivity extends AppCompatActivity implements MainView,
 
     @BindView(R.id.text_title_page)
     TextView textViewTitlePage;
+
+    @Nullable
+    @BindView(R.id.text_email)
+    TextView textViewEmail;
 
     private View loggedInHeaderView, notLogHeaderView;
 
@@ -78,8 +83,11 @@ public class MainActivity extends AppCompatActivity implements MainView,
     }
 
     @Override
-    public void showLoggedInView() {
+    public void showLoggedInView(String email) {
         displayHeaderView(true);
+        if (textViewEmail != null) {
+            textViewEmail.setText(email);
+        }
     }
 
     @Override
@@ -198,13 +206,13 @@ public class MainActivity extends AppCompatActivity implements MainView,
         Menu mainMenu = navigationViewMain.getMenu();
         mainMenu.clear();
         for (int i = 0; i < pageList.size(); i++) {
-            mainMenu.add(Menu.NONE, i, Menu.NONE, pageList.get(i).getTitle(FoxApplication.langCode));
+            mainMenu.add(Menu.NONE, i, Menu.NONE, pageList.get(i).getMultiLangTitles().getTitle(FoxApplication.langCode));
         }
     }
 
     private void setPostFragmentViewPager(List<Page> pageList) {
-        NewsPageFragmentPagerAdapter fragmentPagerAdapter =
-                new NewsPageFragmentPagerAdapter(getSupportFragmentManager(), pageList);
+        MediaFragmentPagerAdapter fragmentPagerAdapter =
+                new MediaFragmentPagerAdapter(getSupportFragmentManager(), pageList);
         viewPagerPost.setAdapter(fragmentPagerAdapter);
     }
 }

@@ -1,7 +1,7 @@
 package com.example.thuyhien.simplelogin.presenter.impl;
 
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
-import com.example.thuyhien.simplelogin.data.interactor.listener.OnLoadPageListListener;
+import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.presenter.MainPresenter;
@@ -14,7 +14,7 @@ import java.util.List;
  * Created by thuyhien on 10/9/17.
  */
 
-public class MainPresenterImpl implements MainPresenter, OnLoadPageListListener {
+public class MainPresenterImpl implements MainPresenter, LoadDataListener<List<Page>> {
 
     private WeakReference<MainView> mainViewWeakReference;
     private UserManager userManager;
@@ -30,7 +30,7 @@ public class MainPresenterImpl implements MainPresenter, OnLoadPageListListener 
     public void checkIsLoggedIn() {
         if (getMainView() != null) {
             if (userManager.isLoggedIn()) {
-                getMainView().showLoggedInView();
+                getMainView().showLoggedInView(userManager.getEmail());
                 loadPageList();
             } else {
                 getMainView().showNotLogInView();
