@@ -1,14 +1,16 @@
 package com.example.thuyhien.simplelogin.data.interactor.impl;
 
 import android.graphics.Bitmap;
+import android.provider.ContactsContract;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.OnLoadFeedListener;
 import com.example.thuyhien.simplelogin.data.interactor.listener.OnLoadImageListener;
 import com.example.thuyhien.simplelogin.data.interactor.listener.OnLoadPageListListener;
-import com.example.thuyhien.simplelogin.model.FeedPost;
-import com.example.thuyhien.simplelogin.model.ImagePost;
+import com.example.thuyhien.simplelogin.data.network.retrofit.DataEndpointInterface;
+import com.example.thuyhien.simplelogin.model.MediaFeed;
+import com.example.thuyhien.simplelogin.model.MediaImage;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.utils.ImageUtils;
 import com.example.thuyhien.simplelogin.utils.RetrofitUtils;
@@ -27,10 +29,15 @@ import retrofit2.Response;
 
 public class RetrofitLoadDataInteractor implements LoadDataInteractor {
 
+    private DataEndpointInterface dataApiService;
+
+    public RetrofitLoadDataInteractor(DataEndpointInterface dataApiService) {
+        this.dataApiService = dataApiService;
+    }
+
     @Override
-    public void getPostList(final OnLoadPageListListener listener) {
-        String platform = "app";
-        Call<List<Page>> call = FoxApplication.getInstance().getDataApiService().getPageList(platform);
+    public void getPageList(final OnLoadPageListListener listener) {
+        Call<List<Page>> call = dataApiService.getPageList();
         call.enqueue(new Callback<List<Page>>() {
             @Override
             public void onResponse(Call<List<Page>> call, Response<List<Page>> response) {
@@ -49,30 +56,8 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
     }
 
     @Override
-    public void getFeedList(String feedUrl, final OnLoadFeedListener listener) {
-        Call<List<FeedPost>> call = FoxApplication.getInstance().getDataApiService().getFeedList(feedUrl);
-        call.enqueue(new Callback<List<FeedPost>>() {
-            @Override
-            public void onResponse(Call<List<FeedPost>> call, Response<List<FeedPost>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    listener.onLoadDataSuccess(response.body());
-                } else {
-                    listener.onLoadDataFail(
-                            RetrofitUtils.createLoadDataException(response.errorBody()));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<FeedPost>> call, Throwable t) {
-                listener.onLoadDataFail(new Exception(t));
-            }
-        });
-    }
-
-    @Override
-    public void getPoster(final ImagePost imagePost, final OnLoadImageListener listener) {
-        Call<ResponseBody> call = FoxApplication.getInstance().getDataApiService()
-                .getImagePost(imagePost.getImageUrl());
+    public void getPoster(final MediaImage imagePost, final OnLoadImageListener listener) {
+        Call<ResponseBody> call = dataApiService.getImagePost(imagePost.getImageUrl());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -93,6 +78,4 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
             }
         });
     }
-
-
 }

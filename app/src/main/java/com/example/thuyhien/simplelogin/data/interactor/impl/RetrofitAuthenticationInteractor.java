@@ -4,6 +4,7 @@ import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.data.interactor.AuthenticationInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.OnAuthenticateAccountListener;
 import com.example.thuyhien.simplelogin.data.network.model.AccountRequest;
+import com.example.thuyhien.simplelogin.data.network.retrofit.AuthenticationEndpointInterface;
 import com.example.thuyhien.simplelogin.model.User;
 import com.example.thuyhien.simplelogin.utils.RetrofitUtils;
 
@@ -17,10 +18,15 @@ import retrofit2.Response;
 
 public class RetrofitAuthenticationInteractor implements AuthenticationInteractor {
 
+    private AuthenticationEndpointInterface authenApiService;
+
+    public RetrofitAuthenticationInteractor(AuthenticationEndpointInterface authenApiService) {
+        this.authenApiService = authenApiService;
+    }
+
     @Override
     public void signIn(AccountRequest accountRequest, final OnAuthenticateAccountListener listener) {
-        Call<User> call = FoxApplication.getInstance().getAuthenApiService()
-                .signInAccount(RetrofitUtils.AUTH_TOKEN, accountRequest);
+        Call<User> call = authenApiService.signInAccount(RetrofitUtils.AUTH_TOKEN, accountRequest);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -41,8 +47,7 @@ public class RetrofitAuthenticationInteractor implements AuthenticationInteracto
 
     @Override
     public void signUp(AccountRequest accountRequest, final OnAuthenticateAccountListener listener) {
-        Call<User> call = FoxApplication.getInstance().getAuthenApiService()
-                .signUpAccount(RetrofitUtils.AUTH_TOKEN, accountRequest);
+        Call<User> call = authenApiService.signUpAccount(RetrofitUtils.AUTH_TOKEN, accountRequest);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
