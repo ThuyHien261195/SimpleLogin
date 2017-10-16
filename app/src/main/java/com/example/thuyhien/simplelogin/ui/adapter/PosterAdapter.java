@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.model.FeedPost;
+import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.ui.viewholder.PosterViewHolder;
 
 import java.util.List;
@@ -17,9 +17,9 @@ import java.util.List;
 
 public class PosterAdapter extends RecyclerView.Adapter<PosterViewHolder> {
 
-    private List<FeedPost> feedPostList;
+    private List<MediaFeed> feedPostList;
 
-    public PosterAdapter(List<FeedPost> feedPostList) {
+    public PosterAdapter(List<MediaFeed> feedPostList) {
         this.feedPostList = feedPostList;
     }
 
@@ -32,7 +32,7 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterViewHolder> {
 
     @Override
     public void onBindViewHolder(PosterViewHolder holder, int position) {
-        holder.bindImagePoster(feedPostList.get(position).getPoster());
+        holder.bindImagePoster(feedPostList.get(position).getThumbnails().get(0));
     }
 
     @Override
