@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.ui.fragment.PageFragment;
 
@@ -34,6 +35,6 @@ public class NewsPageFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return pageList.get(position).getMultiLangSectionName().getEnglishName();
+        return pageList.get(position).getTitle(FoxApplication.langCode);
     }
 }
