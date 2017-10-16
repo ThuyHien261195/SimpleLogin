@@ -8,10 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
+import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.impl.RetrofitLoadDataInteractor;
+import com.example.thuyhien.simplelogin.data.network.retrofit.DataEndpointInterface;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.presenter.PagePresenter;
@@ -37,10 +40,13 @@ public class PageFragment extends Fragment implements PageView {
     @BindView(R.id.recycler_view_section)
     RecyclerView recyclerViewSection;
 
+    @BindView(R.id.progress_bar_loading)
+    ProgressBar progressBarLoading;
+
     public static PageFragment newInstance(Page page) {
         PageFragment postFragment = new PageFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable(BUNDLE_PAGE, page);
+        bundle.putSerializable(BUNDLE_PAGE, page);
         postFragment.setArguments(bundle);
         return postFragment;
     }
@@ -67,29 +73,45 @@ public class PageFragment extends Fragment implements PageView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         createPagePresenter();
+        initViews();
         pagePresenter.loadAllFeedList(page.getSectionList());
     }
 
     @Override
     public void showAllFeedList(List<Section> sectionList) {
-        initViews(sectionList);
+        displayMediaFeed(sectionList);
     }
 
-    private void initViews(List<Section> sectionList) {
+    @Override
+    public void showLoading() {
+        recyclerViewSection.setVisibility(View.GONE);
+        progressBarLoading.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+        progressBarLoading.setVisibility(View.GONE);
+        recyclerViewSection.setVisibility(View.VISIBLE);
+    }
+
+    private void initViews() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerViewSection.setLayoutManager(linearLayoutManager);
+    }
+
+    private void displayMediaFeed(List<Section> sectionList) {
         SectionAdapter sectionAdapter = new SectionAdapter(sectionList);
         recyclerViewSection.setAdapter(sectionAdapter);
     }
 
     private void getSectionBundle() {
         if (getArguments() != null) {
-            page = getArguments().getParcelable(BUNDLE_PAGE);
+            page = (Page) getArguments().getSerializable(BUNDLE_PAGE);
         }
     }
 
     private void createPagePresenter() {
-        LoadDataInteractor loadDataInteractor = new RetrofitLoadDataInteractor();
-        pagePresenter = new PagePresenterImpl(this, loadDataInteractor);
+        DataEndpointInterface dataApiService = FoxApplication.getInstance().getDataApiService();
+        pagePresenter = new PagePresenterImpl(this, dataApiService);
     }
 }
