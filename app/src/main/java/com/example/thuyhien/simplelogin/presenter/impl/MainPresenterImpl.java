@@ -31,6 +31,7 @@ public class MainPresenterImpl implements MainPresenter, OnLoadPageListListener 
         if (getMainView() != null) {
             if (userManager.isLoggedIn()) {
                 getMainView().showLoggedInView();
+                loadPageList();
             } else {
                 getMainView().showNotLogInView();
             }
@@ -39,7 +40,7 @@ public class MainPresenterImpl implements MainPresenter, OnLoadPageListListener 
 
     @Override
     public void loadPageList() {
-        loadDataInteractor.getPostList(this);
+        loadDataInteractor.getPageList(this);
     }
 
     @Override
