@@ -36,7 +36,7 @@ public class SectionViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindContentSection(Section section) {
-        textViewTitleSection.setText(section.getTitle(FoxApplication.langCode));
+        textViewTitleSection.setText(section.getMultiLangTitles().getTitle(FoxApplication.langCode));
         recyclerViewPoster.setLayoutManager(linearLayoutManager);
         PosterAdapter posterAdapter = new PosterAdapter(section.getFeedPostList());
         recyclerViewPoster.setAdapter(posterAdapter);
