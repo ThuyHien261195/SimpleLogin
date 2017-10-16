@@ -1,8 +1,7 @@
 package com.example.thuyhien.simplelogin.data.interactor.impl;
 
-import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.data.interactor.AuthenticationInteractor;
-import com.example.thuyhien.simplelogin.data.interactor.listener.OnAuthenticateAccountListener;
+import com.example.thuyhien.simplelogin.data.interactor.listener.AuthenticateAccountListener;
 import com.example.thuyhien.simplelogin.data.network.model.AccountRequest;
 import com.example.thuyhien.simplelogin.data.network.retrofit.AuthenticationEndpointInterface;
 import com.example.thuyhien.simplelogin.model.User;
@@ -25,7 +24,7 @@ public class RetrofitAuthenticationInteractor implements AuthenticationInteracto
     }
 
     @Override
-    public void signIn(AccountRequest accountRequest, final OnAuthenticateAccountListener listener) {
+    public void signIn(AccountRequest accountRequest, final AuthenticateAccountListener listener) {
         Call<User> call = authenApiService.signInAccount(RetrofitUtils.AUTH_TOKEN, accountRequest);
         call.enqueue(new Callback<User>() {
             @Override
@@ -46,7 +45,7 @@ public class RetrofitAuthenticationInteractor implements AuthenticationInteracto
     }
 
     @Override
-    public void signUp(AccountRequest accountRequest, final OnAuthenticateAccountListener listener) {
+    public void signUp(AccountRequest accountRequest, final AuthenticateAccountListener listener) {
         Call<User> call = authenApiService.signUpAccount(RetrofitUtils.AUTH_TOKEN, accountRequest);
         call.enqueue(new Callback<User>() {
             @Override
