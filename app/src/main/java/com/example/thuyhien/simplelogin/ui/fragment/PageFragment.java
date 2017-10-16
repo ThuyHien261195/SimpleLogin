@@ -112,6 +112,7 @@ public class PageFragment extends Fragment implements PageView {
 
     private void createPagePresenter() {
         DataEndpointInterface dataApiService = FoxApplication.getInstance().getDataApiService();
-        pagePresenter = new PagePresenterImpl(this, dataApiService);
+        LoadDataInteractor loadDataInteractor = new RetrofitLoadDataInteractor(dataApiService);
+        pagePresenter = new PagePresenterImpl(this, loadDataInteractor);
     }
 }
