@@ -23,6 +23,7 @@ import com.example.thuyhien.simplelogin.data.interactor.impl.RetrofitLoadDataInt
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.data.manager.impl.SharedPreferencesUserManager;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
+import com.example.thuyhien.simplelogin.data.network.retrofit.DataEndpointInterface;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.presenter.MainPresenter;
 import com.example.thuyhien.simplelogin.presenter.impl.MainPresenterImpl;
@@ -37,12 +38,8 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements MainView,
         NavigationView.OnNavigationItemSelectedListener {
-    public static final int LOGGED_IN_VIEW = 0;
-    public static final int NOT_LOG_INT_VIEW = 1;
-
     private MainPresenter mainPresenter;
     private FoxApplication foxApplication = FoxApplication.getInstance();
-    private int stateView = 0;
 
     @BindView(R.id.drawer_layout_main)
     DrawerLayout drawerLayoutMain;
@@ -82,15 +79,12 @@ public class MainActivity extends AppCompatActivity implements MainView,
 
     @Override
     public void showLoggedInView() {
-        mainPresenter.loadPageList();
-        stateView = LOGGED_IN_VIEW;
-        displayHeaderView();
+        displayHeaderView(true);
     }
 
     @Override
     public void showNotLogInView() {
-        stateView = NOT_LOG_INT_VIEW;
-        displayHeaderView();
+        displayHeaderView(false);
     }
 
     @Override
@@ -126,17 +120,9 @@ public class MainActivity extends AppCompatActivity implements MainView,
         }
     }
 
-    private void displayHeaderView() {
-        switch (stateView) {
-            case LOGGED_IN_VIEW:
-                loggedInHeaderView.setVisibility(View.VISIBLE);
-                notLogHeaderView.setVisibility(View.GONE);
-                break;
-            case NOT_LOG_INT_VIEW:
-                loggedInHeaderView.setVisibility(View.GONE);
-                notLogHeaderView.setVisibility(View.VISIBLE);
-                break;
-        }
+    private void displayHeaderView(boolean isLogIn) {
+        loggedInHeaderView.setVisibility(isLogIn ? View.VISIBLE : View.GONE);
+        notLogHeaderView.setVisibility(!isLogIn ? View.VISIBLE : View.GONE);
     }
 
     private void addHeaderViewForSlidingMenu() {
@@ -172,7 +158,8 @@ public class MainActivity extends AppCompatActivity implements MainView,
 
     private void createMainPresenter() {
         UserManager userManager = new SharedPreferencesUserManager(foxApplication.getSharedPref());
-        LoadDataInteractor loadDataInteractor = new RetrofitLoadDataInteractor();
+        DataEndpointInterface dataApiService = foxApplication.getDataApiService();
+        LoadDataInteractor loadDataInteractor = new RetrofitLoadDataInteractor(dataApiService);
         mainPresenter = new MainPresenterImpl(this, userManager, loadDataInteractor);
     }
 
@@ -211,8 +198,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
         Menu mainMenu = navigationViewMain.getMenu();
         mainMenu.clear();
         for (int i = 0; i < pageList.size(); i++) {
-            mainMenu.add(Menu.NONE, i, Menu.NONE,
-                    pageList.get(i).getMultiLangSectionName().getEnglishName());
+            mainMenu.add(Menu.NONE, i, Menu.NONE, pageList.get(i).getTitle(FoxApplication.langCode));
         }
     }
 
