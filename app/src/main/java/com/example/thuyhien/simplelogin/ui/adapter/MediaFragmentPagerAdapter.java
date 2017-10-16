@@ -14,11 +14,11 @@ import java.util.List;
  * Created by thuyhien on 10/12/17.
  */
 
-public class NewsPageFragmentPagerAdapter extends FragmentPagerAdapter {
+public class MediaFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private List<Page> pageList;
 
-    public NewsPageFragmentPagerAdapter(FragmentManager fm, List<Page> pageList) {
+    public MediaFragmentPagerAdapter(FragmentManager fm, List<Page> pageList) {
         super(fm);
         this.pageList = pageList;
     }
