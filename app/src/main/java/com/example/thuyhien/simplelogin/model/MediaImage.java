@@ -5,22 +5,13 @@ import android.os.Parcelable;
 
 import com.example.thuyhien.simplelogin.utils.ImageUtils;
 
+import java.io.Serializable;
+
 /**
  * Created by thuyhien on 10/11/17.
  */
 
-public class ImagePost implements Parcelable {
-
-    public static final Parcelable.Creator<ImagePost> CREATOR =
-            new Parcelable.Creator<ImagePost>() {
-                public ImagePost createFromParcel(Parcel in) {
-                    return new ImagePost(in);
-                }
-
-                public ImagePost[] newArray(int size) {
-                    return new ImagePost[size];
-                }
-            };
+public class ImagePost implements Serializable {
 
     private String imageUrl;
     private String imageTitle;
@@ -71,25 +62,5 @@ public class ImagePost implements Parcelable {
 
     public void setHeight(int height) {
         this.height = height;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(imageUrl);
-        parcel.writeString(imageTitle);
-        parcel.writeInt(width);
-        parcel.writeInt(height);
-    }
-
-    private ImagePost(Parcel in) {
-        this.imageUrl = in.readString();
-        this.imageTitle = in.readString();
-        this.width = in.readInt();
-        this.height = in.readInt();
     }
 }
