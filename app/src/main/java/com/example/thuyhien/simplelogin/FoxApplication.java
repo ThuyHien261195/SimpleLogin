@@ -3,6 +3,7 @@ package com.example.thuyhien.simplelogin;
 import android.app.Application;
 import android.content.SharedPreferences;
 
+import com.example.thuyhien.simplelogin.data.network.converter.FeedPostConverter;
 import com.example.thuyhien.simplelogin.data.network.converter.FeedPostListConverter;
 import com.example.thuyhien.simplelogin.data.network.converter.ImagePostConverter;
 import com.example.thuyhien.simplelogin.data.network.converter.UserConverter;
@@ -10,8 +11,6 @@ import com.example.thuyhien.simplelogin.data.network.retrofit.AuthenticationEndp
 import com.example.thuyhien.simplelogin.data.network.retrofit.DataEndpointInterface;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.MediaImage;
-import com.example.thuyhien.simplelogin.model.Page;
-import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.model.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -93,7 +92,8 @@ public class FoxApplication extends Application {
         }.getType();
         GsonBuilder gsonBuilder = new GsonBuilder()
                 .registerTypeAdapter(feedListType, new FeedPostListConverter())
-                .registerTypeAdapter(MediaImage.class, new ImagePostConverter());
+                .registerTypeAdapter(MediaImage.class, new ImagePostConverter())
+                .registerTypeAdapter(MediaFeed.class, new FeedPostConverter());
         dataGson = gsonBuilder.create();
 
         Retrofit retrofit = new Retrofit.Builder()
