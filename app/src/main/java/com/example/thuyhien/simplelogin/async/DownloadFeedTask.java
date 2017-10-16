@@ -35,7 +35,7 @@ public class DownloadFeedTask extends AsyncTask<Section, Void, List<Section>> {
             Call<List<MediaFeed>> call = dataApiService.getFeedList(section.getFeedUrl());
             try {
                 Response<List<MediaFeed>> response = call.execute();
-                if(response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null) {
                     section.setFeedPostList(response.body());
                 }
             } catch (IOException e) {

@@ -35,6 +35,6 @@ public class NewsPageFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return pageList.get(position).getTitle(FoxApplication.langCode);
+        return pageList.get(position).getMultiLangTitles().getTitle(FoxApplication.langCode);
     }
 }
