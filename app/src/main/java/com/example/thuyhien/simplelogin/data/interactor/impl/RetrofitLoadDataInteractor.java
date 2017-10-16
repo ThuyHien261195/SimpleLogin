@@ -1,21 +1,21 @@
 package com.example.thuyhien.simplelogin.data.interactor.impl;
 
 import android.graphics.Bitmap;
-import android.provider.ContactsContract;
 
-import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
-import com.example.thuyhien.simplelogin.data.interactor.listener.OnLoadFeedListener;
-import com.example.thuyhien.simplelogin.data.interactor.listener.OnLoadImageListener;
-import com.example.thuyhien.simplelogin.data.interactor.listener.OnLoadPageListListener;
+import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
 import com.example.thuyhien.simplelogin.data.network.retrofit.DataEndpointInterface;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.MediaImage;
 import com.example.thuyhien.simplelogin.model.Page;
+import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.utils.ImageUtils;
 import com.example.thuyhien.simplelogin.utils.RetrofitUtils;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -36,7 +36,7 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
     }
 
     @Override
-    public void getPageList(final OnLoadPageListListener listener) {
+    public void getPageList(final LoadDataListener<List<Page>> listener) {
         Call<List<Page>> call = dataApiService.getPageList();
         call.enqueue(new Callback<List<Page>>() {
             @Override
@@ -56,7 +56,28 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
     }
 
     @Override
-    public void getPoster(final MediaImage imagePost, final OnLoadImageListener listener) {
+    public List<Section> getFeedList(Section[] sections) {
+        if (sections != null) {
+            for (Section section : sections) {
+                if (!section.getType().equals("Custom layout")) {
+                    Call<List<MediaFeed>> call = dataApiService.getFeedList(section.getFeedUrl());
+                    try {
+                        Response<List<MediaFeed>> response = call.execute();
+                        if (response.isSuccessful() && response.body() != null) {
+                            section.setFeedPostList(response.body());
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return new ArrayList<>(Arrays.asList(sections));
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public void getPoster(final MediaImage imagePost, final LoadDataListener<Bitmap> listener) {
         Call<ResponseBody> call = dataApiService.getImagePost(imagePost.getImageUrl());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
