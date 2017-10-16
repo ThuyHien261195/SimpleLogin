@@ -12,6 +12,7 @@ import com.example.thuyhien.simplelogin.data.interactor.AuthenticationInteractor
 import com.example.thuyhien.simplelogin.data.interactor.impl.RetrofitAuthenticationInteractor;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.data.manager.impl.SharedPreferencesUserManager;
+import com.example.thuyhien.simplelogin.data.network.retrofit.AuthenticationEndpointInterface;
 import com.example.thuyhien.simplelogin.presenter.AuthenticatePresenter;
 import com.example.thuyhien.simplelogin.presenter.impl.SignUpPresenterImpl;
 import com.example.thuyhien.simplelogin.ui.exception.InvalidInputException;
@@ -116,7 +117,8 @@ public class SignUpActivity extends AppCompatActivity implements AuthenticationV
 
     private void createSignUpPresenter() {
         UserManager userManager = new SharedPreferencesUserManager(foxApplication.getSharedPref());
-        AuthenticationInteractor signUpInteractor = new RetrofitAuthenticationInteractor();
+        AuthenticationEndpointInterface authenApiService = foxApplication.getAuthenApiService();
+        AuthenticationInteractor signUpInteractor = new RetrofitAuthenticationInteractor(authenApiService);
         signUpPresenter = new SignUpPresenterImpl(this, signUpInteractor, userManager);
     }
 }
