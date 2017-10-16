@@ -4,12 +4,14 @@ import android.app.Application;
 import android.content.SharedPreferences;
 
 import com.example.thuyhien.simplelogin.data.network.converter.FeedPostListConverter;
-import com.example.thuyhien.simplelogin.data.network.converter.PageListConverter;
+import com.example.thuyhien.simplelogin.data.network.converter.ImagePostConverter;
 import com.example.thuyhien.simplelogin.data.network.converter.UserConverter;
 import com.example.thuyhien.simplelogin.data.network.retrofit.AuthenticationEndpointInterface;
 import com.example.thuyhien.simplelogin.data.network.retrofit.DataEndpointInterface;
-import com.example.thuyhien.simplelogin.model.FeedPost;
+import com.example.thuyhien.simplelogin.model.MediaFeed;
+import com.example.thuyhien.simplelogin.model.MediaImage;
 import com.example.thuyhien.simplelogin.model.Page;
+import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.model.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -29,12 +31,15 @@ public class FoxApplication extends Application {
     public static final String AUTHENTICATION_BASE_URL = "http://userkit-identity-stg.ap-southeast-1.elasticbeanstalk.com/v1/";
     public static final String DATA_BASE_URL = "http://fox-plus-server-staging.ap-southeast-1.elasticbeanstalk.com/";
     public static final String PREF_DATA_FILE_NAME = "FoxSharedPreferData";
+    public static String langCode = "en";
 
     private static FoxApplication instance;
     private SharedPreferences sharedPref;
     private AuthenticationEndpointInterface authenApiService;
 
     private DataEndpointInterface dataApiService;
+    private Gson authenGson;
+    private Gson dataGson;
 
     @Override
     public void onCreate() {
@@ -61,33 +66,39 @@ public class FoxApplication extends Application {
         return dataApiService;
     }
 
+    public Gson getAuthenGson() {
+        return authenGson;
+    }
+
+    public Gson getDataGson() {
+        return dataGson;
+    }
+
     private void createAuthenticationRetrofit() {
         Type profileType = new TypeToken<User>() {
         }.getType();
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(profileType, new UserConverter());
-        Gson gson = gsonBuilder.create();
+        authenGson = gsonBuilder.create();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(AUTHENTICATION_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create(authenGson))
                 .build();
         authenApiService = retrofit.create(AuthenticationEndpointInterface.class);
     }
 
     private void createDataRetrofit() {
-        Type feedListType = new TypeToken<List<FeedPost>>() {
-        }.getType();
-        Type pageListType = new TypeToken<List<Page>>() {
+        Type feedListType = new TypeToken<List<MediaFeed>>() {
         }.getType();
         GsonBuilder gsonBuilder = new GsonBuilder()
-                .registerTypeAdapter(pageListType, new PageListConverter())
-                .registerTypeAdapter(feedListType, new FeedPostListConverter());
-        Gson gson = gsonBuilder.create();
+                .registerTypeAdapter(feedListType, new FeedPostListConverter())
+                .registerTypeAdapter(MediaImage.class, new ImagePostConverter());
+        dataGson = gsonBuilder.create();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DATA_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create(dataGson))
                 .build();
         dataApiService = retrofit.create(DataEndpointInterface.class);
     }
