@@ -1,7 +1,7 @@
 package com.example.thuyhien.simplelogin.presenter.impl;
 
 import com.example.thuyhien.simplelogin.data.interactor.AuthenticationInteractor;
-import com.example.thuyhien.simplelogin.data.interactor.listener.OnAuthenticateAccountListener;
+import com.example.thuyhien.simplelogin.data.interactor.listener.AuthenticateAccountListener;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.data.network.exception.AuthenticationException;
 import com.example.thuyhien.simplelogin.data.network.model.AccountRequest;
@@ -17,7 +17,7 @@ import java.lang.ref.WeakReference;
  * Created by thuyhien on 10/9/17.
  */
 
-public class SignUpPresenterImpl implements AuthenticatePresenter, OnAuthenticateAccountListener {
+public class SignUpPresenterImpl implements AuthenticatePresenter, AuthenticateAccountListener {
 
     private WeakReference<AuthenticationView> signUpViewWeakPref;
     private AuthenticationInteractor signUpInteractor;

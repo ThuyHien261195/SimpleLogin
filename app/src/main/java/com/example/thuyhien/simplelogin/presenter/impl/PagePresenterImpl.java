@@ -1,11 +1,8 @@
 package com.example.thuyhien.simplelogin.presenter.impl;
 
-import com.example.thuyhien.simplelogin.FoxApplication;
+import com.example.thuyhien.simplelogin.async.DownloadFeedTask;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
-import com.example.thuyhien.simplelogin.data.interactor.listener.OnLoadFeedListener;
-import com.example.thuyhien.simplelogin.data.interactor.thread.DownloadFeedTask;
-import com.example.thuyhien.simplelogin.data.network.retrofit.DataEndpointInterface;
-import com.example.thuyhien.simplelogin.model.MediaFeed;
+import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
 import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.presenter.PagePresenter;
 import com.example.thuyhien.simplelogin.view.PageView;
@@ -17,20 +14,19 @@ import java.util.List;
  * Created by thuyhien on 10/12/17.
  */
 
-public class PagePresenterImpl implements PagePresenter, OnLoadFeedListener {
+public class PagePresenterImpl implements PagePresenter, LoadDataListener<List<Section>> {
 
     private WeakReference<PageView> pageViewWeakReference;
-    private DataEndpointInterface dataApiService;
+    private LoadDataInteractor loadDataInteractor;
 
-    public PagePresenterImpl(PageView pageView,
-                             DataEndpointInterface dataApiService) {
+    public PagePresenterImpl(PageView pageView, LoadDataInteractor loadDataInteractor) {
         this.pageViewWeakReference = new WeakReference<PageView>(pageView);
-        this.dataApiService = dataApiService;
+        this.loadDataInteractor = loadDataInteractor;
     }
 
     @Override
     public void loadAllFeedList(List<Section> sectionList) {
-        if(getPageView() != null) {
+        if (getPageView() != null) {
             getPageView().showLoading();
         }
         getFeedListEachSection(sectionList);
@@ -44,8 +40,13 @@ public class PagePresenterImpl implements PagePresenter, OnLoadFeedListener {
         }
     }
 
+    @Override
+    public void onLoadDataFail(Exception ex) {
+        // TODO
+    }
+
     private void getFeedListEachSection(List<Section> sectionList) {
-        DownloadFeedTask downloadFeedTask = new DownloadFeedTask(dataApiService, this);
+        DownloadFeedTask downloadFeedTask = new DownloadFeedTask(loadDataInteractor, this);
         Section[] sections = sectionList.toArray(new Section[sectionList.size()]);
         downloadFeedTask.execute(sections);
     }
