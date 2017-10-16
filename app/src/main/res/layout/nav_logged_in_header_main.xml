@@ -14,6 +14,7 @@
         android:src="@mipmap/ic_launcher" />
 
     <TextView
+        android:id="@+id/text_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/title_email_vertical_padding"
