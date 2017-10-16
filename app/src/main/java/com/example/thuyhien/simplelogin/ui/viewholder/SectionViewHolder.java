@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.ui.adapter.PosterAdapter;
@@ -35,7 +36,7 @@ public class SectionViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindContentSection(Section section) {
-        textViewTitleSection.setText(section.getMultiLangSectionName().getEnglishName());
+        textViewTitleSection.setText(section.getTitle(FoxApplication.langCode));
         recyclerViewPoster.setLayoutManager(linearLayoutManager);
         PosterAdapter posterAdapter = new PosterAdapter(section.getFeedPostList());
         recyclerViewPoster.setAdapter(posterAdapter);
