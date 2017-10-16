@@ -1,8 +1,11 @@
 package com.example.thuyhien.simplelogin.presenter.impl;
 
+import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.OnLoadFeedListener;
-import com.example.thuyhien.simplelogin.model.FeedPost;
+import com.example.thuyhien.simplelogin.data.interactor.thread.DownloadFeedTask;
+import com.example.thuyhien.simplelogin.data.network.retrofit.DataEndpointInterface;
+import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.presenter.PagePresenter;
 import com.example.thuyhien.simplelogin.view.PageView;
@@ -17,49 +20,34 @@ import java.util.List;
 public class PagePresenterImpl implements PagePresenter, OnLoadFeedListener {
 
     private WeakReference<PageView> pageViewWeakReference;
-    private LoadDataInteractor loadDataInteractor;
-    private List<Section> sectionList;
-    private int position;
+    private DataEndpointInterface dataApiService;
 
-    public PagePresenterImpl(PageView pageView, LoadDataInteractor loadDataInteractor) {
+    public PagePresenterImpl(PageView pageView,
+                             DataEndpointInterface dataApiService) {
         this.pageViewWeakReference = new WeakReference<PageView>(pageView);
-        this.loadDataInteractor = loadDataInteractor;
+        this.dataApiService = dataApiService;
     }
 
     @Override
     public void loadAllFeedList(List<Section> sectionList) {
-        this.sectionList = sectionList;
-        position = 0;
-        getFeedListEachSection(position);
+        if(getPageView() != null) {
+            getPageView().showLoading();
+        }
+        getFeedListEachSection(sectionList);
     }
 
     @Override
-    public void onLoadDataSuccess(List<FeedPost> feedPostList) {
-        if (sectionList != null) {
-            sectionList.get(position).setFeedPostList(feedPostList);
-            position += 1;
-            getFeedListEachSection(position);
-        }
-    }
-
-    @Override
-    public void onLoadDataFail(Exception ex) {
-        if (sectionList != null) {
-            position += 1;
-            getFeedListEachSection(position);
-        }
-    }
-
-    private void getFeedListEachSection(int position) {
-        if (position == sectionList.size() && getPageView() != null) {
+    public void onLoadDataSuccess(List<Section> sectionList) {
+        if (getPageView() != null) {
+            getPageView().hideLoading();
             getPageView().showAllFeedList(sectionList);
-            sectionList = null;
         }
+    }
 
-        if (sectionList != null) {
-            Section section = sectionList.get(position);
-            this.loadDataInteractor.getFeedList(section.getFeedUrl(), this);
-        }
+    private void getFeedListEachSection(List<Section> sectionList) {
+        DownloadFeedTask downloadFeedTask = new DownloadFeedTask(dataApiService, this);
+        Section[] sections = sectionList.toArray(new Section[sectionList.size()]);
+        downloadFeedTask.execute(sections);
     }
 
     private PageView getPageView() {
