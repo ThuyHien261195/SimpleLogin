@@ -1,7 +1,11 @@
 package com.example.thuyhien.simplelogin.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
+import com.example.thuyhien.simplelogin.FoxApplication;
+import com.example.thuyhien.simplelogin.R;
 
 import java.io.InputStream;
 
@@ -10,10 +14,12 @@ import java.io.InputStream;
  */
 
 public class ImageUtils {
-    public static final int REQUEST_WIDTH = 100;
-    public static final int REQUEST_HEIGHT = 120;
+    public static final int REQUEST_WIDTH = R.dimen.item_poster_width;
+    public static final int REQUEST_HEIGHT = R.dimen.item_poster_height;
 
-    public static Bitmap decodeBitMapFromInputStream(InputStream inputStream, int outWidth, int outHeight) {
+    public static Bitmap decodeBitMapFromInputStream(InputStream inputStream,
+                                                     int outWidth,
+                                                     int outHeight) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = calculateInSampleSize(outWidth, outHeight);
         options.inJustDecodeBounds = false;
@@ -23,12 +29,14 @@ public class ImageUtils {
     private static int calculateInSampleSize(int outWidth, int outHeight) {
         int inSampleSize = 1;
 
-        if (outHeight > REQUEST_HEIGHT || outWidth > REQUEST_WIDTH) {
+        int reqWidth = FoxApplication.getInstance().getResources().getDimensionPixelSize(REQUEST_WIDTH);
+        int reqHeight = FoxApplication.getInstance().getResources().getDimensionPixelSize(REQUEST_HEIGHT);
+        if (outHeight > reqHeight || outWidth > reqWidth) {
             int halfHeight = outHeight / 2;
             int halfWidth = outWidth / 2;
 
-            while ((halfHeight / inSampleSize) >= REQUEST_HEIGHT
-                    && (halfWidth / inSampleSize) >= REQUEST_WIDTH) {
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
                 inSampleSize *= 2;
             }
         }
