@@ -1,6 +1,5 @@
 package com.example.thuyhien.simplelogin.utils;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
