@@ -11,21 +11,21 @@ import java.io.Serializable;
  * Created by thuyhien on 10/11/17.
  */
 
-public class ImagePost implements Serializable {
+public class MediaImage implements Serializable {
 
     private String imageUrl;
     private String imageTitle;
     private int width;
     private int height;
 
-    public ImagePost() {
+    public MediaImage() {
         this.imageUrl = "";
         this.imageTitle = "";
         this.width = ImageUtils.REQUEST_WIDTH;
         this.height = ImageUtils.REQUEST_HEIGHT;
     }
 
-    public ImagePost(String imageUrl, String imageTitle) {
+    public MediaImage(String imageUrl, String imageTitle) {
         this.imageUrl = imageUrl;
         this.imageTitle = imageTitle;
         this.width = ImageUtils.REQUEST_WIDTH;

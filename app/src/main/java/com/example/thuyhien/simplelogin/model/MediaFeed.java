@@ -1,9 +1,5 @@
 package com.example.thuyhien.simplelogin.model;
 
-import android.media.Image;
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,19 +8,19 @@ import java.util.List;
  * Created by thuyhien on 10/11/17.
  */
 
-public class FeedPost implements Serializable {
+public class MediaFeed implements Serializable {
     private String id;
     private String guid;
     private String title;
     private String description;
-    private List<ImagePost> thumbnails;
+    private List<MediaImage> thumbnails;
 
-    public FeedPost() {
+    public MediaFeed() {
         this.id = "";
         this.guid = "";
         this.title = "";
         this.description = "";
-        this.thumbnails = new ArrayList<>();
+        this.thumbnails = null;
     }
 
     public String getId() {
@@ -59,11 +55,11 @@ public class FeedPost implements Serializable {
         this.description = description;
     }
 
-    public List<ImagePost> getThumbnails() {
+    public List<MediaImage> getThumbnails() {
         return thumbnails;
     }
 
-    public void setThumbnails(List<ImagePost> thumbnails) {
+    public void setThumbnails(List<MediaImage> thumbnails) {
         this.thumbnails = thumbnails;
     }
 }

@@ -3,6 +3,8 @@ package com.example.thuyhien.simplelogin.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,10 +13,12 @@ import java.util.Map;
  * Created by thuyhien on 10/11/17.
  */
 
-public class MultiLangSectionName implements Serializable {
+public class MultiLangTitles implements Serializable {
+
+    @SerializedName("names")
     private Map<String, String> multiLangTitles;
 
-    public MultiLangSectionName() {
+    public MultiLangTitles() {
         this.multiLangTitles = new HashMap<>();
     }
 
@@ -26,5 +30,7 @@ public class MultiLangSectionName implements Serializable {
         this.multiLangTitles = multiLangTitles;
     }
 
-    public void getTitle(string )
+    public String getTitle(String key) {
+        return this.multiLangTitles.get(key);
+    }
 }
