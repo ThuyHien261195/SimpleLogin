@@ -1,11 +1,9 @@
 package com.example.thuyhien.simplelogin.ui.viewholder;
 
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.model.MediaImage;
 import com.example.thuyhien.simplelogin.utils.ImageUtils;
@@ -39,7 +37,8 @@ public class PosterViewHolder extends RecyclerView.ViewHolder {
     public void bindImagePoster(MediaImage imagePost) {
         if (imagePost != null && !imagePost.getImageUrl().equals("")) {
             picasso.load(imagePost.getImageUrl())
-                    .resize(width, height)
+                    .fit()
+                    .centerCrop()
                     .into(imageViewPoster);
         }
     }
