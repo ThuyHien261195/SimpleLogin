@@ -10,4 +10,8 @@ import java.util.List;
 
 public interface PageView {
     void showAllFeedList(List<Section> sectionList);
+
+    void showLoading();
+
+    void hideLoading();
 }
