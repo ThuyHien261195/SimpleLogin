@@ -1,8 +1,5 @@
 package com.example.thuyhien.simplelogin.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.example.thuyhien.simplelogin.utils.ImageUtils;
 
 import java.io.Serializable;

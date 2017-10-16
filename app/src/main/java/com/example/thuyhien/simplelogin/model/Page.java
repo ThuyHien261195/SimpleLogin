@@ -4,9 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by thuyhien on 10/11/17.
@@ -18,14 +16,13 @@ public class Page implements Serializable {
     private String id;
 
     @SerializedName("names")
-    private Map<String, String> multiLangTitles;
+    private MultiLangTitles multiLangTitles;
 
     @SerializedName("sections")
     private List<Section> sectionList;
 
     public Page() {
         this.id = "";
-        this.multiLangTitles = new HashMap<>();
         this.sectionList = new ArrayList<>();
     }
 
@@ -37,11 +34,11 @@ public class Page implements Serializable {
         this.id = id;
     }
 
-    public Map<String, String> getMultiLangTitles() {
+    public MultiLangTitles getMultiLangTitles() {
         return multiLangTitles;
     }
 
-    public void setMultiLangTitles(Map<String, String> multiLangTitles) {
+    public void setMultiLangTitles(MultiLangTitles multiLangTitles) {
         this.multiLangTitles = multiLangTitles;
     }
 
@@ -51,9 +48,5 @@ public class Page implements Serializable {
 
     public void setSectionList(List<Section> sectionList) {
         this.sectionList = sectionList;
-    }
-
-    public String getTitle(String key) {
-        return this.multiLangTitles.get(key);
     }
 }

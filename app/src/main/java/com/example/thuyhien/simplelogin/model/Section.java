@@ -4,9 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by thuyhien on 10/11/17.
@@ -18,7 +16,7 @@ public class Section implements Serializable {
     private String id;
 
     @SerializedName("names")
-    private Map<String, String> multiLangTitles;
+    private MultiLangTitles multiLangTitles;
 
     @SerializedName("feed_url")
     private String feedUrl;
@@ -30,7 +28,6 @@ public class Section implements Serializable {
 
     public Section() {
         this.id = "";
-        this.multiLangTitles = new HashMap<>();
         this.feedUrl = "";
         this.type = "";
         this.feedPostList = new ArrayList<>();
@@ -44,11 +41,11 @@ public class Section implements Serializable {
         this.id = id;
     }
 
-    public Map<String, String> getMultiLangTitles() {
+    public MultiLangTitles getMultiLangTitles() {
         return multiLangTitles;
     }
 
-    public void setMultiLangTitles(Map<String, String> multiLangTitles) {
+    public void setMultiLangTitles(MultiLangTitles multiLangTitles) {
         this.multiLangTitles = multiLangTitles;
     }
 
@@ -74,9 +71,5 @@ public class Section implements Serializable {
 
     public void setFeedPostList(List<MediaFeed> feedPostList) {
         this.feedPostList = feedPostList;
-    }
-
-    public String getTitle(String key) {
-        return this.multiLangTitles.get(key);
     }
 }
