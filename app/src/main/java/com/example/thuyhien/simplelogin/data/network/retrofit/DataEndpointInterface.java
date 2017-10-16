@@ -1,6 +1,6 @@
 package com.example.thuyhien.simplelogin.data.network.retrofit;
 
-import com.example.thuyhien.simplelogin.model.FeedPost;
+import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.Page;
 
 import java.util.List;
@@ -17,11 +17,11 @@ import retrofit2.http.Url;
 
 public interface DataEndpointInterface {
 
-    @GET("api/v1/pages.json")
-    Call<List<Page>> getPageList(@Query("platform") String platform);
+    @GET("api/v1/pages.json?platform=app")
+    Call<List<Page>> getPageList();
 
     @GET()
-    Call<List<FeedPost>> getFeedList(@Url String feedUrl);
+    Call<List<MediaFeed>> getFeedList(@Url String feedUrl);
 
     @GET()
     Call<ResponseBody> getImagePost(@Url String imageUrl);
