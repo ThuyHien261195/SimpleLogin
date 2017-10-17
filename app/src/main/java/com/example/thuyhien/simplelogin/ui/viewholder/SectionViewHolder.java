@@ -7,8 +7,11 @@ import android.widget.TextView;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
+import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.ui.adapter.PosterAdapter;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,20 +28,19 @@ public class SectionViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.recycler_view_poster)
     RecyclerView recyclerViewPoster;
 
-    private LinearLayoutManager linearLayoutManager;
-
     public SectionViewHolder(View itemView) {
         super(itemView);
 
         ButterKnife.bind(this, itemView);
 
-        linearLayoutManager = new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
+                itemView.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewPoster.setLayoutManager(linearLayoutManager);
     }
 
-    public void bindContentSection(Section section) {
+    public void bindContentSection(Section section, List<MediaFeed> mediaFeedList) {
         textViewTitleSection.setText(section.getMultiLangTitles().getTitle(FoxApplication.langCode));
-        recyclerViewPoster.setLayoutManager(linearLayoutManager);
-        PosterAdapter posterAdapter = new PosterAdapter(section.getFeedPostList());
+        PosterAdapter posterAdapter = new PosterAdapter(mediaFeedList);
         recyclerViewPoster.setAdapter(posterAdapter);
     }
 }
