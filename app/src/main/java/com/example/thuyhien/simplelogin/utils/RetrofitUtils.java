@@ -31,7 +31,13 @@ public class RetrofitUtils {
         if (responseBody != null) {
             try {
                 JSONObject jsonError = new JSONObject(responseBody.string());
-                return new LoadDataException(jsonError.getString("message"));
+                if (jsonError.has("message")) {
+                    return new LoadDataException(jsonError.getString("message"));
+                }
+
+                if (jsonError.has("error")) {
+                    return new LoadDataException(jsonError.getString("error"));
+                }
             } catch (Exception e) {
                 return e;
             }
