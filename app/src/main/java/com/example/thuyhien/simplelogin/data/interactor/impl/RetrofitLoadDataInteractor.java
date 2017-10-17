@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
-import com.example.thuyhien.simplelogin.data.interactor.listener.LoadFeedListener;
 import com.example.thuyhien.simplelogin.data.network.retrofit.DataEndpointInterface;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.MediaImage;
@@ -13,11 +12,10 @@ import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.utils.ImageUtils;
 import com.example.thuyhien.simplelogin.utils.RetrofitUtils;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -59,33 +57,27 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
     }
 
     @Override
-    public void getFeedList(List<Section> sectionList, final LoadFeedListener listener) {
-        for (int i = 0; i < sectionList.size(); i++) {
-            final Section section = sectionList.get(i);
-            final int pos = i;
-            if (!section.getType().equals("Custom layout")) {
-                String feedUrl = addRangeLoadData(section.getFeedUrl());
-                Call<List<MediaFeed>> call = dataApiService.getFeedList(section.getFeedUrl(), feedUrl);
-                call.enqueue(new Callback<List<MediaFeed>>() {
-                    @Override
-                    public void onResponse(Call<List<MediaFeed>> call, Response<List<MediaFeed>> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            section.setFeedPostList(response.body());
-                            listener.onLoadDataSuccess(section, pos);
-                        } else {
-                            listener.onLoadDataFail(RetrofitUtils.createLoadDataException(response.errorBody()));
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<MediaFeed>> call, Throwable t) {
-                        listener.onLoadDataFail(new Exception(t));
-                    }
-                });
+    public void getFeedList(final Section section, final LoadDataListener<Map<Section, List<MediaFeed>>> listener) {
+        String rangeValue = addRangeLoadData(section.getFeedUrl());
+        Call<List<MediaFeed>> call = dataApiService.getFeedList(section.getFeedUrl(), rangeValue);
+        call.enqueue(new Callback<List<MediaFeed>>() {
+            @Override
+            public void onResponse(Call<List<MediaFeed>> call, Response<List<MediaFeed>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Map<Section, List<MediaFeed>> result = new HashMap<>();
+                    result.put(section, response.body());
+                    listener.onLoadDataSuccess(result);
+                } else {
+                    listener.onLoadDataFail(RetrofitUtils.createLoadDataException(response.errorBody()));
+                }
             }
-        }
-    }
 
+            @Override
+            public void onFailure(Call<List<MediaFeed>> call, Throwable t) {
+                listener.onLoadDataFail(new Exception(t));
+            }
+        });
+    }
 
     @Override
     public void getPoster(final MediaImage imagePost, final LoadDataListener<Bitmap> listener) {
@@ -100,7 +92,7 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
                             imagePost.getHeight());
                     listener.onLoadDataSuccess(bitmap);
                 } else {
-                    listener.onLoadDataFail(RetrofitUtils.createAuthenException(response.errorBody()));
+                    listener.onLoadDataFail(RetrofitUtils.createLoadDataException(response.errorBody()));
                 }
             }
 
@@ -112,25 +104,23 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
     }
 
     @Override
-    public List<Section> getTotalFeedList(Section[] sections) {
-        if (sections != null) {
-            for (Section section : sections) {
-                if (!section.getType().equals("Custom layout")) {
-                    String feedUrl = addRangeLoadData(section.getFeedUrl());
-                    Call<List<MediaFeed>> call = dataApiService.getFeedList(section.getFeedUrl(), feedUrl);
-                    try {
-                        Response<List<MediaFeed>> response = call.execute();
-                        if (response.isSuccessful() && response.body() != null) {
-                            section.setFeedPostList(response.body());
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+    public void getPage(String pageId, final LoadDataListener<Page> listener) {
+        Call<Page> call = dataApiService.getPage(pageId);
+        call.enqueue(new Callback<Page>() {
+            @Override
+            public void onResponse(Call<Page> call, Response<Page> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    listener.onLoadDataSuccess(response.body());
+                } else {
+                    listener.onLoadDataFail(RetrofitUtils.createLoadDataException(response.errorBody()));
                 }
             }
-            return new ArrayList<>(Arrays.asList(sections));
-        }
-        return new ArrayList<>();
+
+            @Override
+            public void onFailure(Call<Page> call, Throwable t) {
+                listener.onLoadDataFail(new Exception(t));
+            }
+        });
     }
 
     private String addRangeLoadData(String feedUrl) {
@@ -140,4 +130,26 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
         }
         return null;
     }
+
+//    @Override
+//    public List<Section> getTotalFeedList(Section[] sections) {
+//        if (sections != null) {
+//            for (Section section : sections) {
+//                if (!section.getType().equals("Custom layout")) {
+//                    String feedUrl = addRangeLoadData(section.getFeedUrl());
+//                    Call<List<MediaFeed>> call = dataApiService.getFeedList(section.getFeedUrl(), feedUrl);
+//                    try {
+//                        Response<List<MediaFeed>> response = call.execute();
+//                        if (response.isSuccessful() && response.body() != null) {
+//                            section.setFeedPostList(response.body());
+//                        }
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//            return new ArrayList<>(Arrays.asList(sections));
+//        }
+//        return new ArrayList<>();
+//    }
 }
