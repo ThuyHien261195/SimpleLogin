@@ -1,19 +1,22 @@
 package com.example.thuyhien.simplelogin.presenter.impl;
 
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
-import com.example.thuyhien.simplelogin.data.interactor.listener.LoadFeedListener;
+import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
+import com.example.thuyhien.simplelogin.model.MediaFeed;
+import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.presenter.PagePresenter;
 import com.example.thuyhien.simplelogin.view.PageView;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by thuyhien on 10/12/17.
  */
 
-public class PagePresenterImpl implements PagePresenter, LoadFeedListener {
+public class PagePresenterImpl implements PagePresenter, LoadDataListener {
 
     private WeakReference<PageView> pageViewWeakReference;
     private LoadDataInteractor loadDataInteractor;
@@ -28,25 +31,42 @@ public class PagePresenterImpl implements PagePresenter, LoadFeedListener {
         if (getPageView() != null) {
             getPageView().showLoading();
         }
-        loadDataInteractor.getFeedList(sectionList, this);
+        getFeedListEachSection(sectionList);
     }
 
     @Override
-    public void onLoadDataSuccess(Section section, int position) {
-        if (getPageView() != null) {
-            getPageView().hideLoading();
-            getPageView().displayMediaFeedList(section, position);
+    public void loadPage(Page page) {
+        loadDataInteractor.getPage(page.getId(), this);
+    }
+
+    @Override
+    public void onLoadDataSuccess(Object data) {
+        if (data instanceof Map) {
+            if (getPageView() != null) {
+                getPageView().hideLoading();
+                getPageView().displayMediaFeedList((Map<Section, List<MediaFeed>>) data);
+            }
+        } else if (data instanceof Page) {
+            if (getPageView() != null) {
+                getPageView().displayRefreshPage((Page) data);
+            }
         }
     }
 
     @Override
-    public void onLoadDataSuccess(Section data) {
-
+    public void onLoadDataFail(Exception ex) {
+        if (getPageView() != null) {
+            getPageView().showErrorMessage(ex);
+        }
     }
 
-    @Override
-    public void onLoadDataFail(Exception ex) {
-        ex.printStackTrace();
+    private void getFeedListEachSection(List<Section> sectionList) {
+        for (int i = 0; i < sectionList.size(); i++) {
+            final Section section = sectionList.get(i);
+            if (!section.getType().equals("Custom layout")) {
+                loadDataInteractor.getFeedList(section, this);
+            }
+        }
     }
 
     private PageView getPageView() {

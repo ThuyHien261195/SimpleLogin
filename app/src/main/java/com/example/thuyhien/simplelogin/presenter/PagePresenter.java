@@ -1,5 +1,6 @@
 package com.example.thuyhien.simplelogin.presenter;
 
+import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.model.Section;
 
 import java.util.List;
@@ -10,4 +11,6 @@ import java.util.List;
 
 public interface PagePresenter {
     void loadAllFeedList(List<Section> sectionList);
+
+    void loadPage(Page page);
 }
