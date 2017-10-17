@@ -26,7 +26,7 @@ public class DownloadFeedTask extends AsyncTask<Section, Void, List<Section>> {
     @Override
     protected List<Section> doInBackground(Section... sections) {
         if (sections != null) {
-            return loadDataInteractor.getFeedList(sections);
+            return loadDataInteractor.getTotalFeedList(sections);
         }
         return new ArrayList<>();
     }
