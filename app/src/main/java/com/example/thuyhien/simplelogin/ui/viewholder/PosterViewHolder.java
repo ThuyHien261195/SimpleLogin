@@ -1,5 +1,6 @@
 package com.example.thuyhien.simplelogin.ui.viewholder;
 
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -31,15 +32,11 @@ public class PosterViewHolder extends RecyclerView.ViewHolder {
 
     public void bindImagePoster(MediaImage imagePost) {
         if (imagePost != null && !imagePost.getImageUrl().equals("")) {
-            picasso.setLoggingEnabled(true);
-            picasso.load(replaceSpaceChar(imagePost.getImageUrl()))
+            String imageUrl = imagePost.getImageUrl().replace(" ", "%20");
+            picasso.load(Uri.parse(imageUrl))
                     .fit()
                     .centerCrop()
                     .into(imageViewPoster);
         }
-    }
-
-    public String replaceSpaceChar(String feedUrl) {
-        return feedUrl.replace(" ", "%20");
     }
 }
