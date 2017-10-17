@@ -3,24 +3,32 @@ package com.example.thuyhien.simplelogin.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.impl.RetrofitLoadDataInteractor;
+import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
 import com.example.thuyhien.simplelogin.data.network.retrofit.DataEndpointInterface;
+import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.presenter.PagePresenter;
 import com.example.thuyhien.simplelogin.presenter.impl.PagePresenterImpl;
 import com.example.thuyhien.simplelogin.ui.adapter.SectionAdapter;
 import com.example.thuyhien.simplelogin.view.PageView;
+
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +43,9 @@ public class PageFragment extends Fragment implements PageView {
     private Page page;
     private PagePresenter pagePresenter;
     private SectionAdapter sectionAdapter;
+
+    @BindView(R.id.swipe_media_feed_list)
+    SwipeRefreshLayout swipeRefreshMediaFeedList;
 
     @BindView(R.id.recycler_view_section)
     RecyclerView recyclerViewSection;
@@ -88,16 +99,45 @@ public class PageFragment extends Fragment implements PageView {
         recyclerViewSection.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void displayMediaFeedList(Map<Section, List<MediaFeed>> mediaFeedList) {
+        sectionAdapter.updateSection(mediaFeedList);
+    }
+
+    @Override
+    public void displayRefreshPage(Page page) {
+        this.page = page;
+        pagePresenter.loadAllFeedList(page.getSectionList());
+        recyclerViewSection.scrollToPosition(0);
+        swipeRefreshMediaFeedList.setRefreshing(false);
+    }
+
+    @Override
+    public void showErrorMessage(Exception ex) {
+        if (swipeRefreshMediaFeedList.isRefreshing() && ex instanceof LoadDataException) {
+            swipeRefreshMediaFeedList.setRefreshing(false);
+            Toast.makeText(getContext(), R.string.error_refresh_data, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void initViews() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerViewSection.setLayoutManager(linearLayoutManager);
         sectionAdapter = new SectionAdapter(page.getSectionList());
         recyclerViewSection.setAdapter(sectionAdapter);
-    }
 
-    @Override
-    public void displayMediaFeedList(Section section, int position) {
-        sectionAdapter.udpateSection(section, position);
+        swipeRefreshMediaFeedList.setColorSchemeColors(
+                ContextCompat.getColor(getContext(), android.R.color.holo_blue_light),
+                ContextCompat.getColor(getContext(), android.R.color.holo_green_light),
+                ContextCompat.getColor(getContext(), android.R.color.holo_orange_light),
+                ContextCompat.getColor(getContext(), android.R.color.holo_red_light));
+
+        swipeRefreshMediaFeedList.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                pagePresenter.loadPage(page);
+            }
+        });
     }
 
     private void getSectionBundle() {
