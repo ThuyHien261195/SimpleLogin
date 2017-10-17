@@ -3,7 +3,6 @@ package com.example.thuyhien.simplelogin.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -54,8 +53,6 @@ public class MainActivity extends AppCompatActivity implements MainView,
     @BindView(R.id.text_title_page)
     TextView textViewTitlePage;
 
-    @Nullable
-    @BindView(R.id.text_email)
     TextView textViewEmail;
 
     private View loggedInHeaderView, notLogHeaderView;
@@ -139,6 +136,8 @@ public class MainActivity extends AppCompatActivity implements MainView,
         notLogHeaderView = inflater.inflate(R.layout.nav_no_acc_header_main, null);
         navigationViewMain.addHeaderView(loggedInHeaderView);
         navigationViewMain.addHeaderView(notLogHeaderView);
+
+        textViewEmail = loggedInHeaderView.findViewById(R.id.text_email);
 
         loggedInHeaderView.setOnClickListener(new View.OnClickListener() {
             @Override
