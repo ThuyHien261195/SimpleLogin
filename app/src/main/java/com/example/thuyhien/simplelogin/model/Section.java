@@ -3,8 +3,6 @@ package com.example.thuyhien.simplelogin.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by thuyhien on 10/11/17.
@@ -24,13 +22,10 @@ public class Section implements Serializable {
     @SerializedName("type")
     private String type;
 
-    private List<MediaFeed> feedPostList;
-
     public Section() {
         this.id = "";
         this.feedUrl = "";
         this.type = "";
-        this.feedPostList = new ArrayList<>();
     }
 
     public String getId() {
@@ -65,11 +60,19 @@ public class Section implements Serializable {
         this.type = type;
     }
 
-    public List<MediaFeed> getFeedPostList() {
-        return feedPostList;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Section section = (Section) o;
+
+        return id != null ? id.equals(section.id) : section.id == null;
+
     }
 
-    public void setFeedPostList(List<MediaFeed> feedPostList) {
-        this.feedPostList = feedPostList;
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }
