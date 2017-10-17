@@ -39,4 +39,11 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionViewHolder> {
     public int getItemCount() {
         return sectionList.size();
     }
+
+    public void udpateSection(Section section, int position) {
+        if (sectionList != null) {
+            sectionList.set(position, section);
+            notifyItemChanged(position);
+        }
+    }
 }

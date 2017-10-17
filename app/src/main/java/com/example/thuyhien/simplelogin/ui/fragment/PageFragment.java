@@ -22,8 +22,6 @@ import com.example.thuyhien.simplelogin.presenter.impl.PagePresenterImpl;
 import com.example.thuyhien.simplelogin.ui.adapter.SectionAdapter;
 import com.example.thuyhien.simplelogin.view.PageView;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -36,6 +34,7 @@ public class PageFragment extends Fragment implements PageView {
     public static final String BUNDLE_PAGE = "Page";
     private Page page;
     private PagePresenter pagePresenter;
+    private SectionAdapter sectionAdapter;
 
     @BindView(R.id.recycler_view_section)
     RecyclerView recyclerViewSection;
@@ -78,11 +77,6 @@ public class PageFragment extends Fragment implements PageView {
     }
 
     @Override
-    public void showAllFeedList(List<Section> sectionList) {
-        displayMediaFeed(sectionList);
-    }
-
-    @Override
     public void showLoading() {
         recyclerViewSection.setVisibility(View.GONE);
         progressBarLoading.setVisibility(View.VISIBLE);
@@ -97,11 +91,13 @@ public class PageFragment extends Fragment implements PageView {
     private void initViews() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerViewSection.setLayoutManager(linearLayoutManager);
+        sectionAdapter = new SectionAdapter(page.getSectionList());
+        recyclerViewSection.setAdapter(sectionAdapter);
     }
 
-    private void displayMediaFeed(List<Section> sectionList) {
-        SectionAdapter sectionAdapter = new SectionAdapter(sectionList);
-        recyclerViewSection.setAdapter(sectionAdapter);
+    @Override
+    public void displayMediaFeedList(Section section, int position) {
+        sectionAdapter.udpateSection(section, position);
     }
 
     private void getSectionBundle() {
