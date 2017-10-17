@@ -41,6 +41,5 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager_post"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/view_pager_padding" />
+        android:layout_height="match_parent" />
 </LinearLayout>
