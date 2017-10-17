@@ -2,6 +2,7 @@ package com.example.thuyhien.simplelogin;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.example.thuyhien.simplelogin.data.network.converter.FeedPostConverter;
 import com.example.thuyhien.simplelogin.data.network.converter.FeedPostListConverter;
@@ -22,13 +23,14 @@ import java.util.List;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.example.thuyhien.simplelogin.BuildConfig.DATA_BASE_URL;
+
 /**
  * Created by thuyhien on 10/10/17.
  */
 
 public class FoxApplication extends Application {
     public static final String AUTHENTICATION_BASE_URL = "http://userkit-identity-stg.ap-southeast-1.elasticbeanstalk.com/v1/";
-    public static final String DATA_BASE_URL = "http://fox-plus-server-staging.ap-southeast-1.elasticbeanstalk.com/";
     public static final String PREF_DATA_FILE_NAME = "FoxSharedPreferData";
     public static String langCode = "en";
 
@@ -95,7 +97,7 @@ public class FoxApplication extends Application {
                 .registerTypeAdapter(MediaImage.class, new ImagePostConverter())
                 .registerTypeAdapter(MediaFeed.class, new FeedPostConverter());
         dataGson = gsonBuilder.create();
-
+        Log.e("URL", DATA_BASE_URL);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DATA_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(dataGson))
