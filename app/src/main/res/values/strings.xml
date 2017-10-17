@@ -32,6 +32,7 @@
     <string name="error_create_user">Create user account unsuccessfully</string>
     <string name="error_login_user">Login user account unsuccessfully</string>
     <string name="error_unknow">Unknow error</string>
+    <string name="error_refresh_data">Error when refreshing</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

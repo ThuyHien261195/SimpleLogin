@@ -59,7 +59,7 @@
     <dimen name="item_section_vertical_margin">@dimen/small_space</dimen>
     <dimen name="title_section_text_size">18sp</dimen>
     <dimen name="recycler_view_poster_vertical_margin">@dimen/small_space</dimen>
-    <dimen name="view_pager_padding">@dimen/medium_space</dimen>
+    <dimen name="fragment_page_padding">16dp</dimen>
 
     <!-- Item image feed in section. -->
     <dimen name="item_poster_height">120dp</dimen>
