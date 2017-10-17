@@ -31,10 +31,15 @@ public class PosterViewHolder extends RecyclerView.ViewHolder {
 
     public void bindImagePoster(MediaImage imagePost) {
         if (imagePost != null && !imagePost.getImageUrl().equals("")) {
-            picasso.load(imagePost.getImageUrl())
+            picasso.setLoggingEnabled(true);
+            picasso.load(replaceSpaceChar(imagePost.getImageUrl()))
                     .fit()
                     .centerCrop()
                     .into(imageViewPoster);
         }
+    }
+
+    public String replaceSpaceChar(String feedUrl) {
+        return feedUrl.replace(" ", "%20");
     }
 }
