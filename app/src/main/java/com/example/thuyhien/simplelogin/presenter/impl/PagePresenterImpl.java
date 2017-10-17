@@ -1,8 +1,7 @@
 package com.example.thuyhien.simplelogin.presenter.impl;
 
-import com.example.thuyhien.simplelogin.async.DownloadFeedTask;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
-import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
+import com.example.thuyhien.simplelogin.data.interactor.listener.LoadFeedListener;
 import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.presenter.PagePresenter;
 import com.example.thuyhien.simplelogin.view.PageView;
@@ -14,7 +13,7 @@ import java.util.List;
  * Created by thuyhien on 10/12/17.
  */
 
-public class PagePresenterImpl implements PagePresenter, LoadDataListener<List<Section>> {
+public class PagePresenterImpl implements PagePresenter, LoadFeedListener {
 
     private WeakReference<PageView> pageViewWeakReference;
     private LoadDataInteractor loadDataInteractor;
@@ -29,29 +28,34 @@ public class PagePresenterImpl implements PagePresenter, LoadDataListener<List<S
         if (getPageView() != null) {
             getPageView().showLoading();
         }
-        getFeedListEachSection(sectionList);
+        loadDataInteractor.getFeedList(sectionList, this);
     }
 
     @Override
-    public void onLoadDataSuccess(List<Section> sectionList) {
+    public void onLoadDataSuccess(Section section, int position) {
         if (getPageView() != null) {
             getPageView().hideLoading();
-            getPageView().showAllFeedList(sectionList);
+            getPageView().displayMediaFeedList(section, position);
         }
     }
 
     @Override
-    public void onLoadDataFail(Exception ex) {
-        // TODO
+    public void onLoadDataSuccess(Section data) {
+
     }
 
-    private void getFeedListEachSection(List<Section> sectionList) {
-        DownloadFeedTask downloadFeedTask = new DownloadFeedTask(loadDataInteractor, this);
-        Section[] sections = sectionList.toArray(new Section[sectionList.size()]);
-        downloadFeedTask.execute(sections);
+    @Override
+    public void onLoadDataFail(Exception ex) {
+        ex.printStackTrace();
     }
 
     private PageView getPageView() {
         return pageViewWeakReference.get();
     }
+
+//    private void getFeedListEachSection(List<Section> sectionList) {
+//        DownloadFeedTask downloadFeedTask = new DownloadFeedTask(loadDataInteractor, this);
+//        Section[] sections = sectionList.toArray(new Section[sectionList.size()]);
+//        downloadFeedTask.execute(sections);
+//    }
 }
