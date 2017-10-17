@@ -6,7 +6,6 @@ import android.widget.ImageView;
 
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.model.MediaImage;
-import com.example.thuyhien.simplelogin.utils.ImageUtils;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -21,7 +20,6 @@ public class PosterViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.image_poster)
     ImageView imageViewPoster;
 
-    private int width, height;
     private final Picasso picasso;
 
     public PosterViewHolder(View itemView) {
@@ -29,9 +27,6 @@ public class PosterViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
 
         picasso = Picasso.with(itemView.getContext());
-
-        width = itemView.getContext().getResources().getDimensionPixelSize(ImageUtils.REQUEST_WIDTH);
-        height = itemView.getContext().getResources().getDimensionPixelSize(ImageUtils.REQUEST_HEIGHT);
     }
 
     public void bindImagePoster(MediaImage imagePost) {
