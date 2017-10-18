@@ -3,7 +3,10 @@
     android:id="@+id/swipe_media_feed_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/fragment_page_padding">
+    android:paddingBottom="@dimen/fragment_page_horizontal_sapcing"
+    android:paddingLeft="@dimen/fragment_page_horizontal_spacing"
+    android:paddingRight="@dimen/fragment_page_horizontal_spacing"
+    android:paddingTop="@dimen/fragment_page_horizontal_sapcing">
 
     <LinearLayout
         android:layout_width="match_parent"
