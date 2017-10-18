@@ -12,6 +12,7 @@ import com.example.thuyhien.simplelogin.ui.viewholder.SectionViewHolder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,12 +22,13 @@ import java.util.Map;
 
 public class SectionAdapter extends RecyclerView.Adapter<SectionViewHolder> {
 
-    private List<Section> sectionList;
-    private Map<Integer, List<MediaFeed>> totalMediaList;
+    private LinkedHashMap<Section, List<MediaFeed>> totalMediaList;
 
     public SectionAdapter(List<Section> sectionList) {
-        this.sectionList = sectionList;
-        totalMediaList = new HashMap<>();
+        totalMediaList = new LinkedHashMap<>();
+        for (Section section : sectionList) {
+            totalMediaList.put(section, new ArrayList<MediaFeed>());
+        }
     }
 
     @Override
@@ -38,24 +40,25 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionViewHolder> {
 
     @Override
     public void onBindViewHolder(SectionViewHolder holder, int position) {
-        List<MediaFeed> mediaFeedList = totalMediaList.get(position);
+        Section section = new ArrayList<>(totalMediaList.keySet()).get(position);
+        List<MediaFeed> mediaFeedList = totalMediaList.get(section);
         if (mediaFeedList == null) {
             mediaFeedList = new ArrayList<>();
         }
-        holder.bindContentSection(sectionList.get(position), mediaFeedList);
+        holder.bindContentSection(section, mediaFeedList);
     }
 
     @Override
     public int getItemCount() {
-        return sectionList.size();
+        return totalMediaList.size();
     }
 
-    public void updateSection(Map<Section, List<MediaFeed>> mediaFeedList) {
-        if (sectionList != null) {
-            Section sectionKey = (Section) mediaFeedList.keySet().toArray()[0];
-            int pos = sectionList.indexOf(sectionKey);
-            if (pos != -1 && totalMediaList != null) {
-                totalMediaList.put(pos, mediaFeedList.get(sectionKey));
+    public void updateSection(Section section, List<MediaFeed> mediaFeedList) {
+        if (totalMediaList != null) {
+            List<Section> sectionList = new ArrayList<>(totalMediaList.keySet());
+            int pos = sectionList.indexOf(section);
+            if (pos != -1) {
+                totalMediaList.put(section, mediaFeedList);
                 notifyItemChanged(pos);
             }
         }

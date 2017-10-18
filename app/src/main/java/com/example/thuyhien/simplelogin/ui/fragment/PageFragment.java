@@ -100,8 +100,8 @@ public class PageFragment extends Fragment implements PageView {
     }
 
     @Override
-    public void displayMediaFeedList(Map<Section, List<MediaFeed>> mediaFeedList) {
-        sectionAdapter.updateSection(mediaFeedList);
+    public void displayMediaFeedList(Section section, List<MediaFeed> mediaFeedList) {
+        sectionAdapter.updateSection(section, mediaFeedList);
     }
 
     @Override

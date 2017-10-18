@@ -16,7 +16,7 @@ public interface PageView {
 
     void hideLoading();
 
-    void displayMediaFeedList(Map<Section, List<MediaFeed>> mediaFeedList);
+    void displayMediaFeedList(Section section, List<MediaFeed> mediaFeedList);
 
     void displayRefreshPage(Page page);
 
