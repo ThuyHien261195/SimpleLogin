@@ -3,6 +3,7 @@ package com.example.thuyhien.simplelogin.data.interactor;
 import android.graphics.Bitmap;
 
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
+import com.example.thuyhien.simplelogin.data.interactor.listener.LoadFeedListListener;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.MediaImage;
 import com.example.thuyhien.simplelogin.model.Page;
@@ -18,7 +19,7 @@ import java.util.Map;
 public interface LoadDataInteractor {
     void getPageList(final LoadDataListener<List<Page>> listener);
 
-    void getFeedList(Section section, final LoadDataListener<Map<Section, List<MediaFeed>>> listener);
+    void getFeedList(Section section, final LoadFeedListListener listener);
 
     void getPoster(MediaImage imagePost, final LoadDataListener<Bitmap> listener);
 

@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
+import com.example.thuyhien.simplelogin.data.interactor.listener.LoadFeedListListener;
 import com.example.thuyhien.simplelogin.data.network.retrofit.DataEndpointInterface;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.MediaImage;
@@ -57,16 +58,14 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
     }
 
     @Override
-    public void getFeedList(final Section section, final LoadDataListener<Map<Section, List<MediaFeed>>> listener) {
+    public void getFeedList(final Section section, final LoadFeedListListener listener) {
         String rangeValue = addRangeLoadData(section.getFeedUrl());
         Call<List<MediaFeed>> call = dataApiService.getFeedList(section.getFeedUrl(), rangeValue);
         call.enqueue(new Callback<List<MediaFeed>>() {
             @Override
             public void onResponse(Call<List<MediaFeed>> call, Response<List<MediaFeed>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Map<Section, List<MediaFeed>> result = new HashMap<>();
-                    result.put(section, response.body());
-                    listener.onLoadDataSuccess(result);
+                    listener.onLoadDataSuccess(section, response.body());
                 } else {
                     listener.onLoadDataFail(RetrofitUtils.createLoadDataException(response.errorBody()));
                 }
