@@ -112,7 +112,9 @@ public class SignInActivity extends AppCompatActivity implements AuthenticationV
 
     @Override
     public void showMessage(String textMsg) {
-        Toast.makeText(this, textMsg, Toast.LENGTH_SHORT).show();
+        if (!textMsg.equals("")) {
+            Toast.makeText(this, textMsg, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void createSignInPresenter() {
