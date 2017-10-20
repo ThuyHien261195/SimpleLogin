@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SimpleLogin</string>
+    <!--<string name="app_name">SimpleLogin</string>-->
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
 
@@ -33,6 +33,8 @@
     <string name="error_login_user">Login user account unsuccessfully</string>
     <string name="error_unknow">Unknow error</string>
     <string name="error_refresh_data">Error when refreshing</string>
+    <string name="error_open_file">Error when opening file</string>
+    <string name="error_empty_file">Empty feed list file</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
