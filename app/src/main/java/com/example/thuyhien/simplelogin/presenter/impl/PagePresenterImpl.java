@@ -35,7 +35,7 @@ public class PagePresenterImpl implements PagePresenter {
 
     @Override
     public void loadAllFeedList(Page page, boolean isRefresh) {
-        if (getPageView() != null) {
+        if (getPageView() != null && !isRefresh) {
             getPageView().showLoading();
         }
 
