@@ -1,7 +1,6 @@
 package com.example.thuyhien.simplelogin.utils;
 
 import android.os.Environment;
-import android.util.Log;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
@@ -29,7 +28,6 @@ public class FileProvider {
     private static FoxApplication foxApplication = FoxApplication.getInstance();
 
     public static File[] getFileList(String folder) {
-        Log.e("File list folder path", folder); // Done
         File dir;
         if (checkExternalStorageAvailable()) {
             dir = getDirectory(folder, true);
@@ -87,7 +85,6 @@ public class FileProvider {
     public static FileInputStream openExistedFileInputStream(File file) {
         try {
             if (file != null) {
-                Log.e("Open exists file path", file.getPath());  // Done
                 return new FileInputStream(file);
             }
         } catch (FileNotFoundException e) {
@@ -166,7 +163,6 @@ public class FileProvider {
         if (dir == null) {
             return null;
         }
-        Log.e("create file path", dir.getPath() + File.separator + fileName);  // Done
         return new File(dir, fileName);
     }
 }
