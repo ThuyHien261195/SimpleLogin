@@ -15,7 +15,9 @@ import android.widget.Toast;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
+import com.example.thuyhien.simplelogin.data.interactor.FileInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
+import com.example.thuyhien.simplelogin.data.interactor.impl.FileInteractorImpl;
 import com.example.thuyhien.simplelogin.data.interactor.impl.RetrofitLoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
 import com.example.thuyhien.simplelogin.data.network.retrofit.DataEndpointInterface;
@@ -28,7 +30,6 @@ import com.example.thuyhien.simplelogin.ui.adapter.SectionAdapter;
 import com.example.thuyhien.simplelogin.view.PageView;
 
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +44,7 @@ public class PageFragment extends Fragment implements PageView {
     private Page page;
     private PagePresenter pagePresenter;
     private SectionAdapter sectionAdapter;
+    private FoxApplication foxApplication = FoxApplication.getInstance();
 
     @BindView(R.id.swipe_media_feed_list)
     SwipeRefreshLayout swipeRefreshMediaFeedList;
@@ -84,7 +86,7 @@ public class PageFragment extends Fragment implements PageView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         createPagePresenter();
         initViews();
-        pagePresenter.loadAllFeedList(page.getSectionList());
+        pagePresenter.loadAllFeedList(page, false);
     }
 
     @Override
@@ -107,16 +109,18 @@ public class PageFragment extends Fragment implements PageView {
     @Override
     public void displayRefreshPage(Page page) {
         this.page = page;
-        pagePresenter.loadAllFeedList(page.getSectionList());
+        pagePresenter.loadAllFeedList(page, true);
         recyclerViewSection.scrollToPosition(0);
         swipeRefreshMediaFeedList.setRefreshing(false);
     }
 
     @Override
     public void showErrorMessage(Exception ex) {
-        if (swipeRefreshMediaFeedList.isRefreshing() && ex instanceof LoadDataException) {
+        if (swipeRefreshMediaFeedList.isRefreshing()) {
             swipeRefreshMediaFeedList.setRefreshing(false);
-            Toast.makeText(getContext(), R.string.error_refresh_data, Toast.LENGTH_SHORT).show();
+            if (ex instanceof LoadDataException) {
+                Toast.makeText(getContext(), R.string.error_refresh_data, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -147,8 +151,9 @@ public class PageFragment extends Fragment implements PageView {
     }
 
     private void createPagePresenter() {
-        DataEndpointInterface dataApiService = FoxApplication.getInstance().getDataApiService();
+        DataEndpointInterface dataApiService = foxApplication.getDataApiService();
         LoadDataInteractor loadDataInteractor = new RetrofitLoadDataInteractor(dataApiService);
-        pagePresenter = new PagePresenterImpl(this, loadDataInteractor);
+        FileInteractor fileInteractor = new FileInteractorImpl(foxApplication.getDataGson());
+        pagePresenter = new PagePresenterImpl(this, loadDataInteractor, fileInteractor);
     }
 }
