@@ -5,7 +5,6 @@ import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.model.Section;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by thuyhien on 10/12/17.

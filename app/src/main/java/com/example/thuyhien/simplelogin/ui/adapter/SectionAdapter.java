@@ -11,10 +11,8 @@ import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.ui.viewholder.SectionViewHolder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by thuyhien on 10/11/17.

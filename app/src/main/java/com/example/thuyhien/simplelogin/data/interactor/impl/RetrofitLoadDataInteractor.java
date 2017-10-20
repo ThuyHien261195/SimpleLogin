@@ -14,9 +14,7 @@ import com.example.thuyhien.simplelogin.utils.ImageUtils;
 import com.example.thuyhien.simplelogin.utils.RetrofitUtils;
 
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

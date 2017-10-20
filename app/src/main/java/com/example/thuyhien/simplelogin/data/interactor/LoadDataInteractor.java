@@ -4,13 +4,11 @@ import android.graphics.Bitmap;
 
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadFeedListListener;
-import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.MediaImage;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.model.Section;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by thuyhien on 10/12/17.
