@@ -1,5 +1,6 @@
 package com.example.thuyhien.simplelogin.presenter.impl;
 
+import com.example.thuyhien.simplelogin.data.interactor.FileInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
@@ -14,16 +15,20 @@ import java.util.List;
  * Created by thuyhien on 10/9/17.
  */
 
-public class MainPresenterImpl implements MainPresenter, LoadDataListener<List<Page>> {
+public class MainPresenterImpl implements MainPresenter {
 
     private WeakReference<MainView> mainViewWeakReference;
     private UserManager userManager;
     private LoadDataInteractor loadDataInteractor;
+    private FileInteractor fileInteractor;
 
-    public MainPresenterImpl(MainView mainView, UserManager userManager, LoadDataInteractor loadDataInteractor) {
+    public MainPresenterImpl(MainView mainView, UserManager userManager,
+                             LoadDataInteractor loadDataInteractor,
+                             FileInteractor fileInteractor) {
         this.mainViewWeakReference = new WeakReference<>(mainView);
         this.userManager = userManager;
         this.loadDataInteractor = loadDataInteractor;
+        this.fileInteractor = fileInteractor;
     }
 
     @Override
@@ -40,21 +45,45 @@ public class MainPresenterImpl implements MainPresenter, LoadDataListener<List<P
 
     @Override
     public void loadPageList() {
-        loadDataInteractor.getPageList(this);
+        fileInteractor.getPageList(new LoadDataListener<List<Page>>() {
+            @Override
+            public void onLoadDataSuccess(List<Page> data) {
+                if (data == null) {
+                    getPageListFromServer();
+                } else {
+                    if (getMainView() != null) {
+                        getMainView().showPageList(data);
+                    }
+                }
+            }
+
+            @Override
+            public void onLoadDataFail(Exception e) {
+                e.printStackTrace();
+
+                getPageListFromServer();
+            }
+        });
     }
 
-    @Override
-    public void onLoadDataSuccess(List<Page> pageList) {
-        if (getMainView() != null) {
-            getMainView().showPageList(pageList);
-        }
-    }
+    private void getPageListFromServer() {
+        loadDataInteractor.getPageList(new LoadDataListener<List<Page>>() {
+            @Override
+            public void onLoadDataSuccess(final List<Page> data) {
+                fileInteractor.savePageList(data);
 
-    @Override
-    public void onLoadDataFail(Exception ex) {
-        if (getMainView() != null) {
-            getMainView().showMessageError(ex);
-        }
+                if (getMainView() != null) {
+                    getMainView().showPageList(data);
+                }
+            }
+
+            @Override
+            public void onLoadDataFail(Exception ex) {
+                if (getMainView() != null) {
+                    getMainView().showMessageError(ex);
+                }
+            }
+        });
     }
 
     private MainView getMainView() {

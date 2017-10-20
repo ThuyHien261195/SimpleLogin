@@ -18,7 +18,9 @@ import android.widget.Toast;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
+import com.example.thuyhien.simplelogin.data.interactor.FileInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
+import com.example.thuyhien.simplelogin.data.interactor.impl.FileInteractorImpl;
 import com.example.thuyhien.simplelogin.data.interactor.impl.RetrofitLoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.data.manager.impl.SharedPreferencesUserManager;
@@ -167,7 +169,8 @@ public class MainActivity extends AppCompatActivity implements MainView,
         UserManager userManager = new SharedPreferencesUserManager(foxApplication.getSharedPref());
         DataEndpointInterface dataApiService = foxApplication.getDataApiService();
         LoadDataInteractor loadDataInteractor = new RetrofitLoadDataInteractor(dataApiService);
-        mainPresenter = new MainPresenterImpl(this, userManager, loadDataInteractor);
+        FileInteractor fileInteractor = new FileInteractorImpl(foxApplication.getDataGson());
+        mainPresenter = new MainPresenterImpl(this, userManager, loadDataInteractor, fileInteractor);
     }
 
     private void initViews() {
