@@ -1,6 +1,7 @@
 package com.example.thuyhien.simplelogin.model;
 
 import com.example.thuyhien.simplelogin.utils.ImageUtils;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
@@ -10,9 +11,16 @@ import java.io.Serializable;
 
 public class MediaImage implements Serializable {
 
+    @SerializedName("url")
     private String imageUrl;
+
+    @SerializedName("title")
     private String imageTitle;
+
+    @SerializedName("width")
     private int width;
+
+    @SerializedName("height")
     private int height;
 
     public MediaImage() {

@@ -28,6 +28,10 @@ public class Section implements Serializable {
         this.type = "";
     }
 
+    public Section(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }
@@ -68,7 +72,6 @@ public class Section implements Serializable {
         Section section = (Section) o;
 
         return id != null ? id.equals(section.id) : section.id == null;
-
     }
 
     @Override
