@@ -25,10 +25,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', 'DATA_BASE_URL', '"http://admin.foxplus.com/"'
             signingConfig signingConfigs.release
+            resValue 'string', 'app_name', 'Fox'
         }
         debug {
             applicationIdSuffix ".debug"
             buildConfigField 'String', 'DATA_BASE_URL', '"http://fox-plus-server-staging.ap-southeast-1.elasticbeanstalk.com/"'
+            resValue 'string', 'app_name', 'SimpleLogin'
         }
     }
 }
