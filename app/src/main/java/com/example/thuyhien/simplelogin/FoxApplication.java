@@ -2,10 +2,11 @@ package com.example.thuyhien.simplelogin;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-import android.util.Log;
+import android.util.Pair;
 
 import com.example.thuyhien.simplelogin.data.network.converter.FeedPostConverter;
 import com.example.thuyhien.simplelogin.data.network.converter.FeedPostListConverter;
+import com.example.thuyhien.simplelogin.data.network.converter.FileFeedListConverter;
 import com.example.thuyhien.simplelogin.data.network.converter.ImagePostConverter;
 import com.example.thuyhien.simplelogin.data.network.converter.UserConverter;
 import com.example.thuyhien.simplelogin.data.network.retrofit.AuthenticationEndpointInterface;
@@ -92,12 +93,16 @@ public class FoxApplication extends Application {
     private void createDataRetrofit() {
         Type feedListType = new TypeToken<List<MediaFeed>>() {
         }.getType();
+
+        Type feedListOfEachSectionType = new TypeToken<Pair<String, List<MediaFeed>>>() {
+        }.getType();
+
         GsonBuilder gsonBuilder = new GsonBuilder()
                 .registerTypeAdapter(feedListType, new FeedPostListConverter())
                 .registerTypeAdapter(MediaImage.class, new ImagePostConverter())
-                .registerTypeAdapter(MediaFeed.class, new FeedPostConverter());
+                .registerTypeAdapter(MediaFeed.class, new FeedPostConverter())
+                .registerTypeAdapter(feedListOfEachSectionType, new FileFeedListConverter());
         dataGson = gsonBuilder.create();
-        Log.e("URL", DATA_BASE_URL);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DATA_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(dataGson))
