@@ -1,6 +1,5 @@
 package com.example.thuyhien.simplelogin.data.interactor.impl;
 
-import android.util.Log;
 import android.util.Pair;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
@@ -50,22 +49,16 @@ public class FileInteractorImpl implements FileInteractor {
                         Page page = readPage(fileInputStream);
                         if (page != null) {
                             pageList.add(page);
-                            Log.e("getPageList read one", "Success"); // Done
                         }
                         fileInputStream.close();
-                    } else {
-                        Log.e("getPageList read one", "Null fileInputStream");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Log.e("getPageList read one", e.getMessage());
                 }
             }
             listener.onLoadDataSuccess(pageList);
-            Log.e("getPageList all", "Success"); // Done
         } else {
             listener.onLoadDataSuccess(null);
-            Log.e("getPageList all", "Null page file list"); // Done
 
         }
     }
@@ -77,9 +70,7 @@ public class FileInteractorImpl implements FileInteractor {
             Page page = readPage(fileInputStream);
             listener.onLoadDataSuccess(page);
             fileInputStream.close();
-            Log.e("getPage", "Success");
         } catch (IOException e) {
-            Log.e("getPage", e.getMessage());
             listener.onLoadDataFail(e);
         }
     }
@@ -89,10 +80,8 @@ public class FileInteractorImpl implements FileInteractor {
         for (Page page : pageList) {
             try {
                 writePage(page, FileProvider.BASE_PAGE_FILE_NAME + "_" + page.getId());
-                Log.e("writePageList", "Success");  // Done
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e("savePageList", "Fail " + e.getMessage());
             }
         }
     }
@@ -102,10 +91,8 @@ public class FileInteractorImpl implements FileInteractor {
         if (page != null) {
             try {
                 writePage(page, FileProvider.BASE_PAGE_FILE_NAME + "_" + page.getId());
-                Log.e("writePage", "Success");  // Done
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e("savePage", e.getMessage());
             }
         }
     }
@@ -120,12 +107,10 @@ public class FileInteractorImpl implements FileInteractor {
                 readFeedList(page, listener, fileInputStream);
                 fileInputStream.close();
             } else {
-                Log.e("getFeedList", "Null fileInputStream");  // Done
                 listener.onLoadDataFail(new FileException(FoxApplication.getInstance().getString(R.string.error_open_file)));
             }
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("getFeedList", e.getMessage());
             listener.onLoadDataFail(e);
         }
     }
@@ -137,10 +122,8 @@ public class FileInteractorImpl implements FileInteractor {
         try {
             String feedListOfSection = convertFeedListToString(section, mediaFeedList);
             FileProvider.writeData(FileProvider.FEED_LIST_FOLDER, fileName, true, feedListOfSection);
-            Log.e("saveFeed", "Success");  // Done
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("saveFeed", "Fail " + e.getMessage());
         }
     }
 
@@ -149,10 +132,8 @@ public class FileInteractorImpl implements FileInteractor {
         String fileName = FileProvider.BASE_FEED_FILE_NAME + page.getId();
         try {
             FileProvider.clearDataInFile(FileProvider.FEED_LIST_FOLDER, fileName);
-            Log.e("clearFile", "Success");  // Done
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("clearFile", e.getMessage());
         }
     }
 
@@ -177,14 +158,11 @@ public class FileInteractorImpl implements FileInteractor {
                 if (feedListOfEachSection != null) {
                     int pos = sectionList.indexOf(new Section(feedListOfEachSection.first));
                     if (pos != -1) {
-                        Log.e("getFeedList", "Success One feed " + sectionList.get(pos).getId() + "Page " + page.getId());  // Done
                         listener.onLoadDataSuccess(sectionList.get(pos), feedListOfEachSection.second);
                     }
                 }
             }
-            Log.e("getFeedList", "Success"); // Done
         } else {
-            Log.e("getFeedList", "Fail buffer empty"); // Done
             listener.onLoadDataFail(new FileException(FoxApplication.getInstance().getString(R.string.error_empty_file)));
         }
         bufferedReader.close();
