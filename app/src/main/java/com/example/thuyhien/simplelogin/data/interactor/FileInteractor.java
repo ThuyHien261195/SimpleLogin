@@ -13,11 +13,9 @@ import java.util.List;
  */
 
 public interface FileInteractor {
-    void getPageList(final LoadDataListener<List<Page>> listener);
+    boolean getPageList(final LoadDataListener<List<Page>> listener);
 
-    void getPage(String fileName, final LoadDataListener<Page> listener);
-
-    void getFeedList(Page page, final LoadFeedListListener listener);
+    boolean getFeedList(Page page, final LoadFeedListListener listener);
 
     void savePageList(List<Page> pageList);
 
@@ -26,7 +24,9 @@ public interface FileInteractor {
     void saveFeed(Page page, Section section,
                   List<MediaFeed> mediaFeedList);
 
-    void clearFile(Page page);
+    void clearFeedFile(Page page);
 
-    boolean checkHasDataInFolder(String folder);
+    void deleteDataInFolder();
+
+    boolean checkFeedFileListExits();
 }

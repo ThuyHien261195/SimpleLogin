@@ -1,5 +1,6 @@
 package com.example.thuyhien.simplelogin.data.interactor.impl;
 
+import android.util.Log;
 import android.util.Pair;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
@@ -16,11 +17,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,57 +30,44 @@ import java.util.List;
 public class FileInteractorImpl implements FileInteractor {
 
     private Gson gson;
+    private File pageDir;
+    private File feedDir;
 
-    public FileInteractorImpl(Gson gson) {
+    public FileInteractorImpl(Gson gson, File pageDir, File feedDir) {
         this.gson = gson;
+        this.pageDir = pageDir;
+        this.feedDir = feedDir;
     }
 
     @Override
-    public void getPageList(final LoadDataListener<List<Page>> listener) {
-        File[] files = FileProvider.getFileList(FileProvider.PAGE_FOLDER);
+    public boolean getPageList(final LoadDataListener<List<Page>> listener) {
+        File[] files = pageDir.listFiles();
         if (files != null && files.length > 0) {
             List<Page> pageList = new ArrayList<>();
             for (File file : files) {
                 try {
-                    FileInputStream fileInputStream = FileProvider.openExistedFileInputStream(file);
-                    if (fileInputStream != null) {
-                        Page page = readPage(fileInputStream);
-                        if (page != null) {
-                            pageList.add(page);
-                        }
-                        fileInputStream.close();
+                    Page page = convertStringToPage(FileProvider.readFile(file));
+                    if (page != null) {
+                        pageList.add(page);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
+            Log.e("getPageList", "success");
             listener.onLoadDataSuccess(pageList);
+            return true;
         } else {
+            Log.e("getPageList", "null");
             listener.onLoadDataSuccess(null);
-
-        }
-    }
-
-    @Override
-    public void getPage(String fileName, final LoadDataListener<Page> listener) {
-        try {
-            FileInputStream fileInputStream = FileProvider.createFileInputStream(FileProvider.PAGE_FOLDER, fileName);
-            Page page = readPage(fileInputStream);
-            listener.onLoadDataSuccess(page);
-            fileInputStream.close();
-        } catch (IOException e) {
-            listener.onLoadDataFail(e);
+            return false;
         }
     }
 
     @Override
     public void savePageList(List<Page> pageList) {
         for (Page page : pageList) {
-            try {
-                writePage(page, FileProvider.BASE_PAGE_FILE_NAME + "_" + page.getId());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            savePage(page);
         }
     }
 
@@ -90,110 +75,119 @@ public class FileInteractorImpl implements FileInteractor {
     public void savePage(Page page) {
         if (page != null) {
             try {
-                writePage(page, FileProvider.BASE_PAGE_FILE_NAME + "_" + page.getId());
+                String pageFileName = FileProvider.BASE_PAGE_FILE_NAME + "_" + page.getId();
+                String content = gson.toJson(page);
+                File pageFile = new File(pageDir, pageFileName);
+                FileProvider.writeFile(pageFile, false, content);
+                Log.e("savePage", "success");
             } catch (Exception e) {
                 e.printStackTrace();
+                Log.e("savePage", "fail " + e.getMessage());
             }
         }
     }
 
     @Override
-    public void getFeedList(Page page, LoadFeedListListener listener) {
-        String fileName = FileProvider.BASE_FEED_FILE_NAME + "_" + page.getId();
+    public boolean getFeedList(Page page, final LoadFeedListListener listener) {
+        String feedFileName = FileProvider.BASE_FEED_FILE_NAME + "_" + page.getId();
         try {
-            FileInputStream fileInputStream =
-                    FileProvider.createFileInputStream(FileProvider.FEED_LIST_FOLDER, fileName);
-            if (fileInputStream != null) {
-                readFeedList(page, listener, fileInputStream);
-                fileInputStream.close();
-            } else {
-                listener.onLoadDataFail(new FileException(FoxApplication.getInstance().getString(R.string.error_open_file)));
-            }
+            File feedFile = new File(feedDir, feedFileName);
+            List<String> contentList = FileProvider.readFile(feedFile);
+            return convertStringToFeedList(page, contentList, listener);
         } catch (IOException e) {
             e.printStackTrace();
             listener.onLoadDataFail(e);
+            Log.e("getFeedList", "fail " + e.getMessage());
         }
+        return false;
     }
 
     @Override
     public void saveFeed(Page page, Section section,
                          List<MediaFeed> mediaFeedList) {
-        String fileName = FileProvider.BASE_FEED_FILE_NAME + "_" + page.getId();
+        String feedFileName = FileProvider.BASE_FEED_FILE_NAME + "_" + page.getId();
         try {
             String feedListOfSection = convertFeedListToString(section, mediaFeedList);
-            FileProvider.writeData(FileProvider.FEED_LIST_FOLDER, fileName, true, feedListOfSection);
+            File feedFile = new File(feedDir, feedFileName);
+            FileProvider.writeFile(feedFile, true, feedListOfSection);
+            Log.e("save feed", "success");
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e("save feed", "fail " + e.getMessage());
         }
     }
 
     @Override
-    public void clearFile(Page page) {
-        String fileName = FileProvider.BASE_FEED_FILE_NAME + page.getId();
+    public void clearFeedFile(Page page) {
+        String feedFileName = FileProvider.BASE_FEED_FILE_NAME + "_" + page.getId();
         try {
-            FileProvider.clearDataInFile(FileProvider.FEED_LIST_FOLDER, fileName);
+            File feedFile = new File(feedDir, feedFileName);
+            FileProvider.clearFile(feedFile);
+            Log.e("clearFeedFile", "success");
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e("clearFeedFile", "fail " + e.getMessage());
         }
     }
 
     @Override
-    public boolean checkHasDataInFolder(String folder) {
-        File[] files = FileProvider.getFileList(folder);
+    public boolean checkFeedFileListExits() {
+        File[] files = feedDir.listFiles();
         return files != null && files.length > 0;
     }
 
-    private void readFeedList(Page page, LoadFeedListListener listener, FileInputStream fileInputStream) throws IOException {
-        List<Section> sectionList = page.getSectionList();
-        String line = "";
-        InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+    @Override
+    public void deleteDataInFolder() {
+        if (pageDir.isDirectory()) {
+            for (File file : pageDir.listFiles()) {
+                file.delete();
+            }
+        }
+        if (feedDir.isDirectory()) {
+            for (File file : feedDir.listFiles()) {
+                file.delete();
+            }
+        }
+    }
 
-        if (bufferedReader.ready()) {
-            while ((line = bufferedReader.readLine()) != null) {
+    private static String convertFeedListToString(Section section, List<MediaFeed> feedList) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(FileProvider.JSON_SECTION_ID_KEY, section.getId());
+        jsonObject.add(FileProvider.JSON_FEED_LIST_KEY,
+                FoxApplication.getInstance().getDataGson().toJsonTree(feedList));
+        return jsonObject.toString();
+    }
+
+    private boolean convertStringToFeedList(Page page, List<String> contentList, LoadFeedListListener listener) throws IOException {
+        List<Section> sectionList = page.getSectionList();
+        if (contentList != null && contentList.size() > 0) {
+            for (String item : contentList) {
                 Type feedListOfEachSectionType = new TypeToken<Pair<String, List<MediaFeed>>>() {
                 }.getType();
                 Pair<String, List<MediaFeed>> feedListOfEachSection =
-                        gson.fromJson(line, feedListOfEachSectionType);
+                        gson.fromJson(item, feedListOfEachSectionType);
                 if (feedListOfEachSection != null) {
                     int pos = sectionList.indexOf(new Section(feedListOfEachSection.first));
                     if (pos != -1) {
+                        Log.e("getFeedList", "Feed list of section " + sectionList.get(pos).getId());
                         listener.onLoadDataSuccess(sectionList.get(pos), feedListOfEachSection.second);
                     }
                 }
             }
+            Log.e("getFeedList", "success");
         } else {
             listener.onLoadDataFail(new FileException(FoxApplication.getInstance().getString(R.string.error_empty_file)));
+            Log.e("getFeedList", "empty feed list file");
+            return false;
         }
-        bufferedReader.close();
+        return true;
     }
 
-    private Page readPage(FileInputStream fileInputStream) throws IOException {
-        if (fileInputStream != null) {
-            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            String line = "";
-            if ((line = bufferedReader.readLine()) != null) {
-                return gson.fromJson(line, Page.class);
-            }
+    private Page convertStringToPage(List<String> contentList) {
+        if (contentList != null && contentList.size() > 0) {
+            return gson.fromJson(contentList.get(0), Page.class);
         }
         return null;
-    }
-
-    private void writePage(Page page, String pageFileName) throws Exception {
-        String pageString = convertPageToString(page);
-        FileProvider.writeData(FileProvider.PAGE_FOLDER, pageFileName, false, pageString);
-    }
-
-    private String convertPageToString(Page page) {
-        return gson.toJson(page);
-    }
-
-    private String convertFeedListToString(Section section, List<MediaFeed> feedList) {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(FileProvider.JSON_SECTION_ID_KEY, section.getId());
-        jsonObject.add(FileProvider.JSON_FEED_LIST_KEY, gson.toJsonTree(feedList));
-        return jsonObject.toString();
     }
 }
 
