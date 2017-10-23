@@ -1,7 +1,6 @@
 package com.example.thuyhien.simplelogin.data.interactor.impl;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import com.example.thuyhien.simplelogin.data.interactor.FileInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;

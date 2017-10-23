@@ -1,6 +1,5 @@
 package com.example.thuyhien.simplelogin.data.interactor.impl;
 
-import android.util.Log;
 import android.util.Pair;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
