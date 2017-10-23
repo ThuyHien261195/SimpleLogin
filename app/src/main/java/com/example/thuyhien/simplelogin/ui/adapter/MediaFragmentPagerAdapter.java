@@ -37,4 +37,9 @@ public class MediaFragmentPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return pageList.get(position).getMultiLangTitles().getTitle(FoxApplication.langCode);
     }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return this.pageList.indexOf(object);
+    }
 }
