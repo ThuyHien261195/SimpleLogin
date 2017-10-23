@@ -99,8 +99,11 @@ public class MainActivity extends AppCompatActivity implements MainView,
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        viewPagerPost.setCurrentItem(id);
-        textViewTitlePage.setText(viewPagerPost.getAdapter().getPageTitle(id));
+        int pos = viewPagerPost.getAdapter().getItemPosition(new Page(String.valueOf(id)));
+        if (pos != -1) {
+            viewPagerPost.setCurrentItem(pos);
+            textViewTitlePage.setText(viewPagerPost.getAdapter().getPageTitle(pos));
+        }
         if (drawerLayoutMain.isDrawerOpen(GravityCompat.START)) {
             drawerLayoutMain.closeDrawer(GravityCompat.START);
         }
