@@ -35,6 +35,7 @@
     <string name="error_refresh_data">Error when refreshing</string>
     <string name="error_open_file">Error when opening file</string>
     <string name="error_empty_file">Empty feed list file</string>
+    <string name="error_implement_fragment_listener">\u0020must implement FragmentListener</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
