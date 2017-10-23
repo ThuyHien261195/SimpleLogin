@@ -30,6 +30,7 @@ import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.presenter.MainPresenter;
 import com.example.thuyhien.simplelogin.presenter.impl.MainPresenterImpl;
 import com.example.thuyhien.simplelogin.ui.adapter.MediaFragmentPagerAdapter;
+import com.example.thuyhien.simplelogin.ui.listener.FragmentListerner;
 import com.example.thuyhien.simplelogin.view.MainView;
 
 import java.util.List;
@@ -39,7 +40,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements MainView,
-        NavigationView.OnNavigationItemSelectedListener {
+        NavigationView.OnNavigationItemSelectedListener,
+        FragmentListerner {
     private MainPresenter mainPresenter;
     private FoxApplication foxApplication = FoxApplication.getInstance();
 
@@ -127,6 +129,15 @@ public class MainActivity extends AppCompatActivity implements MainView,
         }
     }
 
+    @Override
+    public void onChangeTitlePage(String pageId, String title) {
+        textViewTitlePage.setText(title);
+
+        Menu mainMenu = navigationViewMain.getMenu();
+        MenuItem menuItem = mainMenu.findItem(Integer.parseInt(pageId));
+        menuItem.setTitle(title);
+    }
+
     private void displayHeaderView(boolean isLogIn) {
         loggedInHeaderView.setVisibility(isLogIn ? View.VISIBLE : View.GONE);
         notLogHeaderView.setVisibility(!isLogIn ? View.VISIBLE : View.GONE);
@@ -168,9 +179,11 @@ public class MainActivity extends AppCompatActivity implements MainView,
     private void createMainPresenter() {
         UserManager userManager = new SharedPreferencesUserManager(foxApplication.getSharedPref());
         DataEndpointInterface dataApiService = foxApplication.getDataApiService();
-        LoadDataInteractor loadDataInteractor = new RetrofitLoadDataInteractor(dataApiService);
-        FileInteractor fileInteractor = new FileInteractorImpl(foxApplication.getDataGson());
-        mainPresenter = new MainPresenterImpl(this, userManager, loadDataInteractor, fileInteractor);
+        FileInteractor fileInteractor = new FileInteractorImpl(foxApplication.getDataGson(),
+                foxApplication.getPageDir(),
+                foxApplication.getFeedDir());
+        LoadDataInteractor loadDataInteractor = new RetrofitLoadDataInteractor(dataApiService, fileInteractor);
+        mainPresenter = new MainPresenterImpl(this, userManager, loadDataInteractor);
     }
 
     private void initViews() {
@@ -208,7 +221,9 @@ public class MainActivity extends AppCompatActivity implements MainView,
         Menu mainMenu = navigationViewMain.getMenu();
         mainMenu.clear();
         for (int i = 0; i < pageList.size(); i++) {
-            mainMenu.add(Menu.NONE, i, Menu.NONE, pageList.get(i).getMultiLangTitles().getTitle(FoxApplication.langCode));
+            mainMenu.add(Menu.NONE, Integer.parseInt(pageList.get(i).getId()),
+                    Menu.NONE,
+                    pageList.get(i).getMultiLangTitles().getTitle(FoxApplication.langCode));
         }
     }
 
