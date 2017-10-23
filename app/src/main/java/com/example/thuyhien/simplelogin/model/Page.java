@@ -26,6 +26,10 @@ public class Page implements Serializable {
         this.sectionList = new ArrayList<>();
     }
 
+    public Page(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }
@@ -48,5 +52,14 @@ public class Page implements Serializable {
 
     public void setSectionList(List<Section> sectionList) {
         this.sectionList = sectionList;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Page page = (Page) obj;
+        return this.id != null ? id.equals(page.getId()) : page.getId() == null;
     }
 }
