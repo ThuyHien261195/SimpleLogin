@@ -54,11 +54,9 @@ public class FileInteractorImpl implements FileInteractor {
                     e.printStackTrace();
                 }
             }
-            Log.e("getPageList", "success");
             listener.onLoadDataSuccess(pageList);
             return true;
         } else {
-            Log.e("getPageList", "null");
             listener.onLoadDataSuccess(null);
             return false;
         }
@@ -79,10 +77,8 @@ public class FileInteractorImpl implements FileInteractor {
                 String content = gson.toJson(page);
                 File pageFile = new File(pageDir, pageFileName);
                 FileProvider.writeFile(pageFile, false, content);
-                Log.e("savePage", "success");
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e("savePage", "fail " + e.getMessage());
             }
         }
     }
@@ -97,7 +93,6 @@ public class FileInteractorImpl implements FileInteractor {
         } catch (IOException e) {
             e.printStackTrace();
             listener.onLoadDataFail(e);
-            Log.e("getFeedList", "fail " + e.getMessage());
         }
         return false;
     }
@@ -110,10 +105,8 @@ public class FileInteractorImpl implements FileInteractor {
             String feedListOfSection = convertFeedListToString(section, mediaFeedList);
             File feedFile = new File(feedDir, feedFileName);
             FileProvider.writeFile(feedFile, true, feedListOfSection);
-            Log.e("save feed", "success");
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("save feed", "fail " + e.getMessage());
         }
     }
 
@@ -123,10 +116,8 @@ public class FileInteractorImpl implements FileInteractor {
         try {
             File feedFile = new File(feedDir, feedFileName);
             FileProvider.clearFile(feedFile);
-            Log.e("clearFeedFile", "success");
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("clearFeedFile", "fail " + e.getMessage());
         }
     }
 
@@ -169,15 +160,12 @@ public class FileInteractorImpl implements FileInteractor {
                 if (feedListOfEachSection != null) {
                     int pos = sectionList.indexOf(new Section(feedListOfEachSection.first));
                     if (pos != -1) {
-                        Log.e("getFeedList", "Feed list of section " + sectionList.get(pos).getId());
                         listener.onLoadDataSuccess(sectionList.get(pos), feedListOfEachSection.second);
                     }
                 }
             }
-            Log.e("getFeedList", "success");
         } else {
             listener.onLoadDataFail(new FileException(FoxApplication.getInstance().getString(R.string.error_empty_file)));
-            Log.e("getFeedList", "empty feed list file");
             return false;
         }
         return true;
