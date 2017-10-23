@@ -1,7 +1,9 @@
 package com.example.thuyhien.simplelogin.data.interactor.impl;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
+import com.example.thuyhien.simplelogin.data.interactor.FileInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadFeedListListener;
@@ -31,17 +33,30 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
 
     private DataEndpointInterface dataApiService;
 
-    public RetrofitLoadDataInteractor(DataEndpointInterface dataApiService) {
+    private FileInteractor fileInteractor;
+
+    public RetrofitLoadDataInteractor(DataEndpointInterface dataApiService, FileInteractor fileInteractor) {
         this.dataApiService = dataApiService;
+        this.fileInteractor = fileInteractor;
     }
 
     @Override
-    public void getPageList(final LoadDataListener<List<Page>> listener) {
+    public void getPageList(Boolean useCache, final LoadDataListener<List<Page>> listener) {
+        if (useCache) {
+            boolean loadSuccess = fileInteractor.getPageList(listener);
+            if (loadSuccess) {
+                return;
+            }
+        }
+
+        fileInteractor.deleteDataInFolder();
+
         Call<List<Page>> call = dataApiService.getPageList();
         call.enqueue(new Callback<List<Page>>() {
             @Override
             public void onResponse(Call<List<Page>> call, Response<List<Page>> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    fileInteractor.savePageList(response.body());
                     listener.onLoadDataSuccess(response.body());
                 } else {
                     listener.onLoadDataFail(RetrofitUtils.createLoadDataException(response.errorBody()));
@@ -56,24 +71,68 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
     }
 
     @Override
-    public void getFeedList(final Section section, final LoadFeedListListener listener) {
-        String rangeValue = addRangeLoadData(section.getFeedUrl());
-        Call<List<MediaFeed>> call = dataApiService.getFeedList(section.getFeedUrl(), rangeValue);
-        call.enqueue(new Callback<List<MediaFeed>>() {
+    public void getFeedList(final Page page, Boolean useCache,
+                            final LoadFeedListListener listener) {
+        if (useCache && fileInteractor.checkFeedFileListExits()) {
+            if (fileInteractor.getFeedList(page, listener)) {
+                return;
+            }
+        }
+
+        fileInteractor.clearFeedFile(page);
+        List<Section> sectionList = page.getSectionList();
+        for (int i = 0; i < sectionList.size(); i++) {
+            final Section section = sectionList.get(i);
+            if (!section.getType().equals("Custom layout")) {
+                String rangeValue = addRangeLoadData(section.getFeedUrl());
+                Call<List<MediaFeed>> call = dataApiService.getFeedList(section.getFeedUrl(), rangeValue);
+                call.enqueue(new Callback<List<MediaFeed>>() {
+                    @Override
+                    public void onResponse(Call<List<MediaFeed>> call, Response<List<MediaFeed>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            fileInteractor.saveFeed(page, section, response.body());
+                            listener.onLoadDataSuccess(section, response.body());
+                        } else {
+                            listener.onLoadDataFail(RetrofitUtils.createLoadDataException(response.errorBody()));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<MediaFeed>> call, Throwable t) {
+                        listener.onLoadDataFail(new Exception(t));
+                    }
+                });
+            }
+        }
+    }
+
+    @Override
+    public void getPage(String pageId, final LoadDataListener<Page> listener) {
+        Call<Page> call = dataApiService.getPage(pageId);
+        call.enqueue(new Callback<Page>() {
             @Override
-            public void onResponse(Call<List<MediaFeed>> call, Response<List<MediaFeed>> response) {
+            public void onResponse(Call<Page> call, Response<Page> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    listener.onLoadDataSuccess(section, response.body());
+                    fileInteractor.savePage(response.body());
+                    listener.onLoadDataSuccess(response.body());
                 } else {
                     listener.onLoadDataFail(RetrofitUtils.createLoadDataException(response.errorBody()));
                 }
             }
 
             @Override
-            public void onFailure(Call<List<MediaFeed>> call, Throwable t) {
+            public void onFailure(Call<Page> call, Throwable t) {
                 listener.onLoadDataFail(new Exception(t));
             }
         });
+    }
+
+    private String addRangeLoadData(String feedUrl) {
+        int pos = feedUrl.indexOf("range");
+        if (pos == -1) {
+            return DEFAULT_RANGE_LOAD_DATA;
+        }
+        return null;
     }
 
     @Override
@@ -98,34 +157,6 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
                 listener.onLoadDataFail(new Exception(t));
             }
         });
-    }
-
-    @Override
-    public void getPage(String pageId, final LoadDataListener<Page> listener) {
-        Call<Page> call = dataApiService.getPage(pageId);
-        call.enqueue(new Callback<Page>() {
-            @Override
-            public void onResponse(Call<Page> call, Response<Page> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    listener.onLoadDataSuccess(response.body());
-                } else {
-                    listener.onLoadDataFail(RetrofitUtils.createLoadDataException(response.errorBody()));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Page> call, Throwable t) {
-                listener.onLoadDataFail(new Exception(t));
-            }
-        });
-    }
-
-    private String addRangeLoadData(String feedUrl) {
-        int pos = feedUrl.indexOf("range");
-        if (pos == -1) {
-            return DEFAULT_RANGE_LOAD_DATA;
-        }
-        return null;
     }
 
 //    @Override
