@@ -1,5 +1,6 @@
 package com.example.thuyhien.simplelogin.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -27,6 +28,7 @@ import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.presenter.PagePresenter;
 import com.example.thuyhien.simplelogin.presenter.impl.PagePresenterImpl;
 import com.example.thuyhien.simplelogin.ui.adapter.SectionAdapter;
+import com.example.thuyhien.simplelogin.ui.listener.FragmentListerner;
 import com.example.thuyhien.simplelogin.view.PageView;
 
 import java.util.List;
@@ -45,6 +47,7 @@ public class PageFragment extends Fragment implements PageView {
     private PagePresenter pagePresenter;
     private SectionAdapter sectionAdapter;
     private FoxApplication foxApplication = FoxApplication.getInstance();
+    private FragmentListerner fragmentListerner;
 
     @BindView(R.id.swipe_media_feed_list)
     SwipeRefreshLayout swipeRefreshMediaFeedList;
@@ -61,6 +64,16 @@ public class PageFragment extends Fragment implements PageView {
         bundle.putSerializable(BUNDLE_PAGE, page);
         postFragment.setArguments(bundle);
         return postFragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        try {
+            fragmentListerner = (FragmentListerner) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + getString(R.string.error_implement_fragment_listener));
+        }
+        super.onAttach(context);
     }
 
     @Override
@@ -90,6 +103,12 @@ public class PageFragment extends Fragment implements PageView {
     }
 
     @Override
+    public void onDetach() {
+        fragmentListerner = null;
+        super.onDetach();
+    }
+
+    @Override
     public void showLoading() {
         recyclerViewSection.setVisibility(View.GONE);
         progressBarLoading.setVisibility(View.VISIBLE);
@@ -108,7 +127,10 @@ public class PageFragment extends Fragment implements PageView {
 
     @Override
     public void displayRefreshPage(Page page) {
+        fragmentListerner.onChangeTitlePage(page.getId(),
+                page.getMultiLangTitles().getTitle(FoxApplication.langCode));
         this.page = page;
+        setAdapter();
         pagePresenter.loadAllFeedList(page, true);
         recyclerViewSection.scrollToPosition(0);
         swipeRefreshMediaFeedList.setRefreshing(false);
@@ -127,8 +149,7 @@ public class PageFragment extends Fragment implements PageView {
     private void initViews() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerViewSection.setLayoutManager(linearLayoutManager);
-        sectionAdapter = new SectionAdapter(page.getSectionList());
-        recyclerViewSection.setAdapter(sectionAdapter);
+        setAdapter();
 
         swipeRefreshMediaFeedList.setColorSchemeColors(
                 ContextCompat.getColor(getContext(), android.R.color.holo_blue_light),
@@ -144,6 +165,11 @@ public class PageFragment extends Fragment implements PageView {
         });
     }
 
+    private void setAdapter() {
+        sectionAdapter = new SectionAdapter(page.getSectionList());
+        recyclerViewSection.setAdapter(sectionAdapter);
+    }
+
     private void getSectionBundle() {
         if (getArguments() != null) {
             page = (Page) getArguments().getSerializable(BUNDLE_PAGE);
@@ -152,8 +178,10 @@ public class PageFragment extends Fragment implements PageView {
 
     private void createPagePresenter() {
         DataEndpointInterface dataApiService = foxApplication.getDataApiService();
-        LoadDataInteractor loadDataInteractor = new RetrofitLoadDataInteractor(dataApiService);
-        FileInteractor fileInteractor = new FileInteractorImpl(foxApplication.getDataGson());
-        pagePresenter = new PagePresenterImpl(this, loadDataInteractor, fileInteractor);
+        FileInteractor fileInteractor = new FileInteractorImpl(foxApplication.getDataGson(),
+                foxApplication.getPageDir(),
+                foxApplication.getFeedDir());
+        LoadDataInteractor loadDataInteractor = new RetrofitLoadDataInteractor(dataApiService, fileInteractor);
+        pagePresenter = new PagePresenterImpl(this, loadDataInteractor);
     }
 }
