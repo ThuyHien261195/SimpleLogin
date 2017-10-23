@@ -58,10 +58,6 @@ public class MainPresenterImpl implements MainPresenter {
         });
     }
 
-    private void getPageListFromServer() {
-
-    }
-
     private MainView getMainView() {
         return mainViewWeakReference.get();
     }
