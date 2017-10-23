@@ -2,6 +2,7 @@ package com.example.thuyhien.simplelogin;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.os.Environment;
 import android.util.Pair;
 
 import com.example.thuyhien.simplelogin.data.network.converter.FeedPostConverter;
@@ -18,6 +19,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -34,6 +36,10 @@ public class FoxApplication extends Application {
     public static final String AUTHENTICATION_BASE_URL = "http://userkit-identity-stg.ap-southeast-1.elasticbeanstalk.com/v1/";
     public static final String PREF_DATA_FILE_NAME = "FoxSharedPreferData";
     public static String langCode = "en";
+
+    public static final String FOX_FOLDER_NAME = "FoxFile";
+    public static final String FEED_LIST_FOLDER = File.separator + FOX_FOLDER_NAME + "/FeedListFolder";
+    public static final String PAGE_FOLDER = File.separator + FOX_FOLDER_NAME + "/PageFolder";
 
     private static FoxApplication instance;
     private SharedPreferences sharedPref;
@@ -76,6 +82,27 @@ public class FoxApplication extends Application {
         return dataGson;
     }
 
+    public File getPageDir() {
+        return getDirectory(PAGE_FOLDER);
+    }
+
+    public File getFeedDir() {
+        return getDirectory(FEED_LIST_FOLDER);
+    }
+
+    public File getDirectory(String folderPath) {
+        File dir = null;
+        if (checkExternalStorageAvailable()) {
+            dir = new File(instance.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), folderPath);
+        } else {
+            dir = new File(instance.getFilesDir(), folderPath);
+        }
+        if (!dir.exists() && !dir.mkdirs()) {
+            return null;
+        }
+        return dir;
+    }
+
     private void createAuthenticationRetrofit() {
         Type profileType = new TypeToken<User>() {
         }.getType();
@@ -112,5 +139,10 @@ public class FoxApplication extends Application {
 
     private void createSharedPreferencesFile() {
         sharedPref = getSharedPreferences(PREF_DATA_FILE_NAME, MODE_PRIVATE);
+    }
+
+    private boolean checkExternalStorageAvailable() {
+        String state = Environment.getExternalStorageState();
+        return state.equals(Environment.MEDIA_MOUNTED);
     }
 }
