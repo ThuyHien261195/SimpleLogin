@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
-import com.example.thuyhien.simplelogin.data.interactor.FileInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
 import com.example.thuyhien.simplelogin.data.manager.AppManager;
@@ -25,56 +24,32 @@ public class SplashPresenterImpl implements SplashPresenter {
     private WeakReference<SplashView> splashViewWeakReference;
     private AppManager appManager;
     private LoadDataInteractor loadDataInteractor;
-    private FileInteractor fileInteractor;
 
     public SplashPresenterImpl(SplashView splashView, AppManager appManager,
-                               LoadDataInteractor loadDataInteractor,
-                               FileInteractor fileInteractor) {
+                               LoadDataInteractor loadDataInteractor) {
         this.splashViewWeakReference = new WeakReference<SplashView>(splashView);
         this.appManager = appManager;
-        this.fileInteractor = fileInteractor;
         this.loadDataInteractor = loadDataInteractor;
     }
 
     @Override
     public void loadData() {
         if (checkInternet()) {
-            loadDataFromServer();
-        } else {
-            loadDataFromFile();
-            ;
-        }
-    }
-
-    private void loadDataFromServer() {
-        loadDataInteractor.getPageList(new LoadDataListener<List<Page>>() {
-            @Override
-            public void onLoadDataSuccess(List<Page> data) {
-                fileInteractor.savePageList(data);
-                checkFirstOpenApp();
-            }
-
-            @Override
-            public void onLoadDataFail(Exception ex) {
-                ex.printStackTrace();
-                checkFirstOpenApp();
-            }
-        });
-    }
-
-    private void loadDataFromFile() {
-        // Implement thread wait temporarily
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(SLEEP_SECONDS);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            loadDataInteractor.getPageList(false, new LoadDataListener<List<Page>>() {
+                @Override
+                public void onLoadDataSuccess(List<Page> data) {
+                    checkFirstOpenApp();
                 }
-                checkFirstOpenApp();
-            }
-        }).start();
+
+                @Override
+                public void onLoadDataFail(Exception ex) {
+                    ex.printStackTrace();
+                    checkFirstOpenApp();
+                }
+            });
+        } else {
+            checkFirstOpenApp();
+        }
     }
 
     private void checkFirstOpenApp() {

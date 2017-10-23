@@ -48,9 +48,11 @@ public class SplashActivity extends AppCompatActivity implements SplashView {
     private void createSplashPresenter() {
         AppManager appManager = new SharedPreferencesAppManager(foxApplication.getSharedPref());
         DataEndpointInterface dataApiService = foxApplication.getDataApiService();
-        LoadDataInteractor loadDataInteractor = new RetrofitLoadDataInteractor(dataApiService);
-        FileInteractor fileInteractor = new FileInteractorImpl(foxApplication.getDataGson());
-        splashPresenter = new SplashPresenterImpl(this, appManager, loadDataInteractor, fileInteractor);
+        FileInteractor fileInteractor = new FileInteractorImpl(foxApplication.getDataGson(),
+                foxApplication.getPageDir(),
+                foxApplication.getFeedDir());
+        LoadDataInteractor loadDataInteractor = new RetrofitLoadDataInteractor(dataApiService, fileInteractor);
+        splashPresenter = new SplashPresenterImpl(this, appManager, loadDataInteractor);
     }
 }
 
