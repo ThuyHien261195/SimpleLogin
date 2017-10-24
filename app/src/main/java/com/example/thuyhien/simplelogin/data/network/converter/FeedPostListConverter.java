@@ -16,12 +16,15 @@ import java.util.List;
  */
 
 public class FeedPostListConverter extends BaseDeserializer<List<MediaFeed>> {
+
+    public static final String JSON_FEED_LIST_KEY = "entries";
+
     @Override
     public List<MediaFeed> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {
         if (checkValidJsonObject(json)) {
             JsonObject jsonObject = json.getAsJsonObject();
-            JsonElement jsonElement = jsonObject.get("entries");
+            JsonElement jsonElement = jsonObject.get(JSON_FEED_LIST_KEY);
             if (checkValidJsonArray(jsonElement)) {
                 JsonArray jsonArray = jsonElement.getAsJsonArray();
                 List<MediaFeed> mediaFeedList = new ArrayList<>();
