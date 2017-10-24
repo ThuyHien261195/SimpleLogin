@@ -3,11 +3,9 @@ package com.example.thuyhien.simplelogin;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.os.Environment;
-import android.util.Pair;
 
 import com.example.thuyhien.simplelogin.data.network.converter.FeedPostConverter;
 import com.example.thuyhien.simplelogin.data.network.converter.FeedPostListConverter;
-import com.example.thuyhien.simplelogin.data.network.converter.FileFeedListConverter;
 import com.example.thuyhien.simplelogin.data.network.converter.ImagePostConverter;
 import com.example.thuyhien.simplelogin.data.network.converter.UserConverter;
 import com.example.thuyhien.simplelogin.data.network.retrofit.AuthenticationEndpointInterface;
@@ -93,9 +91,9 @@ public class FoxApplication extends Application {
     public File getDirectory(String folderPath) {
         File dir = null;
         if (checkExternalStorageAvailable()) {
-            dir = new File(instance.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), folderPath);
+            dir = new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), folderPath);
         } else {
-            dir = new File(instance.getFilesDir(), folderPath);
+            dir = new File(getFilesDir(), folderPath);
         }
         if (!dir.exists() && !dir.mkdirs()) {
             return null;
@@ -121,14 +119,10 @@ public class FoxApplication extends Application {
         Type feedListType = new TypeToken<List<MediaFeed>>() {
         }.getType();
 
-        Type feedListOfEachSectionType = new TypeToken<Pair<String, List<MediaFeed>>>() {
-        }.getType();
-
         GsonBuilder gsonBuilder = new GsonBuilder()
                 .registerTypeAdapter(feedListType, new FeedPostListConverter())
                 .registerTypeAdapter(MediaImage.class, new ImagePostConverter())
-                .registerTypeAdapter(MediaFeed.class, new FeedPostConverter())
-                .registerTypeAdapter(feedListOfEachSectionType, new FileFeedListConverter());
+                .registerTypeAdapter(MediaFeed.class, new FeedPostConverter());
         dataGson = gsonBuilder.create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DATA_BASE_URL)
