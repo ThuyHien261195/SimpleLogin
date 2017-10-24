@@ -14,10 +14,6 @@ import java.io.OutputStreamWriter;
  */
 
 public class FileProvider {
-    public static final String BASE_PAGE_FILE_NAME = "PageFile";
-    public static final String BASE_FEED_FILE_NAME = "FeedListFile";
-    public static final String JSON_FEED_LIST_KEY = "entries";
-
     public static void writeFile(File file, boolean append, String content)
             throws Exception {
         if (file != null) {
