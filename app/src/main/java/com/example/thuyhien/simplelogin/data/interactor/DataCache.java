@@ -23,5 +23,5 @@ public interface DataCache {
 
     void deleteFeedListFileOfOnePage(Page page);
 
-    void deleteDataInFolder();
+    void clear();
 }
