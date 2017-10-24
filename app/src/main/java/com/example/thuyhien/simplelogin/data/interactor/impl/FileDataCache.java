@@ -1,7 +1,5 @@
 package com.example.thuyhien.simplelogin.data.interactor.impl;
 
-import android.support.annotation.NonNull;
-
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.data.interactor.DataCache;
 import com.example.thuyhien.simplelogin.data.network.converter.FeedPostListConverter;
@@ -87,11 +85,13 @@ public class FileDataCache implements DataCache {
         String feedFileName = getSectionFileName(section);
         try {
             File feedFile = new File(feedDir, feedFileName);
-            String content = FileProvider.readFile(feedFile);
-            if (content != null && !content.equals("")) {
-                Type feedListOfEachSectionType = new TypeToken<List<MediaFeed>>() {
-                }.getType();
-                return gson.fromJson(content, feedListOfEachSectionType);
+            if (feedFile.exists()) {
+                String content = FileProvider.readFile(feedFile);
+                if (content != null && !content.equals("")) {
+                    Type feedListOfEachSectionType = new TypeToken<List<MediaFeed>>() {
+                    }.getType();
+                    return gson.fromJson(content, feedListOfEachSectionType);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
