@@ -1,12 +1,14 @@
 package com.example.thuyhien.simplelogin.data.interactor.impl;
 
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 
-import com.example.thuyhien.simplelogin.data.interactor.FileInteractor;
+import com.example.thuyhien.simplelogin.data.interactor.DataCache;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadFeedListListener;
 import com.example.thuyhien.simplelogin.data.network.retrofit.DataEndpointInterface;
+import com.example.thuyhien.simplelogin.model.AsyncTaskResult;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.MediaImage;
 import com.example.thuyhien.simplelogin.model.Page;
@@ -14,6 +16,7 @@ import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.utils.ImageUtils;
 import com.example.thuyhien.simplelogin.utils.RetrofitUtils;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -32,98 +35,128 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
 
     private DataEndpointInterface dataApiService;
 
-    private FileInteractor fileInteractor;
+    private DataCache dataCache;
 
-    public RetrofitLoadDataInteractor(DataEndpointInterface dataApiService, FileInteractor fileInteractor) {
+    public RetrofitLoadDataInteractor(DataEndpointInterface dataApiService, DataCache dataCache) {
         this.dataApiService = dataApiService;
-        this.fileInteractor = fileInteractor;
+        this.dataCache = dataCache;
     }
 
     @Override
-    public void getPageList(Boolean useCache, final LoadDataListener<List<Page>> listener) {
-        if (useCache) {
-            boolean loadSuccess = fileInteractor.getPageList(listener);
-            if (loadSuccess) {
-                return;
-            }
-        }
-
-        fileInteractor.deleteDataInFolder();
-
-        Call<List<Page>> call = dataApiService.getPageList();
-        call.enqueue(new Callback<List<Page>>() {
+    public void getPageList(final Boolean useCache, final LoadDataListener<List<Page>> listener) {
+        new AsyncTask<Void, Void, AsyncTaskResult<List<Page>>>() {
             @Override
-            public void onResponse(Call<List<Page>> call, Response<List<Page>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    fileInteractor.savePageList(response.body());
-                    listener.onLoadDataSuccess(response.body());
-                } else {
-                    listener.onLoadDataFail(RetrofitUtils.createLoadDataException(response.errorBody()));
+            protected AsyncTaskResult<List<Page>> doInBackground(Void... voids) {
+                List<Page> pageList;
+                if (useCache) {
+                    pageList = dataCache.getPageList();
+                    if (pageList != null && pageList.size() > 0) {
+                        return new AsyncTaskResult<>(pageList);
+                    }
+                }
+
+                dataCache.deleteDataInFolder();
+
+                Call<List<Page>> call = dataApiService.getPageList();
+                try {
+                    Response<List<Page>> response = call.execute();
+                    pageList = response.body();
+                    if (response.isSuccessful() && pageList != null) {
+                        dataCache.savePageList(pageList);
+                        return new AsyncTaskResult<>(pageList);
+                    } else {
+                        return new AsyncTaskResult<>(
+                                RetrofitUtils.createLoadDataException(response.errorBody()));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return new AsyncTaskResult<>(e);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Page>> call, Throwable t) {
-                listener.onLoadDataFail(new Exception(t));
+            protected void onPostExecute(AsyncTaskResult<List<Page>> asyncTaskResult) {
+                if (asyncTaskResult.getResult() != null) {
+                    listener.onLoadDataSuccess(asyncTaskResult.getResult());
+                } else {
+                    listener.onLoadDataFail(asyncTaskResult.getException());
+                }
             }
-        });
+        }.execute();
     }
 
     @Override
-    public void getFeedList(final Page page, Boolean useCache,
+    public void getFeedList(final Section section, final Boolean useCache,
                             final LoadFeedListListener listener) {
-        if (useCache && fileInteractor.checkFeedFileListExits()) {
-            if (fileInteractor.getFeedList(page, listener)) {
-                return;
-            }
-        }
+        new AsyncTask<Section, Void, AsyncTaskResult<List<MediaFeed>>>() {
+            @Override
+            protected AsyncTaskResult<List<MediaFeed>> doInBackground(Section... sections) {
+                List<MediaFeed> mediaFeedList;
+                if (useCache) {
+                    mediaFeedList = dataCache.getFeedList(section);
+                    if (mediaFeedList != null) {
+                        return new AsyncTaskResult<>(mediaFeedList);
+                    }
+                }
 
-        fileInteractor.clearFeedFile(page);
-        List<Section> sectionList = page.getSectionList();
-        for (int i = 0; i < sectionList.size(); i++) {
-            final Section section = sectionList.get(i);
-            if (!section.getType().equals("Custom layout")) {
                 String rangeValue = addRangeLoadData(section.getFeedUrl());
                 Call<List<MediaFeed>> call = dataApiService.getFeedList(section.getFeedUrl(), rangeValue);
-                call.enqueue(new Callback<List<MediaFeed>>() {
-                    @Override
-                    public void onResponse(Call<List<MediaFeed>> call, Response<List<MediaFeed>> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            fileInteractor.saveFeed(page, section, response.body());
-                            listener.onLoadDataSuccess(section, response.body());
-                        } else {
-                            listener.onLoadDataFail(RetrofitUtils.createLoadDataException(response.errorBody()));
-                        }
+                try {
+                    Response<List<MediaFeed>> response = call.execute();
+                    mediaFeedList = response.body();
+                    if (response.isSuccessful() && mediaFeedList != null) {
+                        dataCache.saveFeed(section, mediaFeedList);
+                        return new AsyncTaskResult<>(mediaFeedList);
+                    } else {
+                        return new AsyncTaskResult<>(RetrofitUtils.createLoadDataException(response.errorBody()));
                     }
-
-                    @Override
-                    public void onFailure(Call<List<MediaFeed>> call, Throwable t) {
-                        listener.onLoadDataFail(new Exception(t));
-                    }
-                });
-            }
-        }
-    }
-
-    @Override
-    public void getPage(String pageId, final LoadDataListener<Page> listener) {
-        Call<Page> call = dataApiService.getPage(pageId);
-        call.enqueue(new Callback<Page>() {
-            @Override
-            public void onResponse(Call<Page> call, Response<Page> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    fileInteractor.savePage(response.body());
-                    listener.onLoadDataSuccess(response.body());
-                } else {
-                    listener.onLoadDataFail(RetrofitUtils.createLoadDataException(response.errorBody()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return new AsyncTaskResult<>(e);
                 }
             }
 
             @Override
-            public void onFailure(Call<Page> call, Throwable t) {
-                listener.onLoadDataFail(new Exception(t));
+            protected void onPostExecute(AsyncTaskResult<List<MediaFeed>> asyncTaskResult) {
+                if (asyncTaskResult.getResult() != null) {
+                    listener.onLoadDataSuccess(section, asyncTaskResult.getResult());
+                } else {
+                    listener.onLoadDataFail(asyncTaskResult.getException());
+                }
             }
-        });
+        }.execute(section);
+    }
+
+    @Override
+    public void getPage(final Page page, final LoadDataListener<Page> listener) {
+        new AsyncTask<Void, Void, AsyncTaskResult<Page>>() {
+            @Override
+            protected AsyncTaskResult<Page> doInBackground(Void... voids) {
+                Call<Page> call = dataApiService.getPage(page.getId());
+                try {
+                    Response<Page> response = call.execute();
+                    if (response.isSuccessful() && response.body() != null) {
+                        dataCache.deleteFeedListFileOfOnePage(page);
+                        dataCache.savePage(response.body());
+                        return new AsyncTaskResult<>(response.body());
+                    } else {
+                        return new AsyncTaskResult<>(RetrofitUtils.createLoadDataException(response.errorBody()));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return new AsyncTaskResult<>(e);
+                }
+            }
+
+            @Override
+            protected void onPostExecute(AsyncTaskResult<Page> asyncTaskResult) {
+                if (asyncTaskResult.getResult() != null) {
+                    listener.onLoadDataSuccess(asyncTaskResult.getResult());
+                } else {
+                    listener.onLoadDataFail(asyncTaskResult.getException());
+                }
+            }
+        }.execute();
     }
 
     private String addRangeLoadData(String feedUrl) {

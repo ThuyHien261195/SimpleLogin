@@ -6,6 +6,7 @@ import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListene
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadFeedListListener;
 import com.example.thuyhien.simplelogin.model.MediaImage;
 import com.example.thuyhien.simplelogin.model.Page;
+import com.example.thuyhien.simplelogin.model.Section;
 
 import java.util.List;
 
@@ -14,12 +15,12 @@ import java.util.List;
  */
 
 public interface LoadDataInteractor {
-    void getPageList(Boolean useCache, final LoadDataListener<List<Page>> listener);
+    void getPageList(final Boolean useCache, final LoadDataListener<List<Page>> listener);
 
-    void getFeedList(final Page page, Boolean useCache,
+    void getFeedList(final Section section, final Boolean useCache,
                      final LoadFeedListListener listener);
 
-    void getPage(String pageId, final LoadDataListener<Page> listener);
+    void getPage(final Page page, final LoadDataListener<Page> listener);
 
     void getPoster(MediaImage imagePost, final LoadDataListener<Bitmap> listener);
 }
