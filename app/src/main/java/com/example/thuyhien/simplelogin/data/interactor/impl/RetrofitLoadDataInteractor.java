@@ -76,11 +76,11 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
             }
 
             @Override
-            protected void onPostExecute(Pair<List<Page>, Exception> Pair) {
-                if (Pair.first != null) {
-                    listener.onLoadDataSuccess(Pair.first);
+            protected void onPostExecute(Pair<List<Page>, Exception> pair) {
+                if (pair.first != null) {
+                    listener.onLoadDataSuccess(pair.first);
                 } else {
-                    listener.onLoadDataFail(Pair.second);
+                    listener.onLoadDataFail(pair.second);
                 }
             }
         }.execute();
@@ -119,11 +119,11 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
             }
 
             @Override
-            protected void onPostExecute(Pair<List<MediaFeed>, Exception> Pair) {
-                if (Pair.first != null) {
-                    listener.onLoadDataSuccess(section, Pair.first);
+            protected void onPostExecute(Pair<List<MediaFeed>, Exception> pair) {
+                if (pair.first != null) {
+                    listener.onLoadDataSuccess(section, pair.first);
                 } else {
-                    listener.onLoadDataFail(Pair.second);
+                    listener.onLoadDataFail(pair.second);
                 }
             }
         }.execute(section);
@@ -152,11 +152,11 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
             }
 
             @Override
-            protected void onPostExecute(Pair<Page, Exception> Pair) {
-                if (Pair.first != null) {
-                    listener.onLoadDataSuccess(Pair.first);
+            protected void onPostExecute(Pair<Page, Exception> pair) {
+                if (pair.first != null) {
+                    listener.onLoadDataSuccess(pair.first);
                 } else {
-                    listener.onLoadDataFail(Pair.second);
+                    listener.onLoadDataFail(pair.second);
                 }
             }
         }.execute();
