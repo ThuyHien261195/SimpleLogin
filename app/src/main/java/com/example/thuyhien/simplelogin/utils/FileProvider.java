@@ -8,8 +8,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by thuyhien on 10/18/17.
@@ -18,7 +16,6 @@ import java.util.List;
 public class FileProvider {
     public static final String BASE_PAGE_FILE_NAME = "PageFile";
     public static final String BASE_FEED_FILE_NAME = "FeedListFile";
-    public static final String JSON_SECTION_ID_KEY = "section_id";
     public static final String JSON_FEED_LIST_KEY = "entries";
 
     public static void writeFile(File file, boolean append, String content)
@@ -34,18 +31,15 @@ public class FileProvider {
         }
     }
 
-    public static List<String> readFile(File file) throws IOException {
-        List<String> contentList = new ArrayList<>();
+    public static String readFile(File file) throws IOException {
         FileInputStream fileInputStream = new FileInputStream(file);
         InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        String line = "";
-        while ((line = bufferedReader.readLine()) != null) {
-            contentList.add(line);
+        String line = bufferedReader.readLine();
+        if (line != null) {
+            return line;
         }
-        ;
-        fileInputStream.close();
-        return contentList;
+        return "";
     }
 
     public static void clearFile(File file) throws Exception {
