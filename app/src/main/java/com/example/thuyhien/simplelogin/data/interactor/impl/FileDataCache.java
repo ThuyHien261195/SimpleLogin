@@ -1,7 +1,10 @@
 package com.example.thuyhien.simplelogin.data.interactor.impl;
 
+import android.support.annotation.NonNull;
+
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.data.interactor.DataCache;
+import com.example.thuyhien.simplelogin.data.network.converter.FeedPostListConverter;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.model.Section;
@@ -21,6 +24,9 @@ import java.util.List;
  */
 
 public class FileDataCache implements DataCache {
+
+    private static final String BASE_PAGE_FILE_NAME = "PageFile";
+    private static final String BASE_FEED_FILE_NAME = "FeedListFile";
 
     private Gson gson;
     private File pageDir;
@@ -55,8 +61,10 @@ public class FileDataCache implements DataCache {
 
     @Override
     public void savePageList(List<Page> pageList) {
-        for (Page page : pageList) {
-            savePage(page);
+        if (pageList != null) {
+            for (Page page : pageList) {
+                savePage(page);
+            }
         }
     }
 
@@ -64,7 +72,7 @@ public class FileDataCache implements DataCache {
     public void savePage(Page page) {
         if (page != null) {
             try {
-                String pageFileName = FileProvider.BASE_PAGE_FILE_NAME + "_" + page.getId();
+                String pageFileName = BASE_PAGE_FILE_NAME + "_" + page.getId();
                 String content = gson.toJson(page);
                 File pageFile = new File(pageDir, pageFileName);
                 FileProvider.writeFile(pageFile, false, content);
@@ -76,7 +84,7 @@ public class FileDataCache implements DataCache {
 
     @Override
     public List<MediaFeed> getFeedList(Section section) {
-        String feedFileName = FileProvider.BASE_FEED_FILE_NAME + "_" + section.getId();
+        String feedFileName = getSectionFileName(section);
         try {
             File feedFile = new File(feedDir, feedFileName);
             String content = FileProvider.readFile(feedFile);
@@ -93,27 +101,31 @@ public class FileDataCache implements DataCache {
 
     @Override
     public void saveFeed(Section section, List<MediaFeed> mediaFeedList) {
-        String feedFileName = FileProvider.BASE_FEED_FILE_NAME + "_" + section.getId();
-        try {
-            String feedListOfSection = convertFeedListToString(mediaFeedList);
-            File feedFile = new File(feedDir, feedFileName);
-            FileProvider.writeFile(feedFile, true, feedListOfSection);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (mediaFeedList != null) {
+            String feedFileName = getSectionFileName(section);
+            try {
+                String feedListOfSection = convertFeedListToString(mediaFeedList);
+                File feedFile = new File(feedDir, feedFileName);
+                FileProvider.writeFile(feedFile, true, feedListOfSection);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
     public void deleteFeedListFileOfOnePage(Page page) {
-        for (Section section : page.getSectionList()) {
-            String feedFileName = FileProvider.BASE_FEED_FILE_NAME + "_" + section.getId();
-            File feedFile = new File(feedDir, feedFileName);
-            feedFile.delete();
+        if (page != null) {
+            for (Section section : page.getSectionList()) {
+                String feedFileName = getSectionFileName(section);
+                File feedFile = new File(feedDir, feedFileName);
+                feedFile.delete();
+            }
         }
     }
 
     @Override
-    public void deleteDataInFolder() {
+    public void clear() {
         if (pageDir.isDirectory()) {
             for (File file : pageDir.listFiles()) {
                 file.delete();
@@ -126,9 +138,13 @@ public class FileDataCache implements DataCache {
         }
     }
 
+    private String getSectionFileName(Section section) {
+        return BASE_FEED_FILE_NAME + "_" + section.getId();
+    }
+
     private static String convertFeedListToString(List<MediaFeed> feedList) {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.add(FileProvider.JSON_FEED_LIST_KEY,
+        jsonObject.add(FeedPostListConverter.JSON_FEED_LIST_KEY,
                 FoxApplication.getInstance().getDataGson().toJsonTree(feedList));
         return jsonObject.toString();
     }
