@@ -2,13 +2,13 @@ package com.example.thuyhien.simplelogin.data.interactor.impl;
 
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.util.Pair;
 
 import com.example.thuyhien.simplelogin.data.interactor.DataCache;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadFeedListListener;
 import com.example.thuyhien.simplelogin.data.network.retrofit.DataEndpointInterface;
-import com.example.thuyhien.simplelogin.model.AsyncTaskResult;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.MediaImage;
 import com.example.thuyhien.simplelogin.model.Page;
@@ -44,42 +44,43 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
 
     @Override
     public void getPageList(final Boolean useCache, final LoadDataListener<List<Page>> listener) {
-        new AsyncTask<Void, Void, AsyncTaskResult<List<Page>>>() {
+        new AsyncTask<Void, Void, Pair<List<Page>, Exception>>() {
             @Override
-            protected AsyncTaskResult<List<Page>> doInBackground(Void... voids) {
+            protected Pair<List<Page>, Exception> doInBackground(Void... voids) {
                 List<Page> pageList;
                 if (useCache) {
                     pageList = dataCache.getPageList();
                     if (pageList != null && pageList.size() > 0) {
-                        return new AsyncTaskResult<>(pageList);
+                        return new Pair<>(pageList, null);
                     }
                 }
 
-                dataCache.deleteDataInFolder();
+                dataCache.clear();
 
                 Call<List<Page>> call = dataApiService.getPageList();
                 try {
                     Response<List<Page>> response = call.execute();
-                    pageList = response.body();
-                    if (response.isSuccessful() && pageList != null) {
+
+                    if (response.isSuccessful()) {
+                        pageList = response.body();
                         dataCache.savePageList(pageList);
-                        return new AsyncTaskResult<>(pageList);
+                        return new Pair<>(pageList, null);
                     } else {
-                        return new AsyncTaskResult<>(
+                        return new Pair<>(null,
                                 RetrofitUtils.createLoadDataException(response.errorBody()));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    return new AsyncTaskResult<>(e);
+                    return new Pair<>(null, new Exception(e));
                 }
             }
 
             @Override
-            protected void onPostExecute(AsyncTaskResult<List<Page>> asyncTaskResult) {
-                if (asyncTaskResult.getResult() != null) {
-                    listener.onLoadDataSuccess(asyncTaskResult.getResult());
+            protected void onPostExecute(Pair<List<Page>, Exception> Pair) {
+                if (Pair.first != null) {
+                    listener.onLoadDataSuccess(Pair.first);
                 } else {
-                    listener.onLoadDataFail(asyncTaskResult.getException());
+                    listener.onLoadDataFail(Pair.second);
                 }
             }
         }.execute();
@@ -88,14 +89,14 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
     @Override
     public void getFeedList(final Section section, final Boolean useCache,
                             final LoadFeedListListener listener) {
-        new AsyncTask<Section, Void, AsyncTaskResult<List<MediaFeed>>>() {
+        new AsyncTask<Section, Void, Pair<List<MediaFeed>, Exception>>() {
             @Override
-            protected AsyncTaskResult<List<MediaFeed>> doInBackground(Section... sections) {
+            protected Pair<List<MediaFeed>, Exception> doInBackground(Section... sections) {
                 List<MediaFeed> mediaFeedList;
                 if (useCache) {
                     mediaFeedList = dataCache.getFeedList(section);
                     if (mediaFeedList != null) {
-                        return new AsyncTaskResult<>(mediaFeedList);
+                        return new Pair<>(mediaFeedList, null);
                     }
                 }
 
@@ -103,25 +104,26 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
                 Call<List<MediaFeed>> call = dataApiService.getFeedList(section.getFeedUrl(), rangeValue);
                 try {
                     Response<List<MediaFeed>> response = call.execute();
-                    mediaFeedList = response.body();
-                    if (response.isSuccessful() && mediaFeedList != null) {
+                    if (response.isSuccessful()) {
+                        mediaFeedList = response.body();
                         dataCache.saveFeed(section, mediaFeedList);
-                        return new AsyncTaskResult<>(mediaFeedList);
+                        return new Pair<>(mediaFeedList, null);
                     } else {
-                        return new AsyncTaskResult<>(RetrofitUtils.createLoadDataException(response.errorBody()));
+                        return new Pair<>(null,
+                                RetrofitUtils.createLoadDataException(response.errorBody()));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    return new AsyncTaskResult<>(e);
+                    return new Pair<>(null, new Exception(e));
                 }
             }
 
             @Override
-            protected void onPostExecute(AsyncTaskResult<List<MediaFeed>> asyncTaskResult) {
-                if (asyncTaskResult.getResult() != null) {
-                    listener.onLoadDataSuccess(section, asyncTaskResult.getResult());
+            protected void onPostExecute(Pair<List<MediaFeed>, Exception> Pair) {
+                if (Pair.first != null) {
+                    listener.onLoadDataSuccess(section, Pair.first);
                 } else {
-                    listener.onLoadDataFail(asyncTaskResult.getException());
+                    listener.onLoadDataFail(Pair.second);
                 }
             }
         }.execute(section);
@@ -129,31 +131,32 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
 
     @Override
     public void getPage(final Page page, final LoadDataListener<Page> listener) {
-        new AsyncTask<Void, Void, AsyncTaskResult<Page>>() {
+        new AsyncTask<Void, Void, Pair<Page, Exception>>() {
             @Override
-            protected AsyncTaskResult<Page> doInBackground(Void... voids) {
+            protected Pair<Page, Exception> doInBackground(Void... voids) {
                 Call<Page> call = dataApiService.getPage(page.getId());
                 try {
                     Response<Page> response = call.execute();
                     if (response.isSuccessful() && response.body() != null) {
                         dataCache.deleteFeedListFileOfOnePage(page);
                         dataCache.savePage(response.body());
-                        return new AsyncTaskResult<>(response.body());
+                        return new Pair<>(response.body(), null);
                     } else {
-                        return new AsyncTaskResult<>(RetrofitUtils.createLoadDataException(response.errorBody()));
+                        return new Pair<>(null,
+                                RetrofitUtils.createLoadDataException(response.errorBody()));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    return new AsyncTaskResult<>(e);
+                    return new Pair<>(null, new Exception(e));
                 }
             }
 
             @Override
-            protected void onPostExecute(AsyncTaskResult<Page> asyncTaskResult) {
-                if (asyncTaskResult.getResult() != null) {
-                    listener.onLoadDataSuccess(asyncTaskResult.getResult());
+            protected void onPostExecute(Pair<Page, Exception> Pair) {
+                if (Pair.first != null) {
+                    listener.onLoadDataSuccess(Pair.first);
                 } else {
-                    listener.onLoadDataFail(asyncTaskResult.getException());
+                    listener.onLoadDataFail(Pair.second);
                 }
             }
         }.execute();
