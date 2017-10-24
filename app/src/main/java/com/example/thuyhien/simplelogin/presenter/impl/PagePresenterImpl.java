@@ -43,7 +43,7 @@ public class PagePresenterImpl implements PagePresenter {
 
     @Override
     public void loadPage(Page page) {
-        loadDataInteractor.getPage(page.getId(), new LoadDataListener<Page>() {
+        loadDataInteractor.getPage(page, new LoadDataListener<Page>() {
             @Override
             public void onLoadDataSuccess(Page data) {
                 if (getPageView() != null) {
@@ -61,24 +61,29 @@ public class PagePresenterImpl implements PagePresenter {
     }
 
     private void loadFeedList(Page page, boolean useCache) {
-        loadDataInteractor.getFeedList(page, useCache, new LoadFeedListListener() {
-            @Override
-            public void onLoadDataSuccess(Section section, List<MediaFeed> mediaFeedList) {
-                if (getPageView() != null) {
+        List<Section> sectionList = page.getSectionList();
+        for (Section section : sectionList) {
+            if (!section.getType().equals("Custom layout")) {
+                loadDataInteractor.getFeedList(section, useCache, new LoadFeedListListener() {
+                    @Override
+                    public void onLoadDataSuccess(Section section, List<MediaFeed> mediaFeedList) {
+                        if (getPageView() != null) {
 
-                    getPageView().hideLoading();
+                            getPageView().hideLoading();
 
-                    getPageView().displayMediaFeedList(section, mediaFeedList);
-                }
+                            getPageView().displayMediaFeedList(section, mediaFeedList);
+                        }
+                    }
+
+                    @Override
+                    public void onLoadDataFail(Exception ex) {
+                        if (getPageView() != null) {
+                            getPageView().hideLoading();
+                        }
+                    }
+                });
             }
-
-            @Override
-            public void onLoadDataFail(Exception ex) {
-                if (getPageView() != null) {
-                    getPageView().hideLoading();
-                }
-            }
-        });
+        }
     }
 
     private PageView getPageView() {
