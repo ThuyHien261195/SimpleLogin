@@ -16,9 +16,9 @@ import android.widget.Toast;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.data.interactor.FileInteractor;
+import com.example.thuyhien.simplelogin.data.interactor.DataCache;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
-import com.example.thuyhien.simplelogin.data.interactor.impl.FileInteractorImpl;
+import com.example.thuyhien.simplelogin.data.interactor.impl.FileDataCache;
 import com.example.thuyhien.simplelogin.data.interactor.impl.RetrofitLoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
 import com.example.thuyhien.simplelogin.data.network.retrofit.DataEndpointInterface;
@@ -178,10 +178,10 @@ public class PageFragment extends Fragment implements PageView {
 
     private void createPagePresenter() {
         DataEndpointInterface dataApiService = foxApplication.getDataApiService();
-        FileInteractor fileInteractor = new FileInteractorImpl(foxApplication.getDataGson(),
+        DataCache dataCache = new FileDataCache(foxApplication.getDataGson(),
                 foxApplication.getPageDir(),
                 foxApplication.getFeedDir());
-        LoadDataInteractor loadDataInteractor = new RetrofitLoadDataInteractor(dataApiService, fileInteractor);
+        LoadDataInteractor loadDataInteractor = new RetrofitLoadDataInteractor(dataApiService, dataCache);
         pagePresenter = new PagePresenterImpl(this, loadDataInteractor);
     }
 }
