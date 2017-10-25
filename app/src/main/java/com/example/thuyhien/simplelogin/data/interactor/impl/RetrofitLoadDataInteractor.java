@@ -13,7 +13,6 @@ import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.MediaImage;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.model.Section;
-import com.example.thuyhien.simplelogin.utils.ImageUtils;
 import com.example.thuyhien.simplelogin.utils.RetrofitUtils;
 
 import java.io.IOException;
@@ -178,10 +177,10 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     InputStream inputStream = response.body().byteStream();
-                    Bitmap bitmap = ImageUtils.decodeBitMapFromInputStream(inputStream,
-                            imagePost.getWidth(),
-                            imagePost.getHeight());
-                    listener.onLoadDataSuccess(bitmap);
+//                    Bitmap bitmap = ImageUtils.decodeBitMapFromInputStream(inputStream,
+//                            imagePost.getWidth(),
+//                            imagePost.getHeight());
+//                    listener.onLoadDataSuccess(bitmap);
                 } else {
                     listener.onLoadDataFail(RetrofitUtils.createLoadDataException(response.errorBody()));
                 }
