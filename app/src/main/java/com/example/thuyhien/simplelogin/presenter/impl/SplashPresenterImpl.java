@@ -19,7 +19,6 @@ import java.util.List;
  */
 
 public class SplashPresenterImpl implements SplashPresenter {
-    public static final int SLEEP_SECONDS = 3000;
 
     private WeakReference<SplashView> splashViewWeakReference;
     private AppManager appManager;
@@ -66,7 +65,8 @@ public class SplashPresenterImpl implements SplashPresenter {
     }
 
     private boolean checkInternet() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) FoxApplication.getInstance()
+        ConnectivityManager connectivityManager = (ConnectivityManager) FoxApplication
+                .getInstance()
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         return connectivityManager.getActiveNetworkInfo() != null
                 && connectivityManager.getActiveNetworkInfo().isConnected();
