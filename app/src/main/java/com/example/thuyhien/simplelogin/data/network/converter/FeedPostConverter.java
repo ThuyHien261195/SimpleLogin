@@ -1,6 +1,5 @@
 package com.example.thuyhien.simplelogin.data.network.converter;
 
-import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.MediaImage;
 import com.google.gson.JsonArray;
@@ -30,20 +29,18 @@ public class FeedPostConverter extends BaseDeserializer<MediaFeed> {
             feedPost.setGuid(getStringValue(jsonObject.get("guid"), ""));
             feedPost.setTitle(getStringValue(jsonObject.get("title"), ""));
             feedPost.setDescription(getStringValue(jsonObject.get("description"), ""));
-            List<MediaImage> thumbnails = getImagePost(jsonObject.get("thumbnails"));
+            List<MediaImage> thumbnails = getImagePost(jsonObject.get("thumbnails"), context);
             feedPost.setThumbnails(thumbnails);
         }
         return feedPost;
     }
 
-    private List<MediaImage> getImagePost(JsonElement jsonElement) {
+    private List<MediaImage> getImagePost(JsonElement jsonElement, JsonDeserializationContext context) {
         Type thumbnailType;
         if (checkValidJsonObject(jsonElement)) {
             thumbnailType = new TypeToken<HashMap<String, MediaImage>>() {
             }.getType();
-            HashMap<String, MediaImage> thumbnails = FoxApplication.getInstance()
-                    .getDataGson()
-                    .fromJson(jsonElement, thumbnailType);
+            HashMap<String, MediaImage> thumbnails = context.deserialize(jsonElement, thumbnailType);
             if (thumbnails != null && thumbnails.size() != 0) {
                 return new ArrayList<MediaImage>(thumbnails.values());
             }
@@ -52,9 +49,7 @@ public class FeedPostConverter extends BaseDeserializer<MediaFeed> {
             JsonArray jsonArray = jsonElement.getAsJsonArray();
             thumbnailType = new TypeToken<List<MediaImage>>() {
             }.getType();
-            List<MediaImage> imagePostList = FoxApplication.getInstance()
-                    .getDataGson()
-                    .fromJson(jsonArray, thumbnailType);
+            List<MediaImage> imagePostList = context.deserialize(jsonArray, thumbnailType);
             if (imagePostList != null && imagePostList.size() != 0) {
                 return imagePostList;
             }
