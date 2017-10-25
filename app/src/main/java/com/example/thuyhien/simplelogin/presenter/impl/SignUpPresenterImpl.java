@@ -24,8 +24,8 @@ public class SignUpPresenterImpl implements AuthenticatePresenter, AuthenticateA
     private UserManager userManager;
 
     public SignUpPresenterImpl(AuthenticationView signUpView,
-                               AuthenticationInteractor signUpInteractor,
-                               UserManager userManager) {
+                               UserManager userManager,
+                               AuthenticationInteractor signUpInteractor) {
         this.signUpViewWeakPref = new WeakReference<AuthenticationView>(signUpView);
         this.signUpInteractor = signUpInteractor;
         this.userManager = userManager;
