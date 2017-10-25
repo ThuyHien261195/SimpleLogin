@@ -1,6 +1,5 @@
 package com.example.thuyhien.simplelogin.data.interactor.impl;
 
-import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.data.interactor.DataCache;
 import com.example.thuyhien.simplelogin.data.network.converter.FeedPostListConverter;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
@@ -143,9 +142,10 @@ public class FileDataCache implements DataCache {
     }
 
     private static String convertFeedListToString(List<MediaFeed> feedList) {
+        Gson gson = new Gson();
         JsonObject jsonObject = new JsonObject();
         jsonObject.add(FeedPostListConverter.JSON_FEED_LIST_KEY,
-                FoxApplication.getInstance().getDataGson().toJsonTree(feedList));
+                gson.toJsonTree(feedList));
         return jsonObject.toString();
     }
 
