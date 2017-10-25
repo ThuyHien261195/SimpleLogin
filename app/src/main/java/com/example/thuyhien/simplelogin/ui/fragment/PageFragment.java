@@ -16,22 +16,19 @@ import android.widget.Toast;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.data.interactor.DataCache;
-import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
-import com.example.thuyhien.simplelogin.data.interactor.impl.FileDataCache;
-import com.example.thuyhien.simplelogin.data.interactor.impl.RetrofitLoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
-import com.example.thuyhien.simplelogin.data.network.retrofit.DataEndpointInterface;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.model.Section;
+import com.example.thuyhien.simplelogin.module.PageModule;
 import com.example.thuyhien.simplelogin.presenter.PagePresenter;
-import com.example.thuyhien.simplelogin.presenter.impl.PagePresenterImpl;
 import com.example.thuyhien.simplelogin.ui.adapter.SectionAdapter;
 import com.example.thuyhien.simplelogin.ui.listener.FragmentListerner;
 import com.example.thuyhien.simplelogin.view.PageView;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,10 +41,11 @@ public class PageFragment extends Fragment implements PageView {
 
     public static final String BUNDLE_PAGE = "Page";
     private Page page;
-    private PagePresenter pagePresenter;
     private SectionAdapter sectionAdapter;
-    private FoxApplication foxApplication = FoxApplication.getInstance();
     private FragmentListerner fragmentListerner;
+
+    @Inject
+    PagePresenter pagePresenter;
 
     @BindView(R.id.swipe_media_feed_list)
     SwipeRefreshLayout swipeRefreshMediaFeedList;
@@ -80,6 +78,10 @@ public class PageFragment extends Fragment implements PageView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        ((FoxApplication) getActivity().getApplication()).getAppComponent()
+                .createPageComponent(new PageModule(this))
+                .inject(this);
+
         getSectionBundle();
     }
 
@@ -97,7 +99,6 @@ public class PageFragment extends Fragment implements PageView {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        createPagePresenter();
         initViews();
         pagePresenter.loadAllFeedList(page, false);
     }
@@ -174,14 +175,5 @@ public class PageFragment extends Fragment implements PageView {
         if (getArguments() != null) {
             page = (Page) getArguments().getSerializable(BUNDLE_PAGE);
         }
-    }
-
-    private void createPagePresenter() {
-        DataEndpointInterface dataApiService = foxApplication.getDataApiService();
-        DataCache dataCache = new FileDataCache(foxApplication.getDataGson(),
-                foxApplication.getPageDir(),
-                foxApplication.getFeedDir());
-        LoadDataInteractor loadDataInteractor = new RetrofitLoadDataInteractor(dataApiService, dataCache);
-        pagePresenter = new PagePresenterImpl(this, loadDataInteractor);
     }
 }

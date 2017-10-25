@@ -8,15 +8,13 @@ import android.widget.Toast;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.data.interactor.AuthenticationInteractor;
-import com.example.thuyhien.simplelogin.data.interactor.impl.RetrofitAuthenticationInteractor;
-import com.example.thuyhien.simplelogin.data.manager.UserManager;
-import com.example.thuyhien.simplelogin.data.manager.impl.SharedPreferencesUserManager;
-import com.example.thuyhien.simplelogin.data.network.retrofit.AuthenticationEndpointInterface;
+import com.example.thuyhien.simplelogin.module.AuthenModule;
 import com.example.thuyhien.simplelogin.presenter.AuthenticatePresenter;
-import com.example.thuyhien.simplelogin.presenter.impl.SignInPresenterImpl;
 import com.example.thuyhien.simplelogin.ui.exception.InvalidInputException;
 import com.example.thuyhien.simplelogin.view.AuthenticationView;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -25,8 +23,9 @@ import butterknife.OnClick;
 
 public class SignInActivity extends AppCompatActivity implements AuthenticationView {
 
-    private AuthenticatePresenter signInPresenter;
-    private FoxApplication foxApplication = FoxApplication.getInstance();
+    @Inject
+    @Named("sign_in_presenter")
+    AuthenticatePresenter signInPresenter;
 
     @BindView(R.id.edit_email)
     EditText editTextEmail;
@@ -49,10 +48,13 @@ public class SignInActivity extends AppCompatActivity implements AuthenticationV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ((FoxApplication) getApplication()).getAppComponent()
+                .createAuthenComponent(new AuthenModule(this))
+                .inject(this);
+
         setContentView(R.layout.activity_sign_in);
         ButterKnife.bind(this);
-
-        createSignInPresenter();
     }
 
     @OnClick(R.id.text_forgot_password)
@@ -115,12 +117,5 @@ public class SignInActivity extends AppCompatActivity implements AuthenticationV
         if (!textMsg.equals("")) {
             Toast.makeText(this, textMsg, Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void createSignInPresenter() {
-        UserManager userManager = new SharedPreferencesUserManager(foxApplication.getSharedPref());
-        AuthenticationEndpointInterface authenApiService = foxApplication.getAuthenApiService();
-        AuthenticationInteractor signInInteractor = new RetrofitAuthenticationInteractor(authenApiService);
-        signInPresenter = new SignInPresenterImpl(this, signInInteractor, userManager);
     }
 }

@@ -18,22 +18,17 @@ import android.widget.Toast;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.data.interactor.DataCache;
-import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
-import com.example.thuyhien.simplelogin.data.interactor.impl.FileDataCache;
-import com.example.thuyhien.simplelogin.data.interactor.impl.RetrofitLoadDataInteractor;
-import com.example.thuyhien.simplelogin.data.manager.UserManager;
-import com.example.thuyhien.simplelogin.data.manager.impl.SharedPreferencesUserManager;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
-import com.example.thuyhien.simplelogin.data.network.retrofit.DataEndpointInterface;
 import com.example.thuyhien.simplelogin.model.Page;
+import com.example.thuyhien.simplelogin.module.MainModule;
 import com.example.thuyhien.simplelogin.presenter.MainPresenter;
-import com.example.thuyhien.simplelogin.presenter.impl.MainPresenterImpl;
 import com.example.thuyhien.simplelogin.ui.adapter.MediaFragmentPagerAdapter;
 import com.example.thuyhien.simplelogin.ui.listener.FragmentListerner;
 import com.example.thuyhien.simplelogin.view.MainView;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,8 +37,11 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements MainView,
         NavigationView.OnNavigationItemSelectedListener,
         FragmentListerner {
-    private MainPresenter mainPresenter;
-    private FoxApplication foxApplication = FoxApplication.getInstance();
+    private TextView textViewEmail;
+    private View loggedInHeaderView, notLogHeaderView;
+
+    @Inject
+    MainPresenter mainPresenter;
 
     @BindView(R.id.drawer_layout_main)
     DrawerLayout drawerLayoutMain;
@@ -57,20 +55,17 @@ public class MainActivity extends AppCompatActivity implements MainView,
     @BindView(R.id.text_title_page)
     TextView textViewTitlePage;
 
-    TextView textViewEmail;
-
-    private View loggedInHeaderView, notLogHeaderView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ((FoxApplication) getApplication()).getAppComponent()
+                .createMainComponent(new MainModule(this))
+                .inject(this);
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        createMainPresenter();
-
         initViews();
-
         mainPresenter.checkIsLoggedIn();
     }
 
@@ -177,16 +172,6 @@ public class MainActivity extends AppCompatActivity implements MainView,
 
     private void navigateToAccountScreen() {
         // TODO
-    }
-
-    private void createMainPresenter() {
-        UserManager userManager = new SharedPreferencesUserManager(foxApplication.getSharedPref());
-        DataEndpointInterface dataApiService = foxApplication.getDataApiService();
-        DataCache dataCache = new FileDataCache(foxApplication.getDataGson(),
-                foxApplication.getPageDir(),
-                foxApplication.getFeedDir());
-        LoadDataInteractor loadDataInteractor = new RetrofitLoadDataInteractor(dataApiService, dataCache);
-        mainPresenter = new MainPresenterImpl(this, userManager, loadDataInteractor);
     }
 
     private void initViews() {
