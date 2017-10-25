@@ -20,7 +20,7 @@ import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.model.Section;
-import com.example.thuyhien.simplelogin.module.PageModule;
+import com.example.thuyhien.simplelogin.dagger.module.PageModule;
 import com.example.thuyhien.simplelogin.presenter.PagePresenter;
 import com.example.thuyhien.simplelogin.ui.adapter.SectionAdapter;
 import com.example.thuyhien.simplelogin.ui.listener.FragmentListerner;

@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.module.AuthenModule;
+import com.example.thuyhien.simplelogin.dagger.module.AuthenModule;
 import com.example.thuyhien.simplelogin.presenter.AuthenticatePresenter;
 import com.example.thuyhien.simplelogin.ui.exception.InvalidInputException;
 import com.example.thuyhien.simplelogin.view.AuthenticationView;

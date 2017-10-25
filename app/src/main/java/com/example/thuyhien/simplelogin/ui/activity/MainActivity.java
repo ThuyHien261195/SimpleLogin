@@ -20,7 +20,7 @@ import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
 import com.example.thuyhien.simplelogin.model.Page;
-import com.example.thuyhien.simplelogin.module.MainModule;
+import com.example.thuyhien.simplelogin.dagger.module.MainModule;
 import com.example.thuyhien.simplelogin.presenter.MainPresenter;
 import com.example.thuyhien.simplelogin.ui.adapter.MediaFragmentPagerAdapter;
 import com.example.thuyhien.simplelogin.ui.listener.FragmentListerner;
