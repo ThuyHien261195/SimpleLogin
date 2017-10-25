@@ -1,10 +1,11 @@
-package com.example.thuyhien.simplelogin.module;
+package com.example.thuyhien.simplelogin.dagger.module;
 
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.presenter.MainPresenter;
 import com.example.thuyhien.simplelogin.presenter.impl.MainPresenterImpl;
 import com.example.thuyhien.simplelogin.ui.activity.MainActivity;
+import com.example.thuyhien.simplelogin.view.MainView;
 
 import dagger.Module;
 import dagger.Provides;
@@ -15,14 +16,14 @@ import dagger.Provides;
 
 @Module
 public class MainModule {
-    private MainActivity mainActivity;
+    private MainView mainView;
 
     public MainModule(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
+        this.mainView = mainActivity;
     }
 
     @Provides
     MainPresenter provideMainPresenter(UserManager userManager, LoadDataInteractor loadDataInteractor) {
-        return new MainPresenterImpl(mainActivity, userManager, loadDataInteractor);
+        return new MainPresenterImpl(mainView, userManager, loadDataInteractor);
     }
 }

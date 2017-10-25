@@ -1,5 +1,6 @@
-package com.example.thuyhien.simplelogin.module;
+package com.example.thuyhien.simplelogin.dagger.module;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
@@ -36,22 +37,24 @@ import static android.content.Context.MODE_PRIVATE;
 @Module
 public class AppModule {
     private static final String PREF_DATA_FILE_NAME = "FoxSharedPreferData";
-    private FoxApplication application;
+    public static final String DI_AUTHEN_GSON = "authen_gson";
+    public static final String DI_DATA_GSON = "data_gson";
+    private Context context;
 
-    public AppModule(FoxApplication application) {
-        this.application = application;
+    public AppModule(FoxApplication context) {
+        this.context = context;
     }
 
     @Provides
     @Singleton
-    FoxApplication provideApplication() {
-        return application;
+    Context provideApplication() {
+        return context;
     }
 
     @Provides
     @Singleton
     SharedPreferences provideSharedPref() {
-        return application.getSharedPreferences(PREF_DATA_FILE_NAME, MODE_PRIVATE);
+        return context.getSharedPreferences(PREF_DATA_FILE_NAME, MODE_PRIVATE);
     }
 
     @Provides
@@ -67,7 +70,7 @@ public class AppModule {
     }
 
     @Provides
-    @Named("authen_gson")
+    @Named(DI_AUTHEN_GSON)
     @Singleton
     Gson provideAuthenGson() {
         Type profileType = new TypeToken<User>() {
@@ -78,7 +81,7 @@ public class AppModule {
     }
 
     @Provides
-    @Named("data_gson")
+    @Named(DI_DATA_GSON)
     @Singleton
     Gson provideDataGson() {
         Type feedListType = new TypeToken<List<MediaFeed>>() {

@@ -1,6 +1,6 @@
-package com.example.thuyhien.simplelogin.component;
+package com.example.thuyhien.simplelogin.dagger.component;
 
-import com.example.thuyhien.simplelogin.module.AuthenModule;
+import com.example.thuyhien.simplelogin.dagger.module.AuthenModule;
 import com.example.thuyhien.simplelogin.ui.activity.SignInActivity;
 import com.example.thuyhien.simplelogin.ui.activity.SignUpActivity;
 

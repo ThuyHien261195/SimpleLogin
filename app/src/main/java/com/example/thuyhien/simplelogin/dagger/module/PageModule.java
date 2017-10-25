@@ -1,9 +1,10 @@
-package com.example.thuyhien.simplelogin.module;
+package com.example.thuyhien.simplelogin.dagger.module;
 
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.presenter.PagePresenter;
 import com.example.thuyhien.simplelogin.presenter.impl.PagePresenterImpl;
 import com.example.thuyhien.simplelogin.ui.fragment.PageFragment;
+import com.example.thuyhien.simplelogin.view.PageView;
 
 import dagger.Module;
 import dagger.Provides;
@@ -14,14 +15,14 @@ import dagger.Provides;
 
 @Module
 public class PageModule {
-    PageFragment pageFragment;
+    PageView pageView;
 
-    public PageModule(PageFragment pageFragment) {
-        this.pageFragment = pageFragment;
+    public PageModule(PageView pageView) {
+        this.pageView = pageView;
     }
 
     @Provides
     PagePresenter providePagePresenter(LoadDataInteractor loadDataInteractor) {
-        return new PagePresenterImpl(pageFragment, loadDataInteractor);
+        return new PagePresenterImpl(pageView, loadDataInteractor);
     }
 }

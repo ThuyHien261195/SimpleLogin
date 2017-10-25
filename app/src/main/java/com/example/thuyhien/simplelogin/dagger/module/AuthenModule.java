@@ -1,6 +1,4 @@
-package com.example.thuyhien.simplelogin.module;
-
-import android.app.Activity;
+package com.example.thuyhien.simplelogin.dagger.module;
 
 import com.example.thuyhien.simplelogin.data.interactor.AuthenticationInteractor;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
@@ -20,23 +18,25 @@ import dagger.Provides;
 
 @Module
 public class AuthenModule {
-    private Activity activity;
+    public static final String DI_SIGN_IN_PRESENTER = "sign_in_presenter";
+    public static final String DI_SIGN_UP_PRESENTER = "sign_up_presenter";
+    private AuthenticationView authenticationView;
 
-    public AuthenModule(Activity activity) {
-        this.activity = activity;
+    public AuthenModule(AuthenticationView authenticationView) {
+        this.authenticationView = authenticationView;
     }
 
     @Provides
-    @Named("sign_in_presenter")
+    @Named(DI_SIGN_IN_PRESENTER)
     AuthenticatePresenter provideSignInPresenter(AuthenticationInteractor authenInteractor,
                                                  UserManager userManager) {
-        return new SignInPresenterImpl((AuthenticationView) activity, userManager, authenInteractor);
+        return new SignInPresenterImpl(authenticationView, userManager, authenInteractor);
     }
 
     @Provides
-    @Named("sign_up_presenter")
+    @Named(DI_SIGN_UP_PRESENTER)
     AuthenticatePresenter provideSignUpPresenter(AuthenticationInteractor authenInteractor,
                                                  UserManager userManager) {
-        return new SignUpPresenterImpl((AuthenticationView) activity, userManager, authenInteractor);
+        return new SignUpPresenterImpl(authenticationView, userManager, authenInteractor);
     }
 }

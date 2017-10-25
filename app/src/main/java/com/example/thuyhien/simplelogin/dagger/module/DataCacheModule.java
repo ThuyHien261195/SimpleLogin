@@ -1,8 +1,8 @@
-package com.example.thuyhien.simplelogin.module;
+package com.example.thuyhien.simplelogin.dagger.module;
 
+import android.content.Context;
 import android.os.Environment;
 
-import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.data.interactor.DataCache;
 import com.example.thuyhien.simplelogin.data.interactor.impl.FileDataCache;
 import com.google.gson.Gson;
@@ -23,27 +23,29 @@ public class DataCacheModule {
     public static final String FOX_FOLDER_NAME = "FoxFile";
     public static final String FEED_LIST_FOLDER = File.separator + FOX_FOLDER_NAME + "/FeedListFolder";
     public static final String PAGE_FOLDER = File.separator + FOX_FOLDER_NAME + "/PageFolder";
+    public static final String DI_PAGE_DIR = "page_dir";
+    public static final String DI_FEED_DIR = "feed_dir";
 
     @Provides
-    @Named("page_dir")
-    public File getPageDir(FoxApplication application) {
+    @Named(DI_PAGE_DIR)
+    static File getPageDir(Context application) {
         return getDirectory(application, PAGE_FOLDER);
     }
 
     @Provides
-    @Named("feed_dir")
-    public File getFeedDir(FoxApplication application) {
+    @Named(DI_FEED_DIR)
+    static File getFeedDir(Context application) {
         return getDirectory(application, FEED_LIST_FOLDER);
     }
 
     @Provides
-    public DataCache dataCache(@Named("data_gson") Gson dataGson,
-                               @Named("page_dir") File pageDir,
-                               @Named("feed_dir") File feedDir) {
+    static DataCache dataCache(@Named(AppModule.DI_DATA_GSON) Gson dataGson,
+                               @Named(DI_PAGE_DIR) File pageDir,
+                               @Named(DI_FEED_DIR) File feedDir) {
         return new FileDataCache(dataGson, pageDir, feedDir);
     }
 
-    public File getDirectory(FoxApplication application, String folderPath) {
+    private static File getDirectory(Context application, String folderPath) {
         File dir;
         if (checkExternalStorageAvailable()) {
             dir = new File(application.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), folderPath);
@@ -56,7 +58,7 @@ public class DataCacheModule {
         return dir;
     }
 
-    private boolean checkExternalStorageAvailable() {
+    private static boolean checkExternalStorageAvailable() {
         String state = Environment.getExternalStorageState();
         return state.equals(Environment.MEDIA_MOUNTED);
     }

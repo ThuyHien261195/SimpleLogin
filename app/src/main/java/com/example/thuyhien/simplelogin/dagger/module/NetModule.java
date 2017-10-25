@@ -1,4 +1,4 @@
-package com.example.thuyhien.simplelogin.module;
+package com.example.thuyhien.simplelogin.dagger.module;
 
 import com.example.thuyhien.simplelogin.data.interactor.AuthenticationInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.DataCache;
@@ -27,12 +27,9 @@ import static com.example.thuyhien.simplelogin.BuildConfig.DATA_BASE_URL;
 public class NetModule {
     private static final String AUTHENTICATION_BASE_URL = "http://userkit-identity-stg.ap-southeast-1.elasticbeanstalk.com/v1/";
 
-    public NetModule() {
-    }
-
     @Provides
     @Singleton
-    AuthenticationEndpointInterface provideAuthenApiService(@Named("authen_gson") Gson gson) {
+    static AuthenticationEndpointInterface provideAuthenApiService(@Named(AppModule.DI_AUTHEN_GSON) Gson gson) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(AUTHENTICATION_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
@@ -42,7 +39,7 @@ public class NetModule {
 
     @Provides
     @Singleton
-    DataEndpointInterface provideDataApiService(@Named("data_gson") Gson gson) {
+    static DataEndpointInterface provideDataApiService(@Named(AppModule.DI_DATA_GSON) Gson gson) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(DATA_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
@@ -52,12 +49,12 @@ public class NetModule {
 
     @Provides
     @Singleton
-    AuthenticationInteractor provideAuthenInteractor(AuthenticationEndpointInterface authenApiService) {
+    static AuthenticationInteractor provideAuthenInteractor(AuthenticationEndpointInterface authenApiService) {
         return new RetrofitAuthenticationInteractor(authenApiService);
     }
 
     @Provides
-    LoadDataInteractor provideLoadDataInterator(DataEndpointInterface dataApiService,
+    static LoadDataInteractor provideLoadDataInterator(DataEndpointInterface dataApiService,
                                                 DataCache dataCache) {
         return new RetrofitLoadDataInteractor(dataApiService, dataCache);
     }

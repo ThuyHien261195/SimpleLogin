@@ -1,13 +1,13 @@
-package com.example.thuyhien.simplelogin.component;
+package com.example.thuyhien.simplelogin.dagger.component;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
-import com.example.thuyhien.simplelogin.module.AppModule;
-import com.example.thuyhien.simplelogin.module.AuthenModule;
-import com.example.thuyhien.simplelogin.module.DataCacheModule;
-import com.example.thuyhien.simplelogin.module.MainModule;
-import com.example.thuyhien.simplelogin.module.NetModule;
-import com.example.thuyhien.simplelogin.module.PageModule;
-import com.example.thuyhien.simplelogin.module.SplashModule;
+import com.example.thuyhien.simplelogin.dagger.module.AppModule;
+import com.example.thuyhien.simplelogin.dagger.module.AuthenModule;
+import com.example.thuyhien.simplelogin.dagger.module.DataCacheModule;
+import com.example.thuyhien.simplelogin.dagger.module.MainModule;
+import com.example.thuyhien.simplelogin.dagger.module.NetModule;
+import com.example.thuyhien.simplelogin.dagger.module.PageModule;
+import com.example.thuyhien.simplelogin.dagger.module.SplashModule;
 
 import javax.inject.Singleton;
 
