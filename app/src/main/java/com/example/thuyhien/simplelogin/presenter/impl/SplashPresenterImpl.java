@@ -23,12 +23,14 @@ public class SplashPresenterImpl implements SplashPresenter {
     private WeakReference<SplashView> splashViewWeakReference;
     private AppManager appManager;
     private LoadDataInteractor loadDataInteractor;
+    private Context context;
 
     public SplashPresenterImpl(SplashView splashView, AppManager appManager,
-                               LoadDataInteractor loadDataInteractor) {
+                               LoadDataInteractor loadDataInteractor, Context context) {
         this.splashViewWeakReference = new WeakReference<SplashView>(splashView);
         this.appManager = appManager;
         this.loadDataInteractor = loadDataInteractor;
+        this.context = context;
     }
 
     @Override
@@ -65,8 +67,7 @@ public class SplashPresenterImpl implements SplashPresenter {
     }
 
     private boolean checkInternet() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) FoxApplication
-                .getInstance()
+        ConnectivityManager connectivityManager = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         return connectivityManager.getActiveNetworkInfo() != null
                 && connectivityManager.getActiveNetworkInfo().isConnected();
