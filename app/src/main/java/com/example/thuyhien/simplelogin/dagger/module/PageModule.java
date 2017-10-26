@@ -3,7 +3,6 @@ package com.example.thuyhien.simplelogin.dagger.module;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.presenter.PagePresenter;
 import com.example.thuyhien.simplelogin.presenter.impl.PagePresenterImpl;
-import com.example.thuyhien.simplelogin.ui.fragment.PageFragment;
 import com.example.thuyhien.simplelogin.view.PageView;
 
 import dagger.Module;

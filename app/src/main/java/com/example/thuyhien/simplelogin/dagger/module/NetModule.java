@@ -55,7 +55,7 @@ public class NetModule {
 
     @Provides
     static LoadDataInteractor provideLoadDataInterator(DataEndpointInterface dataApiService,
-                                                DataCache dataCache) {
+                                                       DataCache dataCache) {
         return new RetrofitLoadDataInteractor(dataApiService, dataCache);
     }
 }
