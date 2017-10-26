@@ -42,9 +42,14 @@
 
     <style name="LogInEditTextTheme" parent="LogInTextViewTheme">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:textColor">@android:color/white</item>
         <item name="android:textColorHint">@android:color/white</item>
         <item name="android:paddingTop">@dimen/login_edit_text_vertical_padding</item>
+    </style>
+
+    <style name="ItemPosterTextTheme" parent="LogInTextViewTheme">
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/item_poster_title_text_size</item>
     </style>
 
     <style name="FormLogInTheme">
@@ -58,4 +63,31 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="PosterDesTheme">
+        <item name="android:contentDescription">@string/description_poster_image</item>
+    </style>
+
+    <style name="PosterTheme" parent="PosterDesTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="FeedInfoTheme">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/info_feed_text_size</item>
+    </style>
+
+    <style name="FeedTitleTheme" parent="FeedInfoTheme">
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginRight">@dimen/text_vertical_spacing</item>
+    </style>
+
+    <style name="FeedContentLayoutTheme">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingLeft">@dimen/layout_info_horizontal_spacing</item>
+        <item name="android:paddingRight">@dimen/layout_info_horizontal_spacing</item>
+        <item name="android:paddingTop">@dimen/layout_info_vertical_spacing</item>
+        <item name="android:paddingBottom">@dimen/layout_info_vertical_spacing</item>
+    </style>
 </resources>

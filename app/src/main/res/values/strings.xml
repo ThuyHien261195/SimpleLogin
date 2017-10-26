@@ -17,6 +17,7 @@
     <string name="description_account_image">Account Image</string>
     <string name="description_poster_image">Poster Image</string>
     <string name="description_sliding_menu_image">Menu</string>
+    <string name="description_play_image">Play</string>
 
     <string name="title_welcome">Welcome to</string>
     <string name="title_introduce_app">Enjoy the best TV series, award-\nwining movies,
@@ -26,6 +27,9 @@
     <string name="title_plus">\u0020and\u0020</string>
     <string name="title_privacy_policy">Privacy Policy</string>
     <string name="title_view_terms">Terms of Use</string>
+    <string name="title_feed_name">Title:</string>
+    <string name="title_description">Description:</string>
+    <string name="title_header_feed_dialog">Feed info</string>
 
     <string name="error_empty_field">You must enter %1$s</string>
     <string name="error_invalid_field">%1$s is invalid</string>
@@ -35,7 +39,7 @@
     <string name="error_refresh_data">Error when refreshing</string>
     <string name="error_open_file">Error when opening file</string>
     <string name="error_empty_file">Empty feed list file</string>
-    <string name="error_implement_fragment_listener">\u0020must implement FragmentListener</string>
+    <string name="error_implement_main_activity_listener">\u0020must implement MainActivityListener</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

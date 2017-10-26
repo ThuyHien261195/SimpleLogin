@@ -64,12 +64,26 @@
     <!-- Item image feed in section. -->
     <dimen name="item_poster_height">120dp</dimen>
     <dimen name="item_poster_width">100dp</dimen>
-    <dimen name="image_poster_border_width">2dp</dimen>
-    <dimen name="image_poster_corner_radius">4dp</dimen>
+    <dimen name="item_poster_border_width">2dp</dimen>
+    <dimen name="item_poster_corner_radius">4dp</dimen>
     <dimen name="item_poster_horizontal_margin">@dimen/small_space</dimen>
 
     <!-- Title action bar -->
     <dimen name="title_page_horizontal_spacing">@dimen/large_space</dimen>
     <dimen name="title_page_text_size">18sp</dimen>
     <dimen name="fragment_page_horizontal_spacing">@dimen/medium_space</dimen>
+
+    <!-- Media Feed Info -->
+    <dimen name="layout_poster_height">180dp</dimen>
+    <dimen name="layout_info_horizontal_spacing">@dimen/medium_space</dimen>
+    <dimen name="layout_info_vertical_spacing">@dimen/medium_space</dimen>
+    <dimen name="info_feed_text_size">18sp</dimen>
+    <dimen name="text_vertical_spacing">@dimen/medium_space</dimen>
+
+    <!-- Media Feed Info Dialog -->
+    <dimen name="dialog_header_feed_height">@dimen/x_large_space</dimen>
+    <dimen name="dialog_header_feed_text_size">18sp</dimen>
+    <dimen name="dialog_button_close_vertical_spacing">@dimen/medium_space</dimen>
+    <dimen name="item_lands_poster_spacing">2dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
 </resources>
