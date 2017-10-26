@@ -49,7 +49,7 @@ public class PosterViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    public void bindImagePoster(MediaFeed mediaFeed, WeakReference<MainActivityListener> pageFragmentListenerWeakRef) {
+    public void bindImagePoster(MediaFeed mediaFeed, WeakReference<MainActivityListener> mainActivityListenerWeakRef) {
         this.mediaFeed = mediaFeed;
         List<MediaImage> thumbnails = mediaFeed.getThumbnails();
         if (thumbnails != null && thumbnails.size() > 0) {

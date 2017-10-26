@@ -41,9 +41,9 @@ public class SectionViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindContentSection(Section section, List<MediaFeed> mediaFeedList,
-                                   WeakReference<MainActivityListener> pageFragmentListenerWeakRef) {
+                                   WeakReference<MainActivityListener> mainActivityListenerWeakRef) {
         textViewTitleSection.setText(section.getMultiLangTitles().getTitle(FoxApplication.langCode));
-        PosterAdapter posterAdapter = new PosterAdapter(mediaFeedList, pageFragmentListenerWeakRef);
+        PosterAdapter posterAdapter = new PosterAdapter(mediaFeedList, mainActivityListenerWeakRef);
         recyclerViewPoster.setAdapter(posterAdapter);
     }
 }

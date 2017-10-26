@@ -23,12 +23,12 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterViewHolder> {
 
     private List<MediaFeed> feedPostList;
     private int orientation;
-    private WeakReference<MainActivityListener> pageFragmentListenerWeakRef;
+    private WeakReference<MainActivityListener> mainActivityListenerWeakRef;
 
     public PosterAdapter(List<MediaFeed> feedPostList,
-                         WeakReference<MainActivityListener> pageFragmentListenerWeakRef) {
+                         WeakReference<MainActivityListener> mainActivityListenerWeakRef) {
         this.feedPostList = feedPostList;
-        this.pageFragmentListenerWeakRef = pageFragmentListenerWeakRef;
+        this.mainActivityListenerWeakRef = mainActivityListenerWeakRef;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterViewHolder> {
 
     @Override
     public void onBindViewHolder(PosterViewHolder holder, int position) {
-        holder.bindImagePoster(feedPostList.get(position), pageFragmentListenerWeakRef);
+        holder.bindImagePoster(feedPostList.get(position), mainActivityListenerWeakRef);
 
     }
 

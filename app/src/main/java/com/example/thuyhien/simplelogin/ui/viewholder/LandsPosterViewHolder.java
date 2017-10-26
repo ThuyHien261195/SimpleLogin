@@ -20,23 +20,23 @@ public class LandsPosterViewHolder extends PosterViewHolder {
     @BindView(R.id.text_feed_title)
     TextView textViewFeedTitle;
 
-    private WeakReference<MainActivityListener> pageFragmentListenerWeakRef;
+    private WeakReference<MainActivityListener> mainActivityListenerWeakRef;
 
     public LandsPosterViewHolder(View itemView) {
         super(itemView);
     }
 
     @Override
-    public void bindImagePoster(MediaFeed mediaFeed, WeakReference<MainActivityListener> pageFragmentListenerWeakRef) {
-        super.bindImagePoster(mediaFeed, pageFragmentListenerWeakRef);
+    public void bindImagePoster(MediaFeed mediaFeed, WeakReference<MainActivityListener> mainActivityListenerWeakRef) {
+        super.bindImagePoster(mediaFeed, mainActivityListenerWeakRef);
         textViewFeedTitle.setText(mediaFeed.getTitle());
-        this.pageFragmentListenerWeakRef = pageFragmentListenerWeakRef;
+        this.mainActivityListenerWeakRef = mainActivityListenerWeakRef;
     }
 
     @Override
     protected void openMediaFeedDetail(View view) {
-        if (pageFragmentListenerWeakRef != null) {
-            pageFragmentListenerWeakRef.get().onCreateMediaFeedDialog(mediaFeed);
+        if (mainActivityListenerWeakRef != null) {
+            mainActivityListenerWeakRef.get().onCreateMediaFeedDialog(mediaFeed);
         }
     }
 }
