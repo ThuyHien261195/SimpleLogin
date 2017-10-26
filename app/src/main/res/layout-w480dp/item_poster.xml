@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/item_poster_width"
+    android:layout_height="@dimen/item_poster_height"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginRight="@dimen/item_poster_horizontal_margin"
+    android:orientation="vertical"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="@dimen/item_poster_corner_radius"
+    app:contentPadding="@dimen/item_poster_border_width">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@android:color/black"
+        android:padding="@dimen/item_lands_poster_spacing">
+
+        <ImageView
+            android:id="@+id/image_poster"
+            style="@style/PosterDesTheme"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/image_poster_height"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/text_feed_title"
+            style="@style/ItemPosterTextTheme"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
