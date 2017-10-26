@@ -3,7 +3,6 @@ package com.example.thuyhien.simplelogin.presenter.impl;
 import android.content.Context;
 import android.net.ConnectivityManager;
 
-import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
 import com.example.thuyhien.simplelogin.data.manager.AppManager;
