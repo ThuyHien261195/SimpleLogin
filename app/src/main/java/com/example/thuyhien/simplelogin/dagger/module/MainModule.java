@@ -1,5 +1,7 @@
 package com.example.thuyhien.simplelogin.dagger.module;
 
+import android.content.Context;
+
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.presenter.MainPresenter;
@@ -23,7 +25,7 @@ public class MainModule {
     }
 
     @Provides
-    MainPresenter provideMainPresenter(UserManager userManager, LoadDataInteractor loadDataInteractor) {
-        return new MainPresenterImpl(mainView, userManager, loadDataInteractor);
+    MainPresenter provideMainPresenter(UserManager userManager, LoadDataInteractor loadDataInteractor, Context context) {
+        return new MainPresenterImpl(mainView, userManager, loadDataInteractor, context);
     }
 }
