@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -18,12 +19,14 @@ import android.widget.Toast;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
-import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.dagger.module.MainModule;
+import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
+import com.example.thuyhien.simplelogin.model.MediaFeed;
+import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.presenter.MainPresenter;
 import com.example.thuyhien.simplelogin.ui.adapter.MediaFragmentPagerAdapter;
-import com.example.thuyhien.simplelogin.ui.listener.FragmentListerner;
+import com.example.thuyhien.simplelogin.ui.fragment.MediaFeedDialogFragment;
+import com.example.thuyhien.simplelogin.ui.listener.MainActivityListener;
 import com.example.thuyhien.simplelogin.view.MainView;
 
 import java.util.List;
@@ -36,9 +39,10 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements MainView,
         NavigationView.OnNavigationItemSelectedListener,
-        FragmentListerner {
+        MainActivityListener {
     private TextView textViewEmail;
     private View loggedInHeaderView, notLogHeaderView;
+    private DialogFragment dialogFragment;
 
     @Inject
     MainPresenter mainPresenter;
@@ -67,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
         ButterKnife.bind(this);
         initViews();
         mainPresenter.checkIsLoggedIn();
+        mainPresenter.checkRotation();
     }
 
     @Override
@@ -134,6 +139,26 @@ public class MainActivity extends AppCompatActivity implements MainView,
         Menu mainMenu = navigationViewMain.getMenu();
         MenuItem menuItem = mainMenu.findItem(Integer.parseInt(pageId));
         menuItem.setTitle(title);
+    }
+
+    @Override
+    public void onCreateMediaFeedDialog(MediaFeed mediaFeed) {
+        dialogFragment = MediaFeedDialogFragment.newMediaFeedDialogFragment(mediaFeed);
+        dialogFragment.show(getSupportFragmentManager(), "MediaFeedDialog");
+    }
+
+    @Override
+    public void onCloseMediaFeedDialog() {
+        if (dialogFragment != null) {
+            dialogFragment.dismiss();
+        }
+    }
+
+    @Override
+    public void dismissCurrentDialog() {
+        if (dialogFragment != null && dialogFragment.getDialog().isShowing()) {
+            dialogFragment.dismiss();
+        }
     }
 
     private void displayHeaderView(boolean isLogIn) {

@@ -1,5 +1,8 @@
 package com.example.thuyhien.simplelogin.presenter.impl;
 
+import android.content.Context;
+import android.content.res.Configuration;
+
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
@@ -19,12 +22,14 @@ public class MainPresenterImpl implements MainPresenter {
     private WeakReference<MainView> mainViewWeakReference;
     private UserManager userManager;
     private LoadDataInteractor loadDataInteractor;
+    private Context context;
 
     public MainPresenterImpl(MainView mainView, UserManager userManager,
-                             LoadDataInteractor loadDataInteractor) {
+                             LoadDataInteractor loadDataInteractor, Context context) {
         this.mainViewWeakReference = new WeakReference<>(mainView);
         this.userManager = userManager;
         this.loadDataInteractor = loadDataInteractor;
+        this.context = context;
     }
 
     @Override
@@ -56,6 +61,16 @@ public class MainPresenterImpl implements MainPresenter {
                 }
             }
         });
+    }
+
+    @Override
+    public void checkRotation() {
+        int orientation = context.getResources().getConfiguration().orientation;
+        if (getMainView() != null) {
+            if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                getMainView().dismissCurrentDialog();
+            }
+        }
     }
 
     private MainView getMainView() {
