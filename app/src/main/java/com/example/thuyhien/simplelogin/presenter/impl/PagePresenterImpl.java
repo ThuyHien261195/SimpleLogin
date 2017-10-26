@@ -62,27 +62,24 @@ public class PagePresenterImpl implements PagePresenter {
 
     private void loadFeedList(Page page, boolean useCache) {
         List<Section> sectionList = page.getSectionList();
-        for (Section section : sectionList) {
-            if (!section.getType().equals("Custom layout")) {
-                loadDataInteractor.getFeedList(section, useCache, new LoadFeedListListener() {
-                    @Override
-                    public void onLoadDataSuccess(Section section, List<MediaFeed> mediaFeedList) {
-                        if (getPageView() != null) {
-
-                            getPageView().hideLoading();
-
-                            getPageView().displayMediaFeedList(section, mediaFeedList);
-                        }
+        for (final Section section : sectionList) {
+            loadDataInteractor.getFeedList(section, useCache, new LoadFeedListListener() {
+                @Override
+                public void onLoadDataSuccess(Section section, List<MediaFeed> mediaFeedList) {
+                    if (getPageView() != null) {
+                        getPageView().hideLoading();
+                        getPageView().displayMediaFeedList(section, mediaFeedList);
                     }
+                }
 
-                    @Override
-                    public void onLoadDataFail(Exception ex) {
-                        if (getPageView() != null) {
-                            getPageView().hideLoading();
-                        }
+                @Override
+                public void onLoadDataFail(Exception ex) {
+                    if (getPageView() != null) {
+                        getPageView().hideLoading();
+                        getPageView().displayMediaFeedList(section, null);
                     }
-                });
-            }
+                }
+            });
         }
     }
 
