@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.Section;
+import com.example.thuyhien.simplelogin.ui.listener.MainActivityListener;
 import com.example.thuyhien.simplelogin.ui.viewholder.SectionViewHolder;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,12 +23,14 @@ import java.util.List;
 public class SectionAdapter extends RecyclerView.Adapter<SectionViewHolder> {
 
     private LinkedHashMap<Section, List<MediaFeed>> totalMediaList;
+    private WeakReference<MainActivityListener> pageFragmentListenerWeakReference;
 
-    public SectionAdapter(List<Section> sectionList) {
+    public SectionAdapter(List<Section> sectionList, MainActivityListener listener) {
         totalMediaList = new LinkedHashMap<>();
         for (Section section : sectionList) {
             totalMediaList.put(section, new ArrayList<MediaFeed>());
         }
+        pageFragmentListenerWeakReference = new WeakReference<MainActivityListener>(listener);
     }
 
     @Override
@@ -43,7 +47,7 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionViewHolder> {
         if (mediaFeedList == null) {
             mediaFeedList = new ArrayList<>();
         }
-        holder.bindContentSection(section, mediaFeedList);
+        holder.bindContentSection(section, mediaFeedList, pageFragmentListenerWeakReference);
     }
 
     @Override
@@ -52,12 +56,14 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionViewHolder> {
     }
 
     public void updateSection(Section section, List<MediaFeed> mediaFeedList) {
-        if (totalMediaList != null) {
-            List<Section> sectionList = new ArrayList<>(totalMediaList.keySet());
-            int pos = sectionList.indexOf(section);
+        List<Section> sectionList = new ArrayList<>(totalMediaList.keySet());
+        int pos = sectionList.indexOf(section);
+        if (mediaFeedList != null && mediaFeedList.size() > 0) {
+            totalMediaList.put(section, mediaFeedList);
             if (pos != -1) {
-                totalMediaList.put(section, mediaFeedList);
                 notifyItemChanged(pos);
+            } else {
+                notifyDataSetChanged();
             }
         }
     }
