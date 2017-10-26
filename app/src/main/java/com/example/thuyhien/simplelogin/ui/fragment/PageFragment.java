@@ -16,16 +16,17 @@ import android.widget.Toast;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
+import com.example.thuyhien.simplelogin.dagger.module.PageModule;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.model.Section;
-import com.example.thuyhien.simplelogin.dagger.module.PageModule;
 import com.example.thuyhien.simplelogin.presenter.PagePresenter;
 import com.example.thuyhien.simplelogin.ui.adapter.SectionAdapter;
-import com.example.thuyhien.simplelogin.ui.listener.FragmentListerner;
+import com.example.thuyhien.simplelogin.ui.listener.MainActivityListener;
 import com.example.thuyhien.simplelogin.view.PageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -42,7 +43,7 @@ public class PageFragment extends Fragment implements PageView {
     public static final String BUNDLE_PAGE = "Page";
     private Page page;
     private SectionAdapter sectionAdapter;
-    private FragmentListerner fragmentListerner;
+    private MainActivityListener mainActivityListener;
 
     @Inject
     PagePresenter pagePresenter;
@@ -67,9 +68,9 @@ public class PageFragment extends Fragment implements PageView {
     @Override
     public void onAttach(Context context) {
         try {
-            fragmentListerner = (FragmentListerner) context;
+            mainActivityListener = (MainActivityListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + getString(R.string.error_implement_fragment_listener));
+            throw new ClassCastException(context.toString() + getString(R.string.error_implement_main_activity_listener));
         }
         super.onAttach(context);
     }
@@ -105,7 +106,7 @@ public class PageFragment extends Fragment implements PageView {
 
     @Override
     public void onDetach() {
-        fragmentListerner = null;
+        mainActivityListener = null;
         super.onDetach();
     }
 
@@ -128,10 +129,10 @@ public class PageFragment extends Fragment implements PageView {
 
     @Override
     public void displayRefreshPage(Page page) {
-        fragmentListerner.onChangeTitlePage(page.getId(),
+        mainActivityListener.onChangeTitlePage(page.getId(),
                 page.getMultiLangTitles().getTitle(FoxApplication.langCode));
         this.page = page;
-        setAdapter();
+        setAdapter(page.getSectionList());
         pagePresenter.loadAllFeedList(page, true);
         recyclerViewSection.scrollToPosition(0);
         swipeRefreshMediaFeedList.setRefreshing(false);
@@ -150,7 +151,7 @@ public class PageFragment extends Fragment implements PageView {
     private void initViews() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerViewSection.setLayoutManager(linearLayoutManager);
-        setAdapter();
+        setAdapter(new ArrayList<Section>());
 
         swipeRefreshMediaFeedList.setColorSchemeColors(
                 ContextCompat.getColor(getContext(), android.R.color.holo_blue_light),
@@ -166,8 +167,8 @@ public class PageFragment extends Fragment implements PageView {
         });
     }
 
-    private void setAdapter() {
-        sectionAdapter = new SectionAdapter(page.getSectionList());
+    private void setAdapter(List<Section> sectionList) {
+        sectionAdapter = new SectionAdapter(sectionList, mainActivityListener);
         recyclerViewSection.setAdapter(sectionAdapter);
     }
 
