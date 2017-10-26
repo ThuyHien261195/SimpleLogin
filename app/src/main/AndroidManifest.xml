@@ -25,6 +25,8 @@
         <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.WelcomeActivity" />
         <activity android:name=".ui.activity.SignUpActivity" />
+        <activity android:name=".ui.activity.MediaFeedActivity"
+            android:theme="@style/Base.Theme.AppCompat.Light.DarkActionBar"/>
     </application>
 
 </manifest>
