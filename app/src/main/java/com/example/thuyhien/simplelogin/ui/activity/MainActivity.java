@@ -1,10 +1,13 @@
 package com.example.thuyhien.simplelogin.ui.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -19,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
+import com.example.thuyhien.simplelogin.broadcast.DialogBroadcastReceiver;
 import com.example.thuyhien.simplelogin.dagger.module.MainModule;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
@@ -27,6 +31,7 @@ import com.example.thuyhien.simplelogin.presenter.MainPresenter;
 import com.example.thuyhien.simplelogin.ui.adapter.MediaFragmentPagerAdapter;
 import com.example.thuyhien.simplelogin.ui.fragment.MediaFeedDialogFragment;
 import com.example.thuyhien.simplelogin.ui.listener.MainActivityListener;
+import com.example.thuyhien.simplelogin.ui.viewholder.LandsPosterViewHolder;
 import com.example.thuyhien.simplelogin.view.MainView;
 
 import java.util.List;
@@ -42,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements MainView,
         MainActivityListener {
     private TextView textViewEmail;
     private View loggedInHeaderView, notLogHeaderView;
-    private DialogFragment dialogFragment;
 
     @Inject
     MainPresenter mainPresenter;
@@ -58,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
 
     @BindView(R.id.text_title_page)
     TextView textViewTitlePage;
+    private BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +75,13 @@ public class MainActivity extends AppCompatActivity implements MainView,
         ButterKnife.bind(this);
         initViews();
         mainPresenter.checkIsLoggedIn();
+        registerFeedDialogReceiver();
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterFeedDialogReceiver();
+        super.onDestroy();
     }
 
     @Override
@@ -140,16 +152,9 @@ public class MainActivity extends AppCompatActivity implements MainView,
     }
 
     @Override
-    public void onCreateMediaFeedDialog(MediaFeed mediaFeed) {
-        dialogFragment = MediaFeedDialogFragment.newMediaFeedDialogFragment(mediaFeed);
+    public void onShowMediaFeedDialog(MediaFeed mediaFeed) {
+        DialogFragment dialogFragment = MediaFeedDialogFragment.newMediaFeedDialogFragment(mediaFeed);
         dialogFragment.show(getSupportFragmentManager(), "MediaFeedDialog");
-    }
-
-    @Override
-    public void onCloseMediaFeedDialog() {
-        if (dialogFragment != null) {
-            dialogFragment.dismiss();
-        }
     }
 
     private void displayHeaderView(boolean isLogIn) {
@@ -235,5 +240,17 @@ public class MainActivity extends AppCompatActivity implements MainView,
         MediaFragmentPagerAdapter fragmentPagerAdapter =
                 new MediaFragmentPagerAdapter(getSupportFragmentManager(), pageList);
         viewPagerPost.setAdapter(fragmentPagerAdapter);
+    }
+
+    private void registerFeedDialogReceiver() {
+        broadcastReceiver = new DialogBroadcastReceiver(this);
+        IntentFilter intentFilter = new IntentFilter(LandsPosterViewHolder.ACTION_SHOW_FEED_DIALOG);
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        localBroadcastManager.registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    private void unregisterFeedDialogReceiver() {
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        localBroadcastManager.unregisterReceiver(broadcastReceiver);
     }
 }

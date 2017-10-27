@@ -9,7 +9,5 @@ import com.example.thuyhien.simplelogin.model.MediaFeed;
 public interface MainActivityListener {
     void onChangeTitlePage(String pageId, String title);
 
-    void onCreateMediaFeedDialog(MediaFeed mediaFeed);
-
-    void onCloseMediaFeedDialog();
+    void onShowMediaFeedDialog(MediaFeed mediaFeed);
 }
