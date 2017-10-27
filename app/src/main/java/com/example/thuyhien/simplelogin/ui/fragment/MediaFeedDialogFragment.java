@@ -6,6 +6,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ import butterknife.OnClick;
 
 public class MediaFeedDialogFragment extends DialogFragment {
 
+    public static final String DIALOG_IS_OPEN = "DIALOG_IS_OPEN";
     private MainActivityListener mainActivityListener;
     private MediaFeed mediaFeed;
 
@@ -72,7 +74,22 @@ public class MediaFeedDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dismissDialogWhenRotate(savedInstanceState);
         getFeedBundle();
+    }
+
+    private void dismissDialogWhenRotate(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            Boolean isOpenDialog = savedInstanceState.getBoolean(DIALOG_IS_OPEN, false);
+            if (isOpenDialog) {
+                dismiss();
+            }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(DIALOG_IS_OPEN, getDialog().isShowing());
     }
 
     private void getFeedBundle() {
