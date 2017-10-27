@@ -66,18 +66,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:maxLines="2"
-                    android:text="abc" />
+                    android:maxLines="2" />
 
                 <TextView
                     android:id="@+id/text_description"
                     style="@style/FeedInfoTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/text_vertical_spacing"
-                    android:ellipsize="end"
-                    android:maxLines="4"
-                    android:text="abc" />
+                    android:layout_marginTop="@dimen/text_vertical_spacing" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
