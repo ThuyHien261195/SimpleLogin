@@ -25,7 +25,7 @@ public class MainModule {
     }
 
     @Provides
-    MainPresenter provideMainPresenter(UserManager userManager, LoadDataInteractor loadDataInteractor, Context context) {
-        return new MainPresenterImpl(mainView, userManager, loadDataInteractor, context);
+    MainPresenter provideMainPresenter(UserManager userManager, LoadDataInteractor loadDataInteractor) {
+        return new MainPresenterImpl(mainView, userManager, loadDataInteractor);
     }
 }

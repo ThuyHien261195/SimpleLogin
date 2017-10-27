@@ -22,14 +22,12 @@ public class MainPresenterImpl implements MainPresenter {
     private WeakReference<MainView> mainViewWeakReference;
     private UserManager userManager;
     private LoadDataInteractor loadDataInteractor;
-    private Context context;
 
     public MainPresenterImpl(MainView mainView, UserManager userManager,
-                             LoadDataInteractor loadDataInteractor, Context context) {
+                             LoadDataInteractor loadDataInteractor) {
         this.mainViewWeakReference = new WeakReference<>(mainView);
         this.userManager = userManager;
         this.loadDataInteractor = loadDataInteractor;
-        this.context = context;
     }
 
     @Override
@@ -61,16 +59,6 @@ public class MainPresenterImpl implements MainPresenter {
                 }
             }
         });
-    }
-
-    @Override
-    public void checkRotation() {
-        int orientation = context.getResources().getConfiguration().orientation;
-        if (getMainView() != null) {
-            if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-                getMainView().dismissCurrentDialog();
-            }
-        }
     }
 
     private MainView getMainView() {

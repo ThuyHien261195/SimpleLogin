@@ -8,6 +8,4 @@ public interface MainPresenter {
     void checkIsLoggedIn();
 
     void loadPageList();
-
-    void checkRotation();
 }
