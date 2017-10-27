@@ -1,13 +1,13 @@
 package com.example.thuyhien.simplelogin.ui.viewholder;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
-import com.example.thuyhien.simplelogin.ui.listener.MainActivityListener;
-
-import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 
@@ -17,26 +17,27 @@ import butterknife.BindView;
 
 public class LandsPosterViewHolder extends PosterViewHolder {
 
+    public static final String ACTION_SHOW_FEED_DIALOG = "com.example.thuyhien.simplelogin.SHOW_FEED_DIALOG";
+
     @BindView(R.id.text_feed_title)
     TextView textViewFeedTitle;
-
-    private WeakReference<MainActivityListener> mainActivityListenerWeakRef;
 
     public LandsPosterViewHolder(View itemView) {
         super(itemView);
     }
 
     @Override
-    public void bindImagePoster(MediaFeed mediaFeed, WeakReference<MainActivityListener> mainActivityListenerWeakRef) {
-        super.bindImagePoster(mediaFeed, mainActivityListenerWeakRef);
+    public void bindImagePoster(MediaFeed mediaFeed) {
+        super.bindImagePoster(mediaFeed);
         textViewFeedTitle.setText(mediaFeed.getTitle());
-        this.mainActivityListenerWeakRef = mainActivityListenerWeakRef;
     }
 
     @Override
-    protected void openMediaFeedDetail(View view) {
-        if (mainActivityListenerWeakRef != null) {
-            mainActivityListenerWeakRef.get().onCreateMediaFeedDialog(mediaFeed);
-        }
+    protected void openMediaFeedDetail(View view, Bundle feedBundle) {
+        Intent feedDialogIntent = new Intent();
+        feedDialogIntent.setAction(ACTION_SHOW_FEED_DIALOG);
+        feedDialogIntent.putExtra(BUNDLE_MEDIA_FEED, feedBundle);
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(view.getContext());
+        localBroadcastManager.sendBroadcast(feedDialogIntent);
     }
 }
