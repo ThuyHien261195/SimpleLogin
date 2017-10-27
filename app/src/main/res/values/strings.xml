@@ -29,7 +29,7 @@
     <string name="title_view_terms">Terms of Use</string>
     <string name="title_feed_name">Title:</string>
     <string name="title_description">Description:</string>
-    <string name="title_header_feed_dialog">Feed info</string>
+    <string name="title_header_feed_dialog">Detail</string>
 
     <string name="error_empty_field">You must enter %1$s</string>
     <string name="error_invalid_field">%1$s is invalid</string>

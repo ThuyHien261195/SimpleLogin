@@ -86,4 +86,5 @@
     <dimen name="dialog_button_close_vertical_spacing">@dimen/medium_space</dimen>
     <dimen name="item_lands_poster_spacing">2dp</dimen>
     <dimen name="divider_height">1dp</dimen>
+    <dimen name="dialog_feed_width">500dp</dimen>
 </resources>
