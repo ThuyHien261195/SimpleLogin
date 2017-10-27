@@ -10,9 +10,7 @@ import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.ui.adapter.PosterAdapter;
-import com.example.thuyhien.simplelogin.ui.listener.MainActivityListener;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.BindView;
@@ -40,10 +38,13 @@ public class SectionViewHolder extends RecyclerView.ViewHolder {
         recyclerViewPoster.setLayoutManager(linearLayoutManager);
     }
 
-    public void bindContentSection(Section section, List<MediaFeed> mediaFeedList,
-                                   WeakReference<MainActivityListener> mainActivityListenerWeakRef) {
+    public void bindContentSection(Section section, List<MediaFeed> mediaFeedList) {
         textViewTitleSection.setText(section.getMultiLangTitles().getTitle(FoxApplication.langCode));
-        PosterAdapter posterAdapter = new PosterAdapter(mediaFeedList, mainActivityListenerWeakRef);
+        setAdapter(mediaFeedList);
+    }
+
+    protected void setAdapter(List<MediaFeed> mediaFeedList) {
+        PosterAdapter posterAdapter = new PosterAdapter(mediaFeedList);
         recyclerViewPoster.setAdapter(posterAdapter);
     }
 }
