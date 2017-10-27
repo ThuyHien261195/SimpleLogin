@@ -1,8 +1,5 @@
 package com.example.thuyhien.simplelogin.presenter.impl;
 
-import android.content.Context;
-import android.content.res.Configuration;
-
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;

@@ -1,7 +1,5 @@
 package com.example.thuyhien.simplelogin.dagger.module;
 
-import android.content.Context;
-
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.presenter.MainPresenter;
