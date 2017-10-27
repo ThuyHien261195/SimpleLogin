@@ -11,10 +11,8 @@ import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.MediaImage;
 import com.example.thuyhien.simplelogin.ui.activity.MediaFeedActivity;
-import com.example.thuyhien.simplelogin.ui.listener.MainActivityListener;
 import com.squareup.picasso.Picasso;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.BindView;
@@ -26,8 +24,8 @@ import butterknife.ButterKnife;
 
 public class PosterViewHolder extends RecyclerView.ViewHolder {
 
-    public static final String MEDIA_FEED = "MediaFeed";
     public static final String BUNDLE_MEDIA_FEED = "BundleMediaFeed";
+    public static final String MEDIA_FEED = "MediaFeed";
 
     @BindView(R.id.image_poster)
     ImageView imageViewPoster;
@@ -44,12 +42,13 @@ public class PosterViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openMediaFeedDetail(view);
+                Bundle feedBundle = createFeedBundle();
+                openMediaFeedDetail(view, feedBundle);
             }
         });
     }
 
-    public void bindImagePoster(MediaFeed mediaFeed, WeakReference<MainActivityListener> mainActivityListenerWeakRef) {
+    public void bindImagePoster(MediaFeed mediaFeed) {
         this.mediaFeed = mediaFeed;
         List<MediaImage> thumbnails = mediaFeed.getThumbnails();
         if (thumbnails != null && thumbnails.size() > 0) {
@@ -64,11 +63,15 @@ public class PosterViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    protected void openMediaFeedDetail(View view) {
+    protected void openMediaFeedDetail(View view, Bundle feedBundle) {
         Intent feedIntent = new Intent(view.getContext(), MediaFeedActivity.class);
-        Bundle feedBundle = new Bundle();
-        feedBundle.putSerializable(MEDIA_FEED, mediaFeed);
         feedIntent.putExtra(BUNDLE_MEDIA_FEED, feedBundle);
         view.getContext().startActivity(feedIntent);
+    }
+
+    protected Bundle createFeedBundle() {
+        Bundle feedBundle = new Bundle();
+        feedBundle.putSerializable(MEDIA_FEED, mediaFeed);
+        return feedBundle;
     }
 }
