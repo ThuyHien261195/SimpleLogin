@@ -2,18 +2,19 @@ package com.example.thuyhien.simplelogin.ui.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.MediaImage;
-import com.example.thuyhien.simplelogin.ui.listener.MainActivityListener;
 import com.example.thuyhien.simplelogin.ui.viewholder.PosterViewHolder;
 import com.squareup.picasso.Picasso;
 
@@ -30,7 +31,6 @@ import butterknife.OnClick;
 public class MediaFeedDialogFragment extends DialogFragment {
 
     public static final String DIALOG_IS_OPEN = "DIALOG_IS_OPEN";
-    private MainActivityListener mainActivityListener;
     private MediaFeed mediaFeed;
 
     @BindView(R.id.image_poster)
@@ -50,16 +50,7 @@ public class MediaFeedDialogFragment extends DialogFragment {
         return mediaFeedDialogFragment;
     }
 
-    @Override
-    public void onAttach(Context context) {
-        try {
-            mainActivityListener = (MainActivityListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + getString(R.string.error_implement_main_activity_listener));
-        }
-        super.onAttach(context);
-    }
-
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -73,22 +64,20 @@ public class MediaFeedDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dismissDialogWhenRotate(savedInstanceState);
         getFeedBundle();
     }
 
-    private void dismissDialogWhenRotate(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            Boolean isOpenDialog = savedInstanceState.getBoolean(DIALOG_IS_OPEN, false);
-            if (isOpenDialog) {
-                dismiss();
-            }
-        }
+    @Override
+    public void onResume() {
+        super.onResume();
+        Window window = getDialog().getWindow();
+        window.setLayout(((int) getContext().getResources().getDimension(R.dimen.dialog_feed_width)),
+                ViewPager.LayoutParams.WRAP_CONTENT);
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putBoolean(DIALOG_IS_OPEN, getDialog().isShowing());
+    @OnClick(R.id.button_close)
+    public void onClickCloseButton() {
+        dismiss();
     }
 
     private void getFeedBundle() {
@@ -115,19 +104,6 @@ public class MediaFeedDialogFragment extends DialogFragment {
             String imageUrl = imagePoster.getImageUrl().replace(" ", "%20");
             Picasso.with(getActivity()).load(Uri.parse(imageUrl))
                     .into(imageViewPoster);
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        mainActivityListener = null;
-        super.onDetach();
-    }
-
-    @OnClick(R.id.button_close)
-    public void onClickCloseButton() {
-        if (mainActivityListener != null) {
-            mainActivityListener.onCloseMediaFeedDialog();
         }
     }
 }
