@@ -22,6 +22,7 @@ import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.presenter.PagePresenter;
+import com.example.thuyhien.simplelogin.ui.adapter.LandsSectionAdapter;
 import com.example.thuyhien.simplelogin.ui.adapter.SectionAdapter;
 import com.example.thuyhien.simplelogin.ui.listener.MainActivityListener;
 import com.example.thuyhien.simplelogin.view.PageView;
@@ -47,6 +48,9 @@ public class PageFragment extends Fragment implements PageView {
 
     @Inject
     PagePresenter pagePresenter;
+
+    @Inject
+    boolean isTablet;
 
     @BindView(R.id.swipe_media_feed_list)
     SwipeRefreshLayout swipeRefreshMediaFeedList;
@@ -168,7 +172,11 @@ public class PageFragment extends Fragment implements PageView {
     }
 
     private void setAdapter(List<Section> sectionList) {
-        sectionAdapter = new SectionAdapter(sectionList, mainActivityListener);
+        if (isTablet) {
+            sectionAdapter = new LandsSectionAdapter(sectionList);
+        } else {
+            sectionAdapter = new SectionAdapter(sectionList);
+        }
         recyclerViewSection.setAdapter(sectionAdapter);
     }
 
