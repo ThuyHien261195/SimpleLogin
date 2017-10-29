@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
+import com.example.thuyhien.simplelogin.ui.viewholder.LandsPosterViewHolder;
 import com.example.thuyhien.simplelogin.ui.viewholder.PosterViewHolder;
 
 import java.util.List;
@@ -18,16 +19,22 @@ import java.util.List;
 public class PosterAdapter extends RecyclerView.Adapter<PosterViewHolder> {
 
     private List<MediaFeed> feedPostList;
+    private boolean isTablet;
 
-    public PosterAdapter(List<MediaFeed> feedPostList) {
+    public PosterAdapter(List<MediaFeed> feedPostList, boolean isTablet) {
         this.feedPostList = feedPostList;
+        this.isTablet = isTablet;
     }
 
     @Override
     public PosterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View rowView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_poster, parent, false);
-        return new PosterViewHolder(rowView);
+        if (!isTablet) {
+            return new PosterViewHolder(rowView);
+        } else {
+            return new LandsPosterViewHolder(rowView);
+        }
     }
 
     @Override
