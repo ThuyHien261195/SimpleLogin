@@ -3,7 +3,7 @@ package com.example.thuyhien.simplelogin.ui.viewholder;
 import android.view.View;
 
 import com.example.thuyhien.simplelogin.model.MediaFeed;
-import com.example.thuyhien.simplelogin.ui.adapter.LandsPosterAdapter;
+import com.example.thuyhien.simplelogin.ui.adapter.PosterAdapter;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class LandsSectionViewHolder extends SectionViewHolder {
 
     @Override
     protected void setAdapter(List<MediaFeed> mediaFeedList) {
-        LandsPosterAdapter landsPosterAdapter = new LandsPosterAdapter(mediaFeedList);
+        PosterAdapter landsPosterAdapter = new PosterAdapter(mediaFeedList, true);
         recyclerViewPoster.setAdapter(landsPosterAdapter);
     }
 }

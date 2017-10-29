@@ -44,7 +44,7 @@ public class SectionViewHolder extends RecyclerView.ViewHolder {
     }
 
     protected void setAdapter(List<MediaFeed> mediaFeedList) {
-        PosterAdapter posterAdapter = new PosterAdapter(mediaFeedList);
+        PosterAdapter posterAdapter = new PosterAdapter(mediaFeedList, false);
         recyclerViewPoster.setAdapter(posterAdapter);
     }
 }
