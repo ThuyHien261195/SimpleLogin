@@ -1,5 +1,7 @@
 package com.example.thuyhien.simplelogin.ui.listener;
 
+import android.os.Bundle;
+
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 
 /**
@@ -9,5 +11,5 @@ import com.example.thuyhien.simplelogin.model.MediaFeed;
 public interface MainActivityListener {
     void onChangeTitlePage(String pageId, String title);
 
-    void onShowMediaFeedDialog(MediaFeed mediaFeed);
+    void onShowMediaFeedDetail(Bundle feedBundle);
 }
