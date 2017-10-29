@@ -3,6 +3,7 @@ package com.example.thuyhien.simplelogin.ui.viewholder;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.MediaImage;
+import com.example.thuyhien.simplelogin.ui.activity.MainActivity;
 import com.example.thuyhien.simplelogin.ui.activity.MediaFeedActivity;
 import com.squareup.picasso.Picasso;
 
@@ -23,9 +25,6 @@ import butterknife.ButterKnife;
  */
 
 public class PosterViewHolder extends RecyclerView.ViewHolder {
-
-    public static final String BUNDLE_MEDIA_FEED = "BundleMediaFeed";
-    public static final String MEDIA_FEED = "MediaFeed";
 
     @BindView(R.id.image_poster)
     ImageView imageViewPoster;
@@ -63,15 +62,17 @@ public class PosterViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    protected void openMediaFeedDetail(View view, Bundle feedBundle) {
+    private void openMediaFeedDetail(View view, Bundle feedBundle) {
         Intent feedIntent = new Intent(view.getContext(), MediaFeedActivity.class);
-        feedIntent.putExtra(BUNDLE_MEDIA_FEED, feedBundle);
-        view.getContext().startActivity(feedIntent);
+        feedIntent.setAction(MainActivity.ACTION_SHOW_FEED_DETAIL);
+        feedIntent.putExtra(MainActivity.BUNDLE_MEDIA_FEED, feedBundle);
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(view.getContext());
+        localBroadcastManager.sendBroadcast(feedIntent);
     }
 
-    protected Bundle createFeedBundle() {
+    private Bundle createFeedBundle() {
         Bundle feedBundle = new Bundle();
-        feedBundle.putSerializable(MEDIA_FEED, mediaFeed);
+        feedBundle.putSerializable(MainActivity.MEDIA_FEED, mediaFeed);
         return feedBundle;
     }
 }
