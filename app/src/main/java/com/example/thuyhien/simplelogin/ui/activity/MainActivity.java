@@ -31,7 +31,6 @@ import com.example.thuyhien.simplelogin.presenter.MainPresenter;
 import com.example.thuyhien.simplelogin.ui.adapter.MediaFragmentPagerAdapter;
 import com.example.thuyhien.simplelogin.ui.fragment.MediaFeedDialogFragment;
 import com.example.thuyhien.simplelogin.ui.listener.MainActivityListener;
-import com.example.thuyhien.simplelogin.ui.viewholder.LandsPosterViewHolder;
 import com.example.thuyhien.simplelogin.view.MainView;
 
 import java.util.List;
@@ -45,11 +44,19 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements MainView,
         NavigationView.OnNavigationItemSelectedListener,
         MainActivityListener {
+    public static final String ACTION_SHOW_FEED_DETAIL = "com.example.thuyhien.simplelogin.SHOW_FEED_DETAIL";
+    public static final String BUNDLE_MEDIA_FEED = "BundleMediaFeed";
+    public static final String MEDIA_FEED = "MediaFeed";
+    public static final String TAG_MEDIA_FEED_DIALOG = "MediaFeedDialog";
+
     private TextView textViewEmail;
     private View loggedInHeaderView, notLogHeaderView;
 
     @Inject
     MainPresenter mainPresenter;
+
+    @Inject
+    boolean isTablet;
 
     @BindView(R.id.drawer_layout_main)
     DrawerLayout drawerLayoutMain;
@@ -152,9 +159,16 @@ public class MainActivity extends AppCompatActivity implements MainView,
     }
 
     @Override
-    public void onShowMediaFeedDialog(MediaFeed mediaFeed) {
-        DialogFragment dialogFragment = MediaFeedDialogFragment.newMediaFeedDialogFragment(mediaFeed);
-        dialogFragment.show(getSupportFragmentManager(), "MediaFeedDialog");
+    public void onShowMediaFeedDetail(Bundle feedBundle) {
+        if (feedBundle == null) {
+            return;
+        }
+
+        if (!isTablet) {
+            showFeedDetailScreen(feedBundle);
+        } else {
+            showFeedDetailDialog(feedBundle);
+        }
     }
 
     private void displayHeaderView(boolean isLogIn) {
@@ -244,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
 
     private void registerFeedDialogReceiver() {
         broadcastReceiver = new DialogBroadcastReceiver(this);
-        IntentFilter intentFilter = new IntentFilter(LandsPosterViewHolder.ACTION_SHOW_FEED_DIALOG);
+        IntentFilter intentFilter = new IntentFilter(ACTION_SHOW_FEED_DETAIL);
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
         localBroadcastManager.registerReceiver(broadcastReceiver, intentFilter);
     }
@@ -252,5 +266,20 @@ public class MainActivity extends AppCompatActivity implements MainView,
     private void unregisterFeedDialogReceiver() {
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
         localBroadcastManager.unregisterReceiver(broadcastReceiver);
+    }
+
+    private void showFeedDetailScreen(Bundle feedBundle) {
+        Intent feedIntent = new Intent(this, MediaFeedActivity.class);
+        feedIntent.putExtra(BUNDLE_MEDIA_FEED, feedBundle);
+        startActivity(feedIntent);
+    }
+
+    void showFeedDetailDialog(Bundle feedBundle) {
+        MediaFeed mediaFeed = (MediaFeed) feedBundle.getSerializable(MEDIA_FEED);
+        if (mediaFeed == null) {
+            return;
+        }
+        DialogFragment dialogFragment = MediaFeedDialogFragment.newMediaFeedDialogFragment(mediaFeed);
+        dialogFragment.show(getSupportFragmentManager(), TAG_MEDIA_FEED_DIALOG);
     }
 }
