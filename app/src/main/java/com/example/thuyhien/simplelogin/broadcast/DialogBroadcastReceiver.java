@@ -5,13 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.ui.activity.MainActivity;
-import com.example.thuyhien.simplelogin.ui.adapter.PosterAdapter;
 import com.example.thuyhien.simplelogin.ui.listener.MainActivityListener;
-import com.example.thuyhien.simplelogin.ui.viewholder.LandsPosterViewHolder;
-import com.example.thuyhien.simplelogin.ui.viewholder.PosterViewHolder;
 
 import java.lang.ref.WeakReference;
 
