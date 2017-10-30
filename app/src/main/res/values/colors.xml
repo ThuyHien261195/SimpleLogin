@@ -10,4 +10,5 @@
     <color name="color_button_sign_in_text">#FFE100</color>
     <color name="color_page_screen_bg">#261f28</color>
     <color name="color_dialog_header_feed_text">#FFE100</color>
+    <color name="color_header_feed_dialog">@color/color_common_screen_bg</color>
 </resources>
