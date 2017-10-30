@@ -8,6 +8,7 @@ import com.example.thuyhien.simplelogin.dagger.module.MainModule;
 import com.example.thuyhien.simplelogin.dagger.module.NetModule;
 import com.example.thuyhien.simplelogin.dagger.module.PageModule;
 import com.example.thuyhien.simplelogin.dagger.module.SplashModule;
+import com.example.thuyhien.simplelogin.ui.fragment.MediaFeedDialogFragment;
 
 import javax.inject.Singleton;
 
@@ -21,6 +22,8 @@ import dagger.Component;
 @Component(modules = {AppModule.class, NetModule.class, DataCacheModule.class})
 public interface AppComponent {
     void inject(FoxApplication application);
+
+    void inject(MediaFeedDialogFragment mediaFeedDialogFragment);
 
     MainComponent createMainComponent(MainModule mainModule);
 
