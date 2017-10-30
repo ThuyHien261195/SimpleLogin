@@ -87,15 +87,15 @@ public class MediaFeedDialogFragment extends DialogFragment {
         }
     }
 
+    @OnClick(R.id.button_close)
+    public void onClickCloseButton() {
+        dismiss();
+    }
+
     private void getFeedBundle() {
         if (getArguments() != null) {
             mediaFeed = (MediaFeed) getArguments().getSerializable(MainActivity.MEDIA_FEED);
         }
-    }
-
-    @OnClick(R.id.button_close)
-    public void onClickCloseButton() {
-        dismiss();
     }
 
     private void initViews() {
