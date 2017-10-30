@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.thuyhien.simplelogin.ui.activity.MediaFeedActivity"
     android:orientation="vertical"
-    android:background="@color/color_common_screen_bg">
-
-    <include layout="@layout/partial_media_feed" />
+    android:background="@color/color_common_screen_bg"
+    android:id="@+id/layout_feed_detail">
 
 </LinearLayout>

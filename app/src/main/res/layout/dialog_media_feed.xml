@@ -6,9 +6,11 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/layout_header_feed_detail"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dialog_header_feed_height"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@drawable/dialog_header_layout_bg">
 
         <TextView
             android:layout_width="0dp"
@@ -27,11 +29,6 @@
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/dialog_button_close_vertical_spacing" />
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider_height"
-        android:background="@android:color/white" />
 
     <include layout="@layout/partial_media_feed" />
 
