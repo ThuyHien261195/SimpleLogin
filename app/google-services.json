@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "215088493414",
+    "firebase_url": "https://foxapplication-8fd11.firebaseio.com",
+    "project_id": "foxapplication-8fd11",
+    "storage_bucket": "foxapplication-8fd11.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:215088493414:android:2428190dfabad229",
+        "android_client_info": {
+          "package_name": "com.example.thuyhien.simplelogin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "215088493414-6e5hiht773qsfeahsaf9cdh341tibaqe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnQ1iGzKMB0lo3fLBYsLgvJYyvHqDKyQI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:215088493414:android:213e44b60633bbef",
+        "android_client_info": {
+          "package_name": "com.example.thuyhien.simplelogin.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "215088493414-6e5hiht773qsfeahsaf9cdh341tibaqe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnQ1iGzKMB0lo3fLBYsLgvJYyvHqDKyQI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
