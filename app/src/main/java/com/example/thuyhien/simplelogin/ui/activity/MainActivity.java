@@ -1,5 +1,6 @@
 package com.example.thuyhien.simplelogin.ui.activity;
 
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -80,9 +81,11 @@ public class MainActivity extends AppCompatActivity implements MainView,
                 .inject(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
         initViews();
         mainPresenter.checkIsLoggedIn();
         registerFeedDialogReceiver();
+        cancelNotification();
     }
 
     @Override
@@ -281,5 +284,10 @@ public class MainActivity extends AppCompatActivity implements MainView,
         }
         DialogFragment dialogFragment = MediaFeedDialogFragment.newMediaFeedDialogFragment(mediaFeed);
         dialogFragment.show(getSupportFragmentManager(), TAG_MEDIA_FEED_DIALOG);
+    }
+
+    private void cancelNotification() {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
     }
 }
