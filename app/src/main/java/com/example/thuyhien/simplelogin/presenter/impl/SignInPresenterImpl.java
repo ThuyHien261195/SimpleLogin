@@ -4,7 +4,10 @@ import com.example.thuyhien.simplelogin.data.interactor.AuthenticationInteractor
 import com.example.thuyhien.simplelogin.data.interactor.listener.AuthenticateAccountListener;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.data.network.exception.AuthenticationException;
+import com.example.thuyhien.simplelogin.data.network.exception.FacebookAuthenticationException;
+import com.example.thuyhien.simplelogin.data.network.exception.UnKnowException;
 import com.example.thuyhien.simplelogin.data.network.model.AccountRequest;
+import com.example.thuyhien.simplelogin.data.network.model.FacebookAccountRequest;
 import com.example.thuyhien.simplelogin.model.User;
 import com.example.thuyhien.simplelogin.presenter.AuthenticatePresenter;
 import com.example.thuyhien.simplelogin.ui.exception.InvalidInputException;
@@ -58,6 +61,14 @@ public class SignInPresenterImpl implements AuthenticatePresenter, AuthenticateA
     }
 
     @Override
+    public void authenticateFacebookAcc(String token) {
+        if (!token.equals("")) {
+            FacebookAccountRequest facebookAccountRequest = new FacebookAccountRequest(token);
+            signInInteractor.signIntoWithFacebook(facebookAccountRequest, this);
+        }
+    }
+
+    @Override
     public void onAuthenticateSuccess(User user) {
         userManager.saveUser(user);
         if (getSignInView() != null) {
@@ -67,11 +78,10 @@ public class SignInPresenterImpl implements AuthenticatePresenter, AuthenticateA
 
     @Override
     public void onAuthenticateFail(Exception ex) {
-        if (getSignInView() != null) {
-            if (ex != null && ex instanceof AuthenticationException) {
-                getSignInView().showMessage(ex.getMessage());
-            } else {
-                getSignInView().showMessage("");
+        if (ex != null && ((ex instanceof AuthenticationException)
+                || (ex instanceof FacebookAuthenticationException))) {
+            if (getSignInView() != null) {
+                getSignInView().showMessage(ex);
             }
         }
     }

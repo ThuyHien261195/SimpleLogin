@@ -6,4 +6,6 @@ package com.example.thuyhien.simplelogin.presenter;
 
 public interface AuthenticatePresenter {
     void authenticate(String email, String password);
+
+    void authenticateFacebookAcc(String token);
 }

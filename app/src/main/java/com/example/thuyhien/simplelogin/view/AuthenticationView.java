@@ -11,5 +11,5 @@ public interface AuthenticationView {
 
     void navigateToMain();
 
-    void showMessage(String textMsg);
+    void showMessage(Exception ex);
 }
