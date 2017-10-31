@@ -43,6 +43,7 @@
     <dimen name="title_info_app_right_margin">3dp</dimen>
     <dimen name="title_info_app_vertical_margin">@dimen/medium_space</dimen>
     <dimen name="layout_more_info_app_vertical_margin">@dimen/small_space</dimen>
+    <dimen name="button_facebook_vertical_spacing">@dimen/large_space</dimen>
 
     <!-- Navigation header main properties. -->
     <dimen name="nav_logged_in_header_height">140dp</dimen>

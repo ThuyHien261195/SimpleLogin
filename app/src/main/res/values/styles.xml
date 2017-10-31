@@ -30,6 +30,12 @@
         <item name="android:textSize">@dimen/button_login_text_size</item>
     </style>
 
+    <style name="FacebookButtonTheme" parent="CommonButtonTheme">
+        <item name="android:background">@drawable/btn_login_facebook_bg</item>
+        <item name="android:paddingLeft">@dimen/button_facebook_vertical_spacing</item>
+        <item name="android:paddingRight">@dimen/button_facebook_vertical_spacing</item>
+    </style>
+
     <style name="LogInTextViewTheme">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:gravity">center</item>
