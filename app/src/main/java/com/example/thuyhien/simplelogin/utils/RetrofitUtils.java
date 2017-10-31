@@ -1,6 +1,7 @@
 package com.example.thuyhien.simplelogin.utils;
 
 import com.example.thuyhien.simplelogin.data.network.exception.AuthenticationException;
+import com.example.thuyhien.simplelogin.data.network.exception.FacebookAuthenticationException;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
 import com.example.thuyhien.simplelogin.data.network.exception.UnKnowException;
 
@@ -38,6 +39,18 @@ public class RetrofitUtils {
                 if (jsonError.has("error")) {
                     return new LoadDataException(jsonError.getString("error"));
                 }
+            } catch (Exception e) {
+                return e;
+            }
+        }
+        return new UnKnowException();
+    }
+
+    public static Exception createFacebookAuthenException(ResponseBody responseBody) {
+        if (responseBody != null) {
+            try {
+                JSONObject jsonError = new JSONObject(responseBody.string());
+                return new FacebookAuthenticationException(jsonError.getString("message"));
             } catch (Exception e) {
                 return e;
             }

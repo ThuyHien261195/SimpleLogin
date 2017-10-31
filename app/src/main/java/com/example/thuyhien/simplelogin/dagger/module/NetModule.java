@@ -25,7 +25,7 @@ import static com.example.thuyhien.simplelogin.BuildConfig.DATA_BASE_URL;
 
 @Module
 public class NetModule {
-    private static final String AUTHENTICATION_BASE_URL = "http://userkit-identity-stg.ap-southeast-1.elasticbeanstalk.com/v1/";
+    private static final String AUTHENTICATION_BASE_URL = "http://userkit-identity-stg.ap-southeast-1.elasticbeanstalk.com/";
 
     @Provides
     @Singleton
