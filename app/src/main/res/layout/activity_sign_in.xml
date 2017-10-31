@@ -56,5 +56,13 @@
             style="@style/CommonButtonTheme"
             android:layout_gravity="center"
             android:text="@string/action_login" />
+
+        <com.facebook.login.widget.LoginButton xmlns:facebook="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/button_login_facebook"
+            style="@style/FacebookButtonTheme"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/button_facebook_vertical_spacing"
+            facebook:com_facebook_login_text="@string/action_sign_into_facebook"
+            facebook:com_facebook_logout_text="@string/action_sign_into_facebook" />
     </LinearLayout>
 </LinearLayout>
