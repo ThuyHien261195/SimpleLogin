@@ -9,9 +9,17 @@ import android.widget.Toast;
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.dagger.module.AuthenModule;
+import com.example.thuyhien.simplelogin.data.network.exception.FacebookAuthenticationException;
 import com.example.thuyhien.simplelogin.presenter.AuthenticatePresenter;
 import com.example.thuyhien.simplelogin.ui.exception.InvalidInputException;
 import com.example.thuyhien.simplelogin.view.AuthenticationView;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,6 +31,9 @@ import butterknife.OnClick;
 
 public class SignInActivity extends AppCompatActivity implements AuthenticationView {
 
+    public static final String PERMISSION_EMAIL = "email";
+    private CallbackManager callbackManager;
+
     @Inject
     @Named("sign_in_presenter")
     AuthenticatePresenter signInPresenter;
@@ -32,6 +43,23 @@ public class SignInActivity extends AppCompatActivity implements AuthenticationV
 
     @BindView(R.id.edit_password)
     EditText editTextPassword;
+
+    @BindView(R.id.button_login_facebook)
+    LoginButton loginButtonFacebook;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        ((FoxApplication) getApplication()).getAppComponent()
+                .createAuthenComponent(new AuthenModule(this))
+                .inject(this);
+
+        setContentView(R.layout.activity_sign_in);
+        ButterKnife.bind(this);
+
+        callbackFacebookLogin();
+    }
 
     @BindString(R.string.hint_email)
     String hintEmail;
@@ -44,18 +72,6 @@ public class SignInActivity extends AppCompatActivity implements AuthenticationV
 
     @BindString(R.string.error_invalid_field)
     String errorInvalidField;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        ((FoxApplication) getApplication()).getAppComponent()
-                .createAuthenComponent(new AuthenModule(this))
-                .inject(this);
-
-        setContentView(R.layout.activity_sign_in);
-        ButterKnife.bind(this);
-    }
 
     @OnClick(R.id.text_forgot_password)
     public void onClickForgotPassword() {
@@ -113,9 +129,49 @@ public class SignInActivity extends AppCompatActivity implements AuthenticationV
     }
 
     @Override
-    public void showMessage(String textMsg) {
-        if (!textMsg.equals("")) {
-            Toast.makeText(this, textMsg, Toast.LENGTH_SHORT).show();
+    public void showMessage(Exception ex) {
+        if (ex instanceof FacebookAuthenticationException) {
+            LoginManager.getInstance().logOut();
         }
+
+        String message = ex.getMessage();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void callbackFacebookLogin() {
+        callbackManager = CallbackManager.Factory.create();
+
+        loginButtonFacebook.setReadPermissions(PERMISSION_EMAIL);
+        loginButtonFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                AccessToken accessToken = loginResult.getAccessToken();
+                if (accessToken.getPermissions().contains(PERMISSION_EMAIL)) {
+                    signInPresenter.authenticateFacebookAcc(loginResult.getAccessToken().getToken());
+                } else {
+                    LoginManager.getInstance().logOut();
+                    Toast.makeText(getApplicationContext(), R.string.request_access_email,
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(getApplicationContext(), R.string.cancel_login_facebook,
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Toast.makeText(getApplicationContext(), R.string.error_login_facebook,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
