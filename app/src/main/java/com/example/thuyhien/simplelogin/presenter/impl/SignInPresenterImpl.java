@@ -61,10 +61,8 @@ public class SignInPresenterImpl implements AuthenticatePresenter, AuthenticateA
 
     @Override
     public void authenticateFacebookAcc(String token) {
-        if (!token.equals("")) {
-            FacebookAccountRequest facebookAccountRequest = new FacebookAccountRequest(token);
-            signInInteractor.signIntoWithFacebook(facebookAccountRequest, this);
-        }
+        FacebookAccountRequest facebookAccountRequest = new FacebookAccountRequest(token);
+        signInInteractor.signIntoWithFacebook(facebookAccountRequest, this);
     }
 
     @Override
