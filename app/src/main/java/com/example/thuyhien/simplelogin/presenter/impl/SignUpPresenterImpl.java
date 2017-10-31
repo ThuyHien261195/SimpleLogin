@@ -5,7 +5,6 @@ import com.example.thuyhien.simplelogin.data.interactor.listener.AuthenticateAcc
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.data.network.exception.AuthenticationException;
 import com.example.thuyhien.simplelogin.data.network.exception.FacebookAuthenticationException;
-import com.example.thuyhien.simplelogin.data.network.exception.UnKnowException;
 import com.example.thuyhien.simplelogin.data.network.model.AccountRequest;
 import com.example.thuyhien.simplelogin.data.network.model.FacebookAccountRequest;
 import com.example.thuyhien.simplelogin.model.User;
