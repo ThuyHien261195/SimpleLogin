@@ -117,11 +117,20 @@ public class MainActivity extends AppCompatActivity implements MainView,
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        int pos = viewPagerPost.getAdapter().getItemPosition(new Page(String.valueOf(id)));
-        if (pos != -1) {
-            viewPagerPost.setCurrentItem(pos);
-            textViewTitlePage.setText(viewPagerPost.getAdapter().getPageTitle(pos));
+
+        switch (id) {
+            case R.id.menu_item_setting:
+                openSettingsScreen();
+                break;
+            default:
+                int pos = viewPagerPost.getAdapter().getItemPosition(new Page(String.valueOf(id)));
+                if (pos != -1) {
+                    viewPagerPost.setCurrentItem(pos);
+                    textViewTitlePage.setText(viewPagerPost.getAdapter().getPageTitle(pos));
+                }
+                break;
         }
+
         if (drawerLayoutMain.isDrawerOpen(GravityCompat.START)) {
             drawerLayoutMain.closeDrawer(GravityCompat.START);
         }
@@ -243,12 +252,13 @@ public class MainActivity extends AppCompatActivity implements MainView,
 
     private void addMenuItem(List<Page> pageList) {
         Menu mainMenu = navigationViewMain.getMenu();
-        mainMenu.clear();
+        mainMenu.removeGroup(R.id.group_menu_feed_type);
         for (int i = 0; i < pageList.size(); i++) {
-            mainMenu.add(Menu.NONE, Integer.parseInt(pageList.get(i).getId()),
+            mainMenu.add(R.id.group_menu_feed_type, Integer.parseInt(pageList.get(i).getId()),
                     Menu.NONE,
                     pageList.get(i).getMultiLangTitles().getTitle(FoxApplication.langCode));
         }
+        mainMenu.setGroupCheckable(R.id.group_menu_feed_type, true, true);
     }
 
     private void setPostFragmentViewPager(List<Page> pageList) {
@@ -282,5 +292,10 @@ public class MainActivity extends AppCompatActivity implements MainView,
         }
         DialogFragment dialogFragment = MediaFeedDialogFragment.newMediaFeedDialogFragment(mediaFeed);
         dialogFragment.show(getSupportFragmentManager(), TAG_MEDIA_FEED_DIALOG);
+    }
+
+    private void openSettingsScreen() {
+        Intent settingsIntent = new Intent(this, SettingsActivity.class);
+        startActivity(settingsIntent);
     }
 }
