@@ -8,11 +8,6 @@
     android:padding="@dimen/activity_padding"
     tools:context="com.example.thuyhien.simplelogin.ui.activity.SignInActivity">
 
-    <ImageButton
-        android:id="@+id/button_close"
-        style="@style/CloseButtonTheme"
-        android:layout_gravity="end" />
-
     <LinearLayout
         style="@style/FormLogInTheme"
         android:layout_marginBottom="@dimen/form_login_vertical_margin"
@@ -57,12 +52,20 @@
             android:layout_gravity="center"
             android:text="@string/action_login" />
 
-        <com.facebook.login.widget.LoginButton xmlns:facebook="http://schemas.android.com/apk/res-auto"
+        <Button
             android:id="@+id/button_login_facebook"
             style="@style/FacebookButtonTheme"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/button_facebook_vertical_spacing"
-            facebook:com_facebook_login_text="@string/action_sign_into_facebook"
-            facebook:com_facebook_logout_text="@string/action_sign_into_facebook" />
+            android:drawableLeft="@drawable/com_facebook_button_icon"
+            android:text="@string/action_sign_into_facebook"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white" />
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/button_close"
+        style="@style/CloseButtonTheme"
+        android:layout_gravity="end" />
+
 </LinearLayout>
