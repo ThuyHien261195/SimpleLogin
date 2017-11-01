@@ -31,6 +31,7 @@
     <dimen name="title_introduce_app_text_size">20sp</dimen>
     <dimen name="title_already_acc_text_size">18sp</dimen>
     <dimen name="title_info_app_text_size">14sp</dimen>
+    <dimen name="title_setting_text_size">18sp</dimen>
 
     <dimen name="text_screen_main_bottom_padding">@dimen/large_space</dimen>
 
@@ -88,4 +89,10 @@
     <dimen name="item_lands_poster_spacing">2dp</dimen>
     <dimen name="divider_height">1dp</dimen>
     <dimen name="dialog_feed_width">500dp</dimen>
+
+    <!-- Main menu-->
+    <item name="group_menu_feed_type" type="id">group_menu_feed</item>
+
+    <!-- Setting screen -->
+    <dimen name="item_setting_vertical_spacing">@dimen/medium_space</dimen>
 </resources>

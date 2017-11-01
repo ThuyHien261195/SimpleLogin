@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryBlack</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/color_common_screen_bg</item>
     </style>
 
     <style name="LogoImageTheme">
@@ -95,5 +96,14 @@
         <item name="android:paddingRight">@dimen/layout_info_horizontal_spacing</item>
         <item name="android:paddingTop">@dimen/layout_info_vertical_spacing</item>
         <item name="android:paddingBottom">@dimen/layout_info_vertical_spacing</item>
+    </style>
+
+    <style name="SettingTextTheme">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/title_setting_text_size</item>
+    </style>
+
+    <style name="ChosenSettingTextTheme" parent="SettingTextTheme">
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>
