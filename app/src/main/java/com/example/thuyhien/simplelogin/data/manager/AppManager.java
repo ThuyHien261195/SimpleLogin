@@ -8,4 +8,8 @@ public interface AppManager {
     boolean isAlreadyUsedApp();
 
     void setAlreadyUsedApp();
+
+    String getUsedLanguage();
+
+    void setUsedLanguage();
 }

@@ -2,6 +2,7 @@ package com.example.thuyhien.simplelogin.data.manager.impl;
 
 import android.content.SharedPreferences;
 
+import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.data.manager.AppManager;
 
 /**
@@ -10,6 +11,8 @@ import com.example.thuyhien.simplelogin.data.manager.AppManager;
 
 public class SharedPreferencesAppManager implements AppManager {
     private static final String PREF_ALREADY_USED = "AlreadyUsed";
+    public static final String LANGUAGE_CODE = "LanguageCode";
+    public static final String DEFAULT_LANGUAGE_CODE = "en";
 
     private SharedPreferences sharedPref;
 
@@ -27,6 +30,18 @@ public class SharedPreferencesAppManager implements AppManager {
     public void setAlreadyUsedApp() {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean(PREF_ALREADY_USED, true);
+        editor.apply();
+    }
+
+    @Override
+    public String getUsedLanguage() {
+        return sharedPref.getString(LANGUAGE_CODE, DEFAULT_LANGUAGE_CODE);
+    }
+
+    @Override
+    public void setUsedLanguage() {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(LANGUAGE_CODE, FoxApplication.langCode);
         editor.apply();
     }
 }
