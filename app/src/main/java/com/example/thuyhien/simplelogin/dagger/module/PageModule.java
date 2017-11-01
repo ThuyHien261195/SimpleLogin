@@ -14,7 +14,7 @@ import dagger.Provides;
 
 @Module
 public class PageModule {
-    PageView pageView;
+    private PageView pageView;
 
     public PageModule(PageView pageView) {
         this.pageView = pageView;

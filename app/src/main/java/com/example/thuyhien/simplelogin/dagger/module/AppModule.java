@@ -21,6 +21,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Named;
@@ -99,5 +100,18 @@ public class AppModule {
     @Singleton
     Boolean provideIsTablet() {
         return context.getResources().getBoolean(R.bool.is_tablet);
+    }
+
+    @Provides
+    @Singleton
+    HashMap<String, String> provideLanguageList() {
+        String[] languageCodeList = context.getResources().getStringArray(R.array.language_code_array);
+        String[] languageNameList = context.getResources().getStringArray(R.array.language_name_array);
+
+        HashMap<String, String> languageList = new HashMap<>();
+        for (int i = 0; i < languageNameList.length; i++) {
+            languageList.put(languageNameList[i], languageCodeList[i]);
+        }
+        return languageList;
     }
 }

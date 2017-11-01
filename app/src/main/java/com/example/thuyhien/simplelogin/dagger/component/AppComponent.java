@@ -32,4 +32,6 @@ public interface AppComponent {
     SplashComponent createSplashComponent(SplashModule splashModule);
 
     PageComponent createPageComponent(PageModule pageModule);
+
+    SettingsComponent createSettingsComponent();
 }
