@@ -19,7 +19,8 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
+
+import java.util.Collections;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -44,9 +45,6 @@ public class SignInActivity extends AppCompatActivity implements AuthenticationV
     @BindView(R.id.edit_password)
     EditText editTextPassword;
 
-    @BindView(R.id.button_login_facebook)
-    LoginButton loginButtonFacebook;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,8 +55,7 @@ public class SignInActivity extends AppCompatActivity implements AuthenticationV
 
         setContentView(R.layout.activity_sign_in);
         ButterKnife.bind(this);
-
-        callbackFacebookLogin();
+        registerFacebookCallback();
     }
 
     @BindString(R.string.hint_email)
@@ -144,16 +141,20 @@ public class SignInActivity extends AppCompatActivity implements AuthenticationV
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void callbackFacebookLogin() {
-        callbackManager = CallbackManager.Factory.create();
+    @OnClick(R.id.button_login_facebook)
+    public void onClickLoginWithFacebook() {
+        LoginManager.getInstance().logInWithReadPermissions(this,
+                Collections.singletonList(PERMISSION_EMAIL));
+    }
 
-        loginButtonFacebook.setReadPermissions(PERMISSION_EMAIL);
-        loginButtonFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+    void registerFacebookCallback() {
+        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 AccessToken accessToken = loginResult.getAccessToken();
                 if (accessToken.getPermissions().contains(PERMISSION_EMAIL)) {
-                    signInPresenter.authenticateFacebookAcc(loginResult.getAccessToken().getToken());
+                    signInPresenter.authenticateFacebookAcc(accessToken.getToken());
                 } else {
                     LoginManager.getInstance().logOut();
                     Toast.makeText(getApplicationContext(), R.string.request_access_email,
