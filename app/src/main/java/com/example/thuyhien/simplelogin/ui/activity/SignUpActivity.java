@@ -56,7 +56,7 @@ public class SignUpActivity extends AppCompatActivity implements AuthenticationV
     String errorInvalidField;
 
     @BindView(R.id.button_login_facebook)
-    LoginButton loginButtonFacebook;
+    LoginButton loginButtonWithFacebook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,11 +85,6 @@ public class SignUpActivity extends AppCompatActivity implements AuthenticationV
     @OnClick(R.id.button_close)
     public void onClickCloseButton() {
         this.finish();
-    }
-
-    @OnClick(R.id.button_login_facebook)
-    public void onClickSignUpWithFacebook() {
-
     }
 
     @Override
@@ -151,8 +146,8 @@ public class SignUpActivity extends AppCompatActivity implements AuthenticationV
     private void callbackFacebookLogin() {
         callbackManager = CallbackManager.Factory.create();
 
-        loginButtonFacebook.setReadPermissions(SignInActivity.PERMISSION_EMAIL);
-        loginButtonFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        loginButtonWithFacebook.setReadPermissions(SignInActivity.PERMISSION_EMAIL);
+        loginButtonWithFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 AccessToken accessToken = loginResult.getAccessToken();
