@@ -44,7 +44,8 @@ public class NewsFirebaseMessagingService extends FirebaseMessagingService {
                 .setSmallIcon(R.mipmap.ic_fox_rgb_logo)
                 .setContentTitle(getString(R.string.fox_notification_title))
                 .setContentText(message)
-                .setContentIntent(pendingIntent);
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(notificationId, builder.build());
