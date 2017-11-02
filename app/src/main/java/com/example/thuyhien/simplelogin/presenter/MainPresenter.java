@@ -4,7 +4,7 @@ package com.example.thuyhien.simplelogin.presenter;
  * Created by thuyhien on 10/9/17.
  */
 
-public interface MainPresenter {
+public interface MainPresenter extends BasePresenter {
     void checkIsLoggedIn();
 
     void loadPageList();
