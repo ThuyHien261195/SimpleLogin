@@ -9,6 +9,10 @@
         <item name="android:windowBackground">@color/color_common_screen_bg</item>
     </style>
 
+    <style name="DarkActionBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowBackground">@color/color_common_screen_bg</item>
+    </style>
+
     <style name="LogoImageTheme">
         <item name="android:contentDescription">@string/description_logo_image</item>
         <item name="android:src">@mipmap/ic_fox_plus_logo_v3</item>
