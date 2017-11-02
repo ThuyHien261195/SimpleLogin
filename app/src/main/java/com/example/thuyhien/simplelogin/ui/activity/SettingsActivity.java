@@ -11,8 +11,7 @@ import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.presenter.SettingsPresenter;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -23,13 +22,14 @@ import butterknife.OnClick;
 
 import static com.example.thuyhien.simplelogin.data.manager.impl.SharedPreferencesAppManager.DEFAULT_LANGUAGE_CODE;
 
-public class SettingsActivity extends AppCompatActivity{
+public class SettingsActivity extends AppCompatActivity {
 
+    private String oldLanguageCode = FoxApplication.langCode;
     @Inject
     SettingsPresenter settingsPresenter;
 
     @Inject
-    HashMap<String, String> languageList;
+    LinkedHashMap<String, String> languageList;
 
     @BindView(R.id.text_chosen_lang)
     TextView textViewChosenLang;
@@ -44,21 +44,18 @@ public class SettingsActivity extends AppCompatActivity{
                 .inject(this);
         ButterKnife.bind(this);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().show();
-        }
-
+        displayChosenLanguage();
     }
 
     @OnClick(R.id.layout_language)
     public void onClickLayoutLanguage() {
-        Collection<String> collection = languageList.keySet();
-        final String[] languageNameList = collection.toArray(new String[collection.size()]);
+        List<String> languageNameList = new ArrayList<>(languageList.values());
+        final List<String> languageCodeList = new ArrayList<>(languageList.keySet());
         final int currentLangIndex = findIndexLanguageCode();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(R.string.title_dialog_language)
-                .setSingleChoiceItems(languageNameList,
+                .setSingleChoiceItems(languageNameList.toArray(new String[languageNameList.size()]),
                         currentLangIndex, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -70,29 +67,35 @@ public class SettingsActivity extends AppCompatActivity{
                         int selectedPost = ((AlertDialog) dialogInterface).getListView()
                                 .getCheckedItemPosition();
                         if (selectedPost != currentLangIndex) {
-                            FoxApplication.langCode = languageList.get(languageNameList[selectedPost]);
+                            FoxApplication.langCode = languageCodeList.get(selectedPost);
                             settingsPresenter.saveChosenLanguage();
-                        } else {
-                            dialogInterface.dismiss();
+                            displayChosenLanguage();
                         }
-                    }
-                })
-                .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
                     }
                 });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
 
+    private void displayChosenLanguage() {
+        String langName = languageList.get(FoxApplication.langCode);
+        textViewChosenLang.setText(langName);
+    }
+
     private int findIndexLanguageCode() {
-        List<String> languageCodeList = new ArrayList<>(languageList.values());
+        List<String> languageCodeList = new ArrayList<>(languageList.keySet());
         int index = languageCodeList.indexOf(FoxApplication.langCode);
         if (index != -1) {
             return index;
         }
         return languageCodeList.indexOf(DEFAULT_LANGUAGE_CODE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!oldLanguageCode.equals(FoxApplication.langCode)) {
+            setResult(RESULT_OK);
+        }
+        super.onBackPressed();
     }
 }
