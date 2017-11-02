@@ -13,6 +13,7 @@ import com.example.thuyhien.simplelogin.data.network.converter.FeedPostConverter
 import com.example.thuyhien.simplelogin.data.network.converter.FeedPostListConverter;
 import com.example.thuyhien.simplelogin.data.network.converter.ImagePostConverter;
 import com.example.thuyhien.simplelogin.data.network.converter.UserConverter;
+import com.example.thuyhien.simplelogin.model.Language;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.MediaImage;
 import com.example.thuyhien.simplelogin.model.User;
@@ -21,7 +22,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Named;
@@ -104,13 +105,13 @@ public class AppModule {
 
     @Provides
     @Singleton
-    LinkedHashMap<String, String> provideLanguageList() {
+    List<Language> provideLanguageList() {
         String[] languageCodeList = context.getResources().getStringArray(R.array.language_code_array);
         String[] languageNameList = context.getResources().getStringArray(R.array.language_name_array);
 
-        LinkedHashMap<String, String> languageList = new LinkedHashMap<>();
+        List<Language> languageList = new ArrayList<>();
         for (int i = 0; i < languageCodeList.length; i++) {
-            languageList.put(languageCodeList[i], languageNameList[i]);
+            languageList.add(new Language(languageCodeList[i], languageNameList[i], false));
         }
         return languageList;
     }
