@@ -16,14 +16,14 @@ import java.util.List;
  */
 
 public class LandsSectionAdapter extends SectionAdapter {
-    public LandsSectionAdapter(List<Section> sectionList) {
-        super(sectionList);
+    public LandsSectionAdapter(List<Section> sectionList, String langCode) {
+        super(sectionList, langCode);
     }
 
     @Override
     public SectionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_section, parent, false);
-        return new LandsSectionViewHolder(view);
+        return new LandsSectionViewHolder(view, langCode);
     }
 }

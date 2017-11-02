@@ -2,6 +2,7 @@ package com.example.thuyhien.simplelogin.presenter.impl;
 
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
+import com.example.thuyhien.simplelogin.data.manager.AppManager;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.presenter.MainPresenter;
@@ -17,14 +18,18 @@ import java.util.List;
 public class MainPresenterImpl implements MainPresenter {
 
     private WeakReference<MainView> mainViewWeakReference;
-    private UserManager userManager;
     private LoadDataInteractor loadDataInteractor;
+    private UserManager userManager;
+    private AppManager appManager;
 
-    public MainPresenterImpl(MainView mainView, UserManager userManager,
-                             LoadDataInteractor loadDataInteractor) {
+    public MainPresenterImpl(MainView mainView,
+                             LoadDataInteractor loadDataInteractor,
+                             UserManager userManager,
+                             AppManager appManager) {
         this.mainViewWeakReference = new WeakReference<>(mainView);
-        this.userManager = userManager;
         this.loadDataInteractor = loadDataInteractor;
+        this.userManager = userManager;
+        this.appManager = appManager;
     }
 
     @Override
@@ -52,10 +57,18 @@ public class MainPresenterImpl implements MainPresenter {
             @Override
             public void onLoadDataFail(Exception ex) {
                 if (getMainView() != null) {
-                    getMainView().showMessageError(ex);
+                    getMainView().showErrorMessage(ex);
                 }
             }
         });
+    }
+
+    @Override
+    public void getCurrentLangCode() {
+        String curLang = appManager.getUsedLanguage();
+        if (getMainView() != null) {
+            getMainView().getCurrentLangCode(curLang);
+        }
     }
 
     private MainView getMainView() {

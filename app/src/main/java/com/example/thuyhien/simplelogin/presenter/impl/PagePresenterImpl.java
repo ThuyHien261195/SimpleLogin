@@ -3,6 +3,7 @@ package com.example.thuyhien.simplelogin.presenter.impl;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadFeedListListener;
+import com.example.thuyhien.simplelogin.data.manager.AppManager;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.model.Section;
@@ -20,11 +21,13 @@ public class PagePresenterImpl implements PagePresenter {
 
     private WeakReference<PageView> pageViewWeakReference;
     private LoadDataInteractor loadDataInteractor;
+    private AppManager appManager;
 
     public PagePresenterImpl(PageView pageView,
-                             LoadDataInteractor loadDataInteractor) {
+                             LoadDataInteractor loadDataInteractor, AppManager appManager) {
         this.pageViewWeakReference = new WeakReference<PageView>(pageView);
         this.loadDataInteractor = loadDataInteractor;
+        this.appManager = appManager;
     }
 
 
@@ -58,6 +61,14 @@ public class PagePresenterImpl implements PagePresenter {
                 }
             }
         });
+    }
+
+    @Override
+    public void getCurrentLangCode() {
+        String langCode = appManager.getUsedLanguage();
+        if (getPageView() != null) {
+            getPageView().getCurrentLangCode(langCode);
+        }
     }
 
     private void loadFeedList(Page page, boolean useCache) {

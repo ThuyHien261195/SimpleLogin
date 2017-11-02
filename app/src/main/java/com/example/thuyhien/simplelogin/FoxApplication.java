@@ -14,7 +14,6 @@ import javax.inject.Inject;
  */
 
 public class FoxApplication extends Application {
-    public static String langCode;
     private AppComponent appComponent;
 
     @Inject
@@ -32,10 +31,5 @@ public class FoxApplication extends Application {
                 .appModule(new AppModule(this))
                 .build();
         appComponent.inject(this);
-        getUsedLanguage();
-    }
-
-    private void getUsedLanguage() {
-        langCode = appManager.getUsedLanguage();
     }
 }

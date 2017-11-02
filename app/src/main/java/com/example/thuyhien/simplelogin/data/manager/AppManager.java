@@ -11,5 +11,5 @@ public interface AppManager {
 
     String getUsedLanguage();
 
-    void setUsedLanguage();
+    void setUsedLanguage(String langCode);
 }

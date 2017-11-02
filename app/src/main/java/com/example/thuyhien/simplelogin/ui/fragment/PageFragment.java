@@ -45,6 +45,7 @@ public class PageFragment extends Fragment implements PageView {
     private Page page;
     private SectionAdapter sectionAdapter;
     private MainActivityListener mainActivityListener;
+    private String langCode;
 
     @Inject
     PagePresenter pagePresenter;
@@ -105,6 +106,7 @@ public class PageFragment extends Fragment implements PageView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         initViews();
+        pagePresenter.getCurrentLangCode();
         pagePresenter.loadAllFeedList(page, false);
     }
 
@@ -134,7 +136,7 @@ public class PageFragment extends Fragment implements PageView {
     @Override
     public void displayRefreshPage(Page page) {
         mainActivityListener.onChangeTitlePage(page.getId(),
-                page.getMultiLangTitles().getTitle(FoxApplication.langCode));
+                page.getMultiLangTitles().getTitle(langCode));
         this.page = page;
         setAdapter(page.getSectionList());
         pagePresenter.loadAllFeedList(page, true);
@@ -150,6 +152,11 @@ public class PageFragment extends Fragment implements PageView {
                 Toast.makeText(getContext(), R.string.error_refresh_data, Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    public void getCurrentLangCode(String langCode) {
+        this.langCode = langCode;
     }
 
     private void initViews() {
@@ -173,9 +180,9 @@ public class PageFragment extends Fragment implements PageView {
 
     private void setAdapter(List<Section> sectionList) {
         if (isTablet) {
-            sectionAdapter = new LandsSectionAdapter(sectionList);
+            sectionAdapter = new LandsSectionAdapter(sectionList, langCode);
         } else {
-            sectionAdapter = new SectionAdapter(sectionList);
+            sectionAdapter = new SectionAdapter(sectionList, langCode);
         }
         recyclerViewSection.setAdapter(sectionAdapter);
     }

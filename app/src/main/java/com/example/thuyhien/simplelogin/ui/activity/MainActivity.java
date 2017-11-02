@@ -13,7 +13,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements MainView,
     public static final String BUNDLE_MEDIA_FEED = "BundleMediaFeed";
     public static final String MEDIA_FEED = "MediaFeed";
     public static final String TAG_MEDIA_FEED_DIALOG = "MediaFeedDialog";
-    public static final int REQUEST_CODE_SETTING = 100;
 
     private TextView textViewEmail;
     private View loggedInHeaderView, notLogHeaderView;
@@ -72,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
     @BindView(R.id.text_title_page)
     TextView textViewTitlePage;
     private BroadcastReceiver broadcastReceiver;
+    private String langCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
         ButterKnife.bind(this);
 
         initViews();
+        mainPresenter.getCurrentLangCode();
         mainPresenter.checkIsLoggedIn();
         registerFeedDialogReceiver();
     }
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
     }
 
     @Override
-    public void showMessageError(Exception ex) {
+    public void showErrorMessage(Exception ex) {
         if (ex != null && ex instanceof LoadDataException) {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
         } else {
@@ -184,17 +184,8 @@ public class MainActivity extends AppCompatActivity implements MainView,
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case REQUEST_CODE_SETTING:
-                if (resultCode == RESULT_OK) {
-                    finish();
-                    startActivity(getIntent());
-                }
-                break;
-            default:
-                break;
-        }
+    public void getCurrentLangCode(String langCode) {
+        this.langCode = langCode;
     }
 
     private void displayHeaderView(boolean isLogIn) {
@@ -272,14 +263,14 @@ public class MainActivity extends AppCompatActivity implements MainView,
         for (int i = 0; i < pageList.size(); i++) {
             mainMenu.add(R.id.group_menu_feed_type, Integer.parseInt(pageList.get(i).getId()),
                     Menu.NONE,
-                    pageList.get(i).getMultiLangTitles().getTitle(FoxApplication.langCode));
+                    pageList.get(i).getMultiLangTitles().getTitle(langCode));
         }
         mainMenu.setGroupCheckable(R.id.group_menu_feed_type, true, true);
     }
 
     private void setPostFragmentViewPager(List<Page> pageList) {
         MediaFragmentPagerAdapter fragmentPagerAdapter =
-                new MediaFragmentPagerAdapter(getSupportFragmentManager(), pageList);
+                new MediaFragmentPagerAdapter(getSupportFragmentManager(), pageList, langCode);
         viewPagerPost.setAdapter(fragmentPagerAdapter);
     }
 
@@ -312,6 +303,6 @@ public class MainActivity extends AppCompatActivity implements MainView,
 
     private void openSettingsScreen() {
         Intent settingsIntent = new Intent(this, SettingsActivity.class);
-        startActivityForResult(settingsIntent, REQUEST_CODE_SETTING);
+        startActivity(settingsIntent);
     }
 }

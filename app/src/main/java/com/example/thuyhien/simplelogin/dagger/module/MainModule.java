@@ -1,6 +1,7 @@
 package com.example.thuyhien.simplelogin.dagger.module;
 
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
+import com.example.thuyhien.simplelogin.data.manager.AppManager;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.presenter.MainPresenter;
 import com.example.thuyhien.simplelogin.presenter.impl.MainPresenterImpl;
@@ -23,7 +24,9 @@ public class MainModule {
     }
 
     @Provides
-    MainPresenter provideMainPresenter(UserManager userManager, LoadDataInteractor loadDataInteractor) {
-        return new MainPresenterImpl(mainView, userManager, loadDataInteractor);
+    MainPresenter provideMainPresenter(LoadDataInteractor loadDataInteractor,
+                                       UserManager userManager,
+                                       AppManager appManager) {
+        return new MainPresenterImpl(mainView, loadDataInteractor, userManager, appManager);
     }
 }

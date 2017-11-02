@@ -2,7 +2,6 @@ package com.example.thuyhien.simplelogin.data.manager.impl;
 
 import android.content.SharedPreferences;
 
-import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.data.manager.AppManager;
 
 /**
@@ -39,9 +38,9 @@ public class SharedPreferencesAppManager implements AppManager {
     }
 
     @Override
-    public void setUsedLanguage() {
+    public void setUsedLanguage(String langCode) {
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(LANGUAGE_CODE, FoxApplication.langCode);
+        editor.putString(LANGUAGE_CODE, langCode);
         editor.apply();
     }
 }

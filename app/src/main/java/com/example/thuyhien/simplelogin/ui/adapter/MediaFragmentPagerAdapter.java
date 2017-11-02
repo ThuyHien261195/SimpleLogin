@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.ui.fragment.PageFragment;
 
@@ -17,10 +16,12 @@ import java.util.List;
 public class MediaFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private List<Page> pageList;
+    private String langCode;
 
-    public MediaFragmentPagerAdapter(FragmentManager fm, List<Page> pageList) {
+    public MediaFragmentPagerAdapter(FragmentManager fm, List<Page> pageList, String langCode) {
         super(fm);
         this.pageList = pageList;
+        this.langCode = langCode;
     }
 
     @Override
@@ -35,7 +36,7 @@ public class MediaFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return pageList.get(position).getMultiLangTitles().getTitle(FoxApplication.langCode);
+        return pageList.get(position).getMultiLangTitles().getTitle(langCode);
     }
 
     @Override

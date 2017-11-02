@@ -1,6 +1,7 @@
 package com.example.thuyhien.simplelogin.dagger.module;
 
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
+import com.example.thuyhien.simplelogin.data.manager.AppManager;
 import com.example.thuyhien.simplelogin.presenter.PagePresenter;
 import com.example.thuyhien.simplelogin.presenter.impl.PagePresenterImpl;
 import com.example.thuyhien.simplelogin.view.PageView;
@@ -21,7 +22,7 @@ public class PageModule {
     }
 
     @Provides
-    PagePresenter providePagePresenter(LoadDataInteractor loadDataInteractor) {
-        return new PagePresenterImpl(pageView, loadDataInteractor);
+    PagePresenter providePagePresenter(LoadDataInteractor loadDataInteractor, AppManager appManager) {
+        return new PagePresenterImpl(pageView, loadDataInteractor, appManager);
     }
 }

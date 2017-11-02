@@ -13,8 +13,8 @@ import java.util.List;
 
 public class LandsSectionViewHolder extends SectionViewHolder {
 
-    public LandsSectionViewHolder(View itemView) {
-        super(itemView);
+    public LandsSectionViewHolder(View itemView, String langCode) {
+        super(itemView, langCode);
     }
 
     @Override

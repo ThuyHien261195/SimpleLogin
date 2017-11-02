@@ -10,7 +10,7 @@ import java.util.List;
  * Created by thuyhien on 10/12/17.
  */
 
-public interface PageView {
+public interface PageView extends BaseView {
     void showLoading();
 
     void hideLoading();
@@ -19,5 +19,5 @@ public interface PageView {
 
     void displayRefreshPage(Page page);
 
-    void showErrorMessage(Exception ex);
+    void getCurrentLangCode(String langCode);
 }

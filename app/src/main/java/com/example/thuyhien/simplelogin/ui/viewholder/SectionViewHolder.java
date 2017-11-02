@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.Section;
@@ -28,8 +27,11 @@ public class SectionViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.recycler_view_poster)
     RecyclerView recyclerViewPoster;
 
-    public SectionViewHolder(View itemView) {
+    private String langCode;
+
+    public SectionViewHolder(View itemView, String langCode) {
         super(itemView);
+        this.langCode = langCode;
 
         ButterKnife.bind(this, itemView);
 
@@ -39,7 +41,7 @@ public class SectionViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindContentSection(Section section, List<MediaFeed> mediaFeedList) {
-        textViewTitleSection.setText(section.getMultiLangTitles().getTitle(FoxApplication.langCode));
+        textViewTitleSection.setText(section.getMultiLangTitles().getTitle(langCode));
         setAdapter(mediaFeedList);
     }
 

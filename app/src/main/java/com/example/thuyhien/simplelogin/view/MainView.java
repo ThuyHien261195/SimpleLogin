@@ -14,4 +14,6 @@ public interface MainView extends BaseView {
     void showNotLogInView();
 
     void showPageList(List<Page> pageList);
+
+    void getCurrentLangCode(String langCode);
 }

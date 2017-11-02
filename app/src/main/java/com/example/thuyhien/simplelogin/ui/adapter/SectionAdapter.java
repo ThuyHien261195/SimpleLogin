@@ -21,8 +21,10 @@ import java.util.List;
 public class SectionAdapter extends RecyclerView.Adapter<SectionViewHolder> {
 
     private LinkedHashMap<Section, List<MediaFeed>> totalMediaList;
+    protected String langCode;
 
-    public SectionAdapter(List<Section> sectionList) {
+    public SectionAdapter(List<Section> sectionList, String langCode) {
+        this.langCode = langCode;
         totalMediaList = new LinkedHashMap<>();
         for (Section section : sectionList) {
             totalMediaList.put(section, new ArrayList<MediaFeed>());
@@ -33,7 +35,7 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionViewHolder> {
     public SectionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View rowView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_section, parent, false);
-        return new SectionViewHolder(rowView);
+        return new SectionViewHolder(rowView, langCode);
     }
 
     @Override
