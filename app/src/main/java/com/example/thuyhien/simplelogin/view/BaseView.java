@@ -5,5 +5,5 @@ package com.example.thuyhien.simplelogin.view;
  */
 
 public interface BaseView {
-    void showMessageError(Exception ex);
+    void showErrorMessage(Exception ex);
 }
