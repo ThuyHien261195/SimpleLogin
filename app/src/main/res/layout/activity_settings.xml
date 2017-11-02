@@ -26,7 +26,6 @@
             android:id="@+id/text_chosen_lang"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            style="@style/ChosenSettingTextTheme"
-            android:text="English" />
+            style="@style/ChosenSettingTextTheme" />
     </LinearLayout>
 </LinearLayout>

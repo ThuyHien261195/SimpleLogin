@@ -27,7 +27,7 @@
         <activity android:name=".ui.activity.SignUpActivity" />
         <activity
             android:name=".ui.activity.MediaFeedActivity"
-            android:theme="@style/Base.Theme.AppCompat.Light.DarkActionBar" />
+            android:theme="@style/DarkActionBarTheme" />
 
         <service
             android:name=".service.NewsFirebaseMessagingService"
@@ -65,7 +65,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.SettingsActivity" />
+        <activity android:name=".ui.activity.SettingsActivity"
+            android:theme="@style/DarkActionBarTheme"/>
     </application>
 
 </manifest>
