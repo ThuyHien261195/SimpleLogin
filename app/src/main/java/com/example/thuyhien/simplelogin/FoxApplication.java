@@ -1,7 +1,6 @@
 package com.example.thuyhien.simplelogin;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.example.thuyhien.simplelogin.dagger.component.AppComponent;
 import com.example.thuyhien.simplelogin.dagger.component.DaggerAppComponent;
@@ -38,6 +37,5 @@ public class FoxApplication extends Application {
 
     private void getUsedLanguage() {
         langCode = appManager.getUsedLanguage();
-        Log.e("LangCode", langCode);
     }
 }

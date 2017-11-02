@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
     public static final String BUNDLE_MEDIA_FEED = "BundleMediaFeed";
     public static final String MEDIA_FEED = "MediaFeed";
     public static final String TAG_MEDIA_FEED_DIALOG = "MediaFeedDialog";
+    public static final int REQUEST_CODE_SETTING = 100;
 
     private TextView textViewEmail;
     private View loggedInHeaderView, notLogHeaderView;
@@ -181,6 +183,20 @@ public class MainActivity extends AppCompatActivity implements MainView,
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CODE_SETTING:
+                if (resultCode == RESULT_OK) {
+                    finish();
+                    startActivity(getIntent());
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     private void displayHeaderView(boolean isLogIn) {
         loggedInHeaderView.setVisibility(isLogIn ? View.VISIBLE : View.GONE);
         notLogHeaderView.setVisibility(!isLogIn ? View.VISIBLE : View.GONE);
@@ -296,6 +312,6 @@ public class MainActivity extends AppCompatActivity implements MainView,
 
     private void openSettingsScreen() {
         Intent settingsIntent = new Intent(this, SettingsActivity.class);
-        startActivity(settingsIntent);
+        startActivityForResult(settingsIntent, REQUEST_CODE_SETTING);
     }
 }

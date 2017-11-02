@@ -21,7 +21,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.inject.Named;
@@ -104,13 +104,13 @@ public class AppModule {
 
     @Provides
     @Singleton
-    HashMap<String, String> provideLanguageList() {
+    LinkedHashMap<String, String> provideLanguageList() {
         String[] languageCodeList = context.getResources().getStringArray(R.array.language_code_array);
         String[] languageNameList = context.getResources().getStringArray(R.array.language_name_array);
 
-        HashMap<String, String> languageList = new HashMap<>();
-        for (int i = 0; i < languageNameList.length; i++) {
-            languageList.put(languageNameList[i], languageCodeList[i]);
+        LinkedHashMap<String, String> languageList = new LinkedHashMap<>();
+        for (int i = 0; i < languageCodeList.length; i++) {
+            languageList.put(languageCodeList[i], languageNameList[i]);
         }
         return languageList;
     }
