@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
+import com.example.thuyhien.simplelogin.dagger.module.AuthenModule;
 import com.example.thuyhien.simplelogin.data.network.exception.FacebookAuthenticationException;
 import com.example.thuyhien.simplelogin.presenter.AuthenticatePresenter;
 import com.example.thuyhien.simplelogin.ui.exception.InvalidInputException;

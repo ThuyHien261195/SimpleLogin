@@ -20,13 +20,16 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.broadcast.DialogBroadcastReceiver;
+import com.example.thuyhien.simplelogin.dagger.module.MainModule;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.presenter.MainPresenter;
 import com.example.thuyhien.simplelogin.ui.adapter.MediaFragmentPagerAdapter;
+import com.example.thuyhien.simplelogin.ui.fragment.MediaFeedDialogFragment;
 import com.example.thuyhien.simplelogin.ui.listener.MainActivityListener;
 import com.example.thuyhien.simplelogin.view.MainView;
 

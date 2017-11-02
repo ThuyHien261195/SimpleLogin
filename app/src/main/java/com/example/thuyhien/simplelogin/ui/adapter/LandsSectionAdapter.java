@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.ui.viewholder.LandsSectionViewHolder;
+import com.example.thuyhien.simplelogin.ui.viewholder.SectionViewHolder;
 
 import java.util.List;
 

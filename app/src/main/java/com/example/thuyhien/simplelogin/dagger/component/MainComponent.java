@@ -1,5 +1,8 @@
 package com.example.thuyhien.simplelogin.dagger.component;
 
+import com.example.thuyhien.simplelogin.dagger.module.MainModule;
+import com.example.thuyhien.simplelogin.ui.activity.MainActivity;
+
 import dagger.Subcomponent;
 
 /**

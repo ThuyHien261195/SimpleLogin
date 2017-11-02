@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.model.Language;
 import com.example.thuyhien.simplelogin.ui.listener.SettingListener;
+import com.example.thuyhien.simplelogin.ui.viewholder.LanguageSettingViewHolder;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

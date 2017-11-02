@@ -1,5 +1,8 @@
 package com.example.thuyhien.simplelogin.dagger.component;
 
+import com.example.thuyhien.simplelogin.dagger.module.SplashModule;
+import com.example.thuyhien.simplelogin.ui.activity.SplashActivity;
+
 import dagger.Subcomponent;
 
 /**

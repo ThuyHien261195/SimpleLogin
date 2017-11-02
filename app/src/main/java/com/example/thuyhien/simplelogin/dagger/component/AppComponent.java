@@ -1,5 +1,6 @@
 package com.example.thuyhien.simplelogin.dagger.component;
 
+import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.dagger.module.AppModule;
 import com.example.thuyhien.simplelogin.dagger.module.AuthenModule;
 import com.example.thuyhien.simplelogin.dagger.module.DataCacheModule;
@@ -8,6 +9,7 @@ import com.example.thuyhien.simplelogin.dagger.module.NetModule;
 import com.example.thuyhien.simplelogin.dagger.module.PageModule;
 import com.example.thuyhien.simplelogin.dagger.module.SettingsModule;
 import com.example.thuyhien.simplelogin.dagger.module.SplashModule;
+import com.example.thuyhien.simplelogin.ui.fragment.MediaFeedDialogFragment;
 
 import javax.inject.Singleton;
 
