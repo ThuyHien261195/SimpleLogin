@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
  * Created by thuyhien on 11/2/17.
  */
 
-public class LanguageSettingViewHolder extends RecyclerView.ViewHolder{
+public class LanguageSettingViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.radio_btn_language)
     RadioButton radioButtonLanguage;
