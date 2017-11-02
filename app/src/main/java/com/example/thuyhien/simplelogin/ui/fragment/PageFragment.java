@@ -105,8 +105,8 @@ public class PageFragment extends Fragment implements PageView {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        initViews();
         pagePresenter.getCurrentLangCode();
+        initViews();
         pagePresenter.loadAllFeedList(page, false);
     }
 
@@ -138,7 +138,6 @@ public class PageFragment extends Fragment implements PageView {
         mainActivityListener.onChangeTitlePage(page.getId(),
                 page.getMultiLangTitles().getTitle(langCode));
         this.page = page;
-        pagePresenter.getCurrentLangCode();
         setAdapter(page.getSectionList());
         pagePresenter.loadAllFeedList(page, true);
         recyclerViewSection.scrollToPosition(0);
