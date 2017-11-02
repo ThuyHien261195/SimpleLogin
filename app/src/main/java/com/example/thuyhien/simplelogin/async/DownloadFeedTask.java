@@ -1,10 +1,7 @@
 package com.example.thuyhien.simplelogin.async;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 
-import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
 import com.example.thuyhien.simplelogin.model.Section;
