@@ -1,38 +1,34 @@
 package com.example.thuyhien.simplelogin.ui.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
+import com.example.thuyhien.simplelogin.dagger.module.SettingsModule;
+import com.example.thuyhien.simplelogin.model.Language;
 import com.example.thuyhien.simplelogin.presenter.SettingsPresenter;
+import com.example.thuyhien.simplelogin.ui.adapter.LanguageSettingAdapter;
+import com.example.thuyhien.simplelogin.ui.listener.SettingListener;
+import com.example.thuyhien.simplelogin.view.SettingsView;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-import static com.example.thuyhien.simplelogin.data.manager.impl.SharedPreferencesAppManager.DEFAULT_LANGUAGE_CODE;
+public class SettingsActivity extends AppCompatActivity implements SettingsView, SettingListener {
 
-public class SettingsActivity extends AppCompatActivity {
-
-    private String oldLanguageCode = FoxApplication.langCode;
     @Inject
     SettingsPresenter settingsPresenter;
 
-    @Inject
-    LinkedHashMap<String, String> languageList;
-
-    @BindView(R.id.text_chosen_lang)
-    TextView textViewChosenLang;
+    @BindView(R.id.recycler_view_language)
+    RecyclerView recyclerViewLanguage;
+    private LanguageSettingAdapter languageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,62 +36,24 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         ((FoxApplication) getApplication()).getAppComponent()
-                .createSettingsComponent()
+                .createSettingsComponent(new SettingsModule(this))
                 .inject(this);
         ButterKnife.bind(this);
 
-        displayChosenLanguage();
-    }
-
-    @OnClick(R.id.layout_language)
-    public void onClickLayoutLanguage() {
-        List<String> languageNameList = new ArrayList<>(languageList.values());
-        final List<String> languageCodeList = new ArrayList<>(languageList.keySet());
-        final int currentLangIndex = findIndexLanguageCode();
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setTitle(R.string.title_dialog_language)
-                .setSingleChoiceItems(languageNameList.toArray(new String[languageNameList.size()]),
-                        currentLangIndex, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                            }
-                        })
-                .setPositiveButton(R.string.action_ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        int selectedPost = ((AlertDialog) dialogInterface).getListView()
-                                .getCheckedItemPosition();
-                        if (selectedPost != currentLangIndex) {
-                            FoxApplication.langCode = languageCodeList.get(selectedPost);
-                            settingsPresenter.saveChosenLanguage();
-                            displayChosenLanguage();
-                        }
-                    }
-                });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-
-    private void displayChosenLanguage() {
-        String langName = languageList.get(FoxApplication.langCode);
-        textViewChosenLang.setText(langName);
-    }
-
-    private int findIndexLanguageCode() {
-        List<String> languageCodeList = new ArrayList<>(languageList.keySet());
-        int index = languageCodeList.indexOf(FoxApplication.langCode);
-        if (index != -1) {
-            return index;
-        }
-        return languageCodeList.indexOf(DEFAULT_LANGUAGE_CODE);
+        settingsPresenter.getLanguageList();
     }
 
     @Override
-    public void onBackPressed() {
-        if (!oldLanguageCode.equals(FoxApplication.langCode)) {
-            setResult(RESULT_OK);
-        }
-        super.onBackPressed();
+    public void showLanguageList(List<Language> languageList) {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerViewLanguage.setLayoutManager(linearLayoutManager);
+        languageAdapter = new LanguageSettingAdapter(languageList, this);
+        recyclerViewLanguage.setAdapter(languageAdapter);
+    }
+
+    @Override
+    public void updateChosenLanguage(Language chosenLang, int chosenLangPos) {
+        settingsPresenter.saveChosenLanguage(chosenLang.getLangCode());
+        languageAdapter.updateChosenLanguage(chosenLangPos);
     }
 }
