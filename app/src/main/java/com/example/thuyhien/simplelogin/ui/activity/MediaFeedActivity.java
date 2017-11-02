@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
-import com.example.thuyhien.simplelogin.ui.fragment.MediaFeedDialogFragment;
 
 import butterknife.ButterKnife;
 

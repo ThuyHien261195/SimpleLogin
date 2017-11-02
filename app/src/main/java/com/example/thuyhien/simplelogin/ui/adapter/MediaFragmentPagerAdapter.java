@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.thuyhien.simplelogin.model.Page;
-import com.example.thuyhien.simplelogin.ui.fragment.PageFragment;
 
 import java.util.List;
 

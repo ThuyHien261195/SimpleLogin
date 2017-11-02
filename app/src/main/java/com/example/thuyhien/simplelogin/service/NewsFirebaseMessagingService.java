@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.ui.activity.MainActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 

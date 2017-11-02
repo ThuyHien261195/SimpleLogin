@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.thuyhien.simplelogin.ui.activity.MainActivity;
 import com.example.thuyhien.simplelogin.ui.listener.MainActivityListener;
 
 import java.lang.ref.WeakReference;

@@ -1,8 +1,5 @@
 package com.example.thuyhien.simplelogin.dagger.component;
 
-import com.example.thuyhien.simplelogin.dagger.module.PageModule;
-import com.example.thuyhien.simplelogin.ui.fragment.PageFragment;
-
 import dagger.Subcomponent;
 
 /**

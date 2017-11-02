@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
-import com.example.thuyhien.simplelogin.ui.viewholder.LandsPosterViewHolder;
-import com.example.thuyhien.simplelogin.ui.viewholder.PosterViewHolder;
 
 import java.util.List;
 

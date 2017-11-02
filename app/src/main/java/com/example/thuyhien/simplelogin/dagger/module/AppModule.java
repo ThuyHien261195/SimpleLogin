@@ -3,7 +3,6 @@ package com.example.thuyhien.simplelogin.dagger.module;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.data.manager.AppManager;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
