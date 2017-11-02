@@ -7,6 +7,7 @@ import com.example.thuyhien.simplelogin.dagger.module.DataCacheModule;
 import com.example.thuyhien.simplelogin.dagger.module.MainModule;
 import com.example.thuyhien.simplelogin.dagger.module.NetModule;
 import com.example.thuyhien.simplelogin.dagger.module.PageModule;
+import com.example.thuyhien.simplelogin.dagger.module.SettingsModule;
 import com.example.thuyhien.simplelogin.dagger.module.SplashModule;
 import com.example.thuyhien.simplelogin.ui.fragment.MediaFeedDialogFragment;
 
@@ -33,5 +34,5 @@ public interface AppComponent {
 
     PageComponent createPageComponent(PageModule pageModule);
 
-    SettingsComponent createSettingsComponent();
+    SettingsComponent createSettingsComponent(SettingsModule settingsModule);
 }
