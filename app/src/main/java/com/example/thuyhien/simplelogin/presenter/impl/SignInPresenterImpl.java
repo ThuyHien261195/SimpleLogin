@@ -78,7 +78,7 @@ public class SignInPresenterImpl implements AuthenticatePresenter, AuthenticateA
         if (ex != null && ((ex instanceof AuthenticationException)
                 || (ex instanceof FacebookAuthenticationException))) {
             if (getSignInView() != null) {
-                getSignInView().showMessageError(ex);
+                getSignInView().showErrorMessage(ex);
             }
         }
     }

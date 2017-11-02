@@ -128,7 +128,7 @@ public class SignUpActivity extends AppCompatActivity implements AuthenticationV
     }
 
     @Override
-    public void showMessageError(Exception ex) {
+    public void showErrorMessage(Exception ex) {
         if (ex instanceof FacebookAuthenticationException) {
             LoginManager.getInstance().logOut();
         }
