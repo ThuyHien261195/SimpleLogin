@@ -106,8 +106,4 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/title_setting_text_size</item>
     </style>
-
-    <style name="ChosenSettingTextTheme" parent="SettingTextTheme">
-        <item name="android:textStyle">bold</item>
-    </style>
 </resources>

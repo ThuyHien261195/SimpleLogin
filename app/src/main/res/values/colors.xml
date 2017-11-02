@@ -12,4 +12,5 @@
     <color name="color_dialog_header_feed_text">#FFE100</color>
     <color name="color_header_feed_dialog">@color/color_common_screen_bg</color>
     <color name="color_button_sign_into_fb">#3557a0</color>
+    <color name="color_radio_lang">#FFE100</color>
 </resources>
