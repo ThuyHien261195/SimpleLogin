@@ -5,5 +5,7 @@ package com.example.thuyhien.simplelogin.presenter;
  */
 
 public interface SettingsPresenter {
-    void saveChosenLanguage();
+    void getLanguageList();
+
+    void saveChosenLanguage(String langCode);
 }
