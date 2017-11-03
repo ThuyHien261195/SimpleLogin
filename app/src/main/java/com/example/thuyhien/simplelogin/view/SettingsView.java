@@ -9,5 +9,7 @@ import java.util.List;
  */
 
 public interface SettingsView {
-    void showLanguageList(List<Language> languageList);
+    void showLanguageList(List<Language> languageList, String usedLanguageCode);
+
+    void reloadAppAfterChangeLanguage();
 }

@@ -28,27 +28,18 @@ public class SettingsPresenterImpl implements SettingsPresenter {
 
     @Override
     public void getLanguageList() {
-        updateChosenLanguage();
+        String usedLanguageCode = appManager.getUsedLanguage();
         if (getSettingsView() != null) {
-            getSettingsView().showLanguageList(languageList);
+            getSettingsView().showLanguageList(languageList, usedLanguageCode);
         }
     }
 
     @Override
-    public void saveChosenLanguage(String langCode) {
-        appManager.setUsedLanguage(langCode);
-    }
-
-    private void updateChosenLanguage() {
-        String langCode = appManager.getUsedLanguage();
-        for (int i = 0; i < languageList.size(); i++) {
-            Language language = languageList.get(i);
-            if (language.getLangCode().equals(langCode)) {
-                language.setSelected(true);
-                return;
-            }
+    public void saveChosenLanguage(Language chosenLang) {
+        appManager.setUsedLanguage(chosenLang.getLangCode());
+        if (getSettingsView() != null) {
+            getSettingsView().reloadAppAfterChangeLanguage();
         }
-        languageList.get(0).setSelected(true);
     }
 
     private SettingsView getSettingsView() {
