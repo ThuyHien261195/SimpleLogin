@@ -3,6 +3,8 @@ package com.example.thuyhien.simplelogin.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,22 +79,10 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView 
 
     @Override
     public void reloadAppAfterChangeLanguage() {
-        refreshApp();
-    }
-
-    private void refreshApp() {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-//        Intent upIntent = NavUtils.getParentActivityIntent(this);
-//        if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
-//            TaskStackBuilder.create(this)
-//                    .addNextIntentWithParentStack(upIntent)
-//                    .startActivities();
-//            Log.e("NavUtils", "Not part");
-//        } else {
-//            NavUtils.navigateUpTo(this, upIntent);
-//            Log.e("NavUtils", "Part");
-//        }
+        Intent upIntent = NavUtils.getParentActivityIntent(this);
+        TaskStackBuilder.create(this)
+                .addNextIntentWithParentStack(upIntent)
+                .addNextIntent(new Intent(this, SettingsActivity.class))
+                .startActivities();
     }
 }
