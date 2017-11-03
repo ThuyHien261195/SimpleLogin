@@ -7,12 +7,10 @@ package com.example.thuyhien.simplelogin.model;
 public class Language {
     private String langCode;
     private String langName;
-    private boolean isSelected;
 
     public Language(String langCode, String langName, boolean isSelected) {
         this.langCode = langCode;
         this.langName = langName;
-        this.isSelected = isSelected;
     }
 
     public String getLangCode() {
@@ -29,14 +27,6 @@ public class Language {
 
     public void setLangName(String langName) {
         this.langName = langName;
-    }
-
-    public boolean isSelected() {
-        return isSelected;
-    }
-
-    public void setSelected(boolean selected) {
-        isSelected = selected;
     }
 
     @Override
