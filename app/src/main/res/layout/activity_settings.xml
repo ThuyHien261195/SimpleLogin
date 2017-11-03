@@ -21,9 +21,10 @@
             android:text="@string/title_setting_language"
             style="@style/SettingTextTheme" />
 
-        <android.support.v7.widget.RecyclerView
+        <RadioGroup
+            android:id="@+id/radio_group_language"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/recycler_view_language" />
+            android:orientation="vertical"></RadioGroup>
     </LinearLayout>
 </LinearLayout>
