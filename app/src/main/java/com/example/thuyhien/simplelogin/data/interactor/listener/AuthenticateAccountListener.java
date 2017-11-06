@@ -1,13 +1,11 @@
 package com.example.thuyhien.simplelogin.data.interactor.listener;
 
-import com.example.thuyhien.simplelogin.model.User;
-
 /**
  * Created by thuyhien on 10/9/17.
  */
 
-public interface AuthenticateAccountListener {
-    void onAuthenticateSuccess(User user);
+public interface AuthenticateAccountListener<T> {
+    void onAuthenticateSuccess(T data);
 
     void onAuthenticateFail(Exception ex);
 }
