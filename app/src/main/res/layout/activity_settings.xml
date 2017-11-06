@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/item_setting_bg"
+        android:background="@drawable/layout_item_setting_bg"
         android:paddingBottom="@dimen/item_setting_vertical_spacing">
 
         <TextView
