@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -201,11 +202,12 @@ public class MainActivity extends AppCompatActivity implements MainView,
         navigationViewMain.addHeaderView(notLogHeaderView);
 
         textViewEmail = loggedInHeaderView.findViewById(R.id.text_email);
+        ImageButton imageButtonEditProfile = loggedInHeaderView.findViewById(R.id.image_button_edit);
 
-        loggedInHeaderView.setOnClickListener(new View.OnClickListener() {
+        imageButtonEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigateToAccountScreen();
+                navigateToEditProfileScreen();
             }
         });
 
@@ -222,8 +224,9 @@ public class MainActivity extends AppCompatActivity implements MainView,
         startActivity(signInIntent);
     }
 
-    private void navigateToAccountScreen() {
-        // TODO
+    private void navigateToEditProfileScreen() {
+        Intent editProfileIntent = new Intent(this, ProfileActivity.class);
+        startActivity(editProfileIntent);
     }
 
     private void initViews() {

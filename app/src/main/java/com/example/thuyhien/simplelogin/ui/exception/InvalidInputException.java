@@ -9,6 +9,7 @@ public class InvalidInputException extends Exception {
     public static final String ERROR_CODE_INVALID_EMAIL = "InvalidEmail";
     public static final String ERROR_CODE_EMPTY_PASSWORD = "EmptyPassword";
     public static final String ERROR_CODE_INVALID_PASSWORD = "InvalidPassword";
+    public static final String ERROR_CODE_INVALID_NAME = "EmptyName";
 
     private String errorCode;
 
