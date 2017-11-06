@@ -27,6 +27,7 @@
         <activity android:name=".ui.activity.SignUpActivity" />
         <activity
             android:name=".ui.activity.MediaFeedActivity"
+            android:label="@string/activity_feed_detail_name"
             android:theme="@style/DarkActionBarTheme" />
 
         <service
@@ -64,14 +65,23 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.activity.SettingsActivity"
-            android:theme="@style/DarkActionBarTheme"
-            android:parentActivityName=".ui.activity.MainActivity">
+        <activity
+            android:name=".ui.activity.SettingsActivity"
+            android:label="@string/activity_settings_name"
+            android:parentActivityName=".ui.activity.MainActivity"
+            android:theme="@style/DarkActionBarTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.MainActivity" />
         </activity>
+        <activity
+            android:name=".ui.activity.ProfileActivity"
+            android:label="@string/activity_profiles_name"
+            android:theme="@style/DarkActionBarTheme" />
+        <activity
+            android:name=".ui.activity.AddProfileActivity"
+            android:label="@string/activity_create_profiles_name"
+            android:theme="@style/DarkActionBarTheme" />
     </application>
 
 </manifest>
