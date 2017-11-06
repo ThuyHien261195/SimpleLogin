@@ -1,12 +1,14 @@
 package com.example.thuyhien.simplelogin.dagger.component;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
+import com.example.thuyhien.simplelogin.dagger.module.AddProfileModule;
 import com.example.thuyhien.simplelogin.dagger.module.AppModule;
 import com.example.thuyhien.simplelogin.dagger.module.AuthenModule;
 import com.example.thuyhien.simplelogin.dagger.module.DataCacheModule;
 import com.example.thuyhien.simplelogin.dagger.module.MainModule;
 import com.example.thuyhien.simplelogin.dagger.module.NetModule;
 import com.example.thuyhien.simplelogin.dagger.module.PageModule;
+import com.example.thuyhien.simplelogin.dagger.module.ProfileModule;
 import com.example.thuyhien.simplelogin.dagger.module.SettingsModule;
 import com.example.thuyhien.simplelogin.dagger.module.SplashModule;
 import com.example.thuyhien.simplelogin.ui.fragment.MediaFeedDialogFragment;
@@ -35,4 +37,8 @@ public interface AppComponent {
     PageComponent createPageComponent(PageModule pageModule);
 
     SettingsComponent createSettingsComponent(SettingsModule settingsModule);
+
+    AddProfileComponent createAddProfileComponent(AddProfileModule addProfileModule);
+
+    ProfileComponent createProfileComponent(ProfileModule profileModule);
 }
