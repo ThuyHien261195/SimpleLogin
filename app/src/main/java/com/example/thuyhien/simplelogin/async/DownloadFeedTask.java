@@ -59,4 +59,27 @@ public class DownloadFeedTask extends AsyncTask<Section, Void, List<Section>> {
 //        AlertDialog alertDialog = builder.create();
 //        alertDialog.show();
 //    }
+
+
+//    @Override
+//    public List<Section> getTotalFeedList(Section[] sections) {
+//        if (sections != null) {
+//            for (Section section : sections) {
+//                if (!section.getType().equals("Custom layout")) {
+//                    String feedUrl = addRangeLoadData(section.getFeedUrl());
+//                    Call<List<MediaFeed>> call = dataApiService.getFeedList(section.getFeedUrl(), feedUrl);
+//                    try {
+//                        Response<List<MediaFeed>> response = call.execute();
+//                        if (response.isSuccessful() && response.body() != null) {
+//                            section.setFeedPostList(response.body());
+//                        }
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//            return new ArrayList<>(Arrays.asList(sections));
+//        }
+//        return new ArrayList<>();
+//    }
 }
