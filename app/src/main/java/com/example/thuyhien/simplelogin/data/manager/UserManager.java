@@ -14,4 +14,6 @@ public interface UserManager {
     boolean isLoggedIn();
 
     String getEmail();
+
+    String getToken();
 }
