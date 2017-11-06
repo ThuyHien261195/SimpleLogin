@@ -19,7 +19,7 @@ import java.lang.ref.WeakReference;
  * Created by thuyhien on 10/9/17.
  */
 
-public class SignUpPresenterImpl implements AuthenticatePresenter, AuthenticateAccountListener {
+public class SignUpPresenterImpl implements AuthenticatePresenter, AuthenticateAccountListener<User> {
 
     private WeakReference<AuthenticationView> signUpViewWeakPref;
     private AuthenticationInteractor signUpInteractor;
@@ -66,8 +66,8 @@ public class SignUpPresenterImpl implements AuthenticatePresenter, AuthenticateA
     }
 
     @Override
-    public void onAuthenticateSuccess(User user) {
-        userManager.saveUser(user);
+    public void onAuthenticateSuccess(User data) {
+        userManager.saveUser(data);
         if (getSignUpView() != null) {
             getSignUpView().navigateToMain();
         }
