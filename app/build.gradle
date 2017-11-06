@@ -59,5 +59,4 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
 }
 
-
 apply plugin: 'com.google.gms.google-services'
