@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/item_section_vertical_margin"
-    android:orientation="vertical"
     app:cardCornerRadius="@dimen/item_section_radius"
     app:contentPadding="@dimen/item_section_padding"
     app:cardBackgroundColor="@color/colorPrimaryBlack">
