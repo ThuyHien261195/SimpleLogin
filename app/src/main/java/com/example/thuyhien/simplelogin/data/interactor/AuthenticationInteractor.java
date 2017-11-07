@@ -2,11 +2,11 @@ package com.example.thuyhien.simplelogin.data.interactor;
 
 import com.example.thuyhien.simplelogin.data.interactor.listener.AuthenticateAccountListener;
 import com.example.thuyhien.simplelogin.data.interactor.listener.DeleteProfileListener;
+import com.example.thuyhien.simplelogin.data.interactor.listener.LoadProfileListener;
 import com.example.thuyhien.simplelogin.data.network.model.AccountRequest;
 import com.example.thuyhien.simplelogin.data.network.model.FacebookAccountRequest;
 import com.example.thuyhien.simplelogin.data.network.model.ProfileRequest;
 import com.example.thuyhien.simplelogin.model.Profile;
-import com.example.thuyhien.simplelogin.model.User;
 
 import java.util.List;
 
@@ -15,17 +15,17 @@ import java.util.List;
  */
 
 public interface AuthenticationInteractor {
-    void signIn(AccountRequest accountRequest, AuthenticateAccountListener<User> listener);
+    void signIn(AccountRequest accountRequest, AuthenticateAccountListener listener);
 
-    void signUp(AccountRequest accountRequest, AuthenticateAccountListener<User> listener);
+    void signUp(AccountRequest accountRequest, AuthenticateAccountListener listener);
 
     void signIntoWithFacebook(FacebookAccountRequest facebookAccountRequest,
-                              AuthenticateAccountListener<User> listener);
+                              AuthenticateAccountListener listener);
 
-    void getProfileList(String token, AuthenticateAccountListener<List<Profile>> listener);
+    void getProfileList(String token, LoadProfileListener<List<Profile>> listener);
 
     void addProfile(String token, ProfileRequest profileRequest,
-                    AuthenticateAccountListener<Profile> listener);
+                    LoadProfileListener<Profile> listener);
 
     void deleteProfile(String token, Profile profile, DeleteProfileListener listener);
 }

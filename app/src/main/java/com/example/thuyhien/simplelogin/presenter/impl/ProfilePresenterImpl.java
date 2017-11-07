@@ -1,8 +1,8 @@
 package com.example.thuyhien.simplelogin.presenter.impl;
 
 import com.example.thuyhien.simplelogin.data.interactor.AuthenticationInteractor;
-import com.example.thuyhien.simplelogin.data.interactor.listener.AuthenticateAccountListener;
 import com.example.thuyhien.simplelogin.data.interactor.listener.DeleteProfileListener;
+import com.example.thuyhien.simplelogin.data.interactor.listener.LoadProfileListener;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.model.Profile;
 import com.example.thuyhien.simplelogin.presenter.ProfilePresenter;
@@ -33,9 +33,9 @@ public class ProfilePresenterImpl implements ProfilePresenter {
         showLoading();
 
         String token = userManager.getToken();
-        authenticationInteractor.getProfileList(token, new AuthenticateAccountListener<List<Profile>>() {
+        authenticationInteractor.getProfileList(token, new LoadProfileListener<List<Profile>>() {
             @Override
-            public void onAuthenticateSuccess(List<Profile> data) {
+            public void onLoadProfileSuccess(List<Profile> data) {
                 if (getProfileView() != null) {
                     getProfileView().hideLoading();
                     getProfileView().displayProfileList(data);
@@ -43,7 +43,7 @@ public class ProfilePresenterImpl implements ProfilePresenter {
             }
 
             @Override
-            public void onAuthenticateFail(Exception ex) {
+            public void onLoadProfileFail(Exception ex) {
                 if (getProfileView() != null) {
                     getProfileView().hideLoading();
                     getProfileView().showErrorMessage(ex);

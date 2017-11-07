@@ -3,6 +3,7 @@ package com.example.thuyhien.simplelogin.data.interactor.impl;
 import com.example.thuyhien.simplelogin.data.interactor.AuthenticationInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.AuthenticateAccountListener;
 import com.example.thuyhien.simplelogin.data.interactor.listener.DeleteProfileListener;
+import com.example.thuyhien.simplelogin.data.interactor.listener.LoadProfileListener;
 import com.example.thuyhien.simplelogin.data.network.model.AccountRequest;
 import com.example.thuyhien.simplelogin.data.network.model.FacebookAccountRequest;
 import com.example.thuyhien.simplelogin.data.network.model.ProfileRequest;
@@ -35,7 +36,7 @@ public class RetrofitAuthenticationInteractor implements AuthenticationInteracto
     }
 
     @Override
-    public void signIn(AccountRequest accountRequest, final AuthenticateAccountListener<User> listener) {
+    public void signIn(AccountRequest accountRequest, final AuthenticateAccountListener listener) {
         Call<User> call = authenApiService.signInAccount(RetrofitUtils.AUTH_TOKEN, accountRequest);
         call.enqueue(new Callback<User>() {
             @Override
@@ -56,7 +57,7 @@ public class RetrofitAuthenticationInteractor implements AuthenticationInteracto
     }
 
     @Override
-    public void signUp(AccountRequest accountRequest, final AuthenticateAccountListener<User> listener) {
+    public void signUp(AccountRequest accountRequest, final AuthenticateAccountListener listener) {
         Call<User> call = authenApiService.signUpAccount(RetrofitUtils.AUTH_TOKEN, accountRequest);
         call.enqueue(new Callback<User>() {
             @Override
@@ -78,7 +79,7 @@ public class RetrofitAuthenticationInteractor implements AuthenticationInteracto
 
     @Override
     public void signIntoWithFacebook(FacebookAccountRequest facebookAccountRequest,
-                                     final AuthenticateAccountListener<User> listener) {
+                                     final AuthenticateAccountListener listener) {
         Call<User> call = authenApiService.signIntoWithFacebookAcc(RetrofitUtils.AUTH_TOKEN,
                 facebookAccountRequest);
         call.enqueue(new Callback<User>() {
@@ -100,45 +101,45 @@ public class RetrofitAuthenticationInteractor implements AuthenticationInteracto
     }
 
     @Override
-    public void getProfileList(String token, final AuthenticateAccountListener<List<Profile>> listener) {
+    public void getProfileList(String token, final LoadProfileListener<List<Profile>> listener) {
         Call<List<Profile>> call = authenApiService.getProfiles(token);
         call.enqueue(new Callback<List<Profile>>() {
             @Override
             public void onResponse(Call<List<Profile>> call, Response<List<Profile>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    listener.onAuthenticateSuccess(response.body());
+                    listener.onLoadProfileSuccess(response.body());
                 } else {
-                    listener.onAuthenticateFail(
+                    listener.onLoadProfileFail(
                             RetrofitUtils.createAuthenException(response.errorBody()));
                 }
             }
 
             @Override
             public void onFailure(Call<List<Profile>> call, Throwable t) {
-                listener.onAuthenticateFail(new Exception(t));
+                listener.onLoadProfileFail(new Exception(t));
             }
         });
     }
 
     @Override
     public void addProfile(String token, ProfileRequest profileRequest,
-                           final AuthenticateAccountListener<Profile> listener) {
+                           final LoadProfileListener<Profile> listener) {
         JsonObject jsonObject = createGsonProfile(profileRequest);
         Call<List<Profile>> call = authenApiService.createProfile(token, jsonObject);
         call.enqueue(new Callback<List<Profile>>() {
             @Override
             public void onResponse(Call<List<Profile>> call, Response<List<Profile>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    listener.onAuthenticateSuccess(response.body().get(0));
+                    listener.onLoadProfileSuccess(response.body().get(0));
                 } else {
-                    listener.onAuthenticateFail(
+                    listener.onLoadProfileFail(
                             RetrofitUtils.createAuthenException(response.errorBody()));
                 }
             }
 
             @Override
             public void onFailure(Call<List<Profile>> call, Throwable t) {
-                listener.onAuthenticateFail(new Exception(t));
+                listener.onLoadProfileFail(new Exception(t));
             }
         });
     }

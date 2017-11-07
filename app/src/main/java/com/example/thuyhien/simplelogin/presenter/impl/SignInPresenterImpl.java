@@ -19,7 +19,7 @@ import java.lang.ref.WeakReference;
  * Created by thuyhien on 10/9/17.
  */
 
-public class SignInPresenterImpl implements AuthenticatePresenter, AuthenticateAccountListener<User> {
+public class SignInPresenterImpl implements AuthenticatePresenter, AuthenticateAccountListener {
 
     private WeakReference<AuthenticationView> signInViewWeakPreferences;
     private AuthenticationInteractor signInInteractor;
