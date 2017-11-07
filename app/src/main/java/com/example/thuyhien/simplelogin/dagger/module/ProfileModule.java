@@ -6,6 +6,8 @@ import com.example.thuyhien.simplelogin.presenter.ProfilePresenter;
 import com.example.thuyhien.simplelogin.presenter.impl.ProfilePresenterImpl;
 import com.example.thuyhien.simplelogin.view.ProfileView;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -16,6 +18,8 @@ import dagger.Provides;
 @Module
 public class ProfileModule {
 
+    private static final int NUM_COLUMN_TABLET = 3;
+    private static final int NUM_COLUMN_PHONE = 2;
     private final ProfileView profileView;
 
     public ProfileModule(ProfileView profileView) {
@@ -23,8 +27,17 @@ public class ProfileModule {
     }
 
     @Provides
-    ProfilePresenter profileProfilePresenter(UserManager userManager,
+    ProfilePresenter provileProfilePresenter(UserManager userManager,
                                              AuthenticationInteractor authenticationInteractor) {
         return new ProfilePresenterImpl(userManager, authenticationInteractor, profileView);
+    }
+
+    @Provides
+    int provideProfileGridColumn(boolean isTablet) {
+        if (isTablet) {
+            return NUM_COLUMN_TABLET;
+        } else {
+            return NUM_COLUMN_PHONE;
+        }
     }
 }

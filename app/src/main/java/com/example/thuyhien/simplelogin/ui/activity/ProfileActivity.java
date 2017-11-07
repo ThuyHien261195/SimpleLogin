@@ -37,8 +37,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
         ProfileActivityListener {
 
     private static final int REQUEST_CODE_ADD_PROFILE = 1;
-    public static final int NUM_COLLUM_TABLET = 3;
-    public static final int NUM_COLLUM_PHONE = 2;
     private ProfileAdapter profileAdapter;
     private boolean isDeleting = false;
 
@@ -55,7 +53,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     ProfilePresenter profilePresenter;
 
     @Inject
-    boolean isTablet;
+    int columnNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,8 +180,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     }
 
     private void initViews() {
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, isTablet ?
-                NUM_COLLUM_TABLET : NUM_COLLUM_PHONE);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, columnNumber);
         recyclerViewProfile.setHasFixedSize(true);
         recyclerViewProfile.setLayoutManager(gridLayoutManager);
 
@@ -191,14 +188,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
             @Override
             public int getSpanSize(int position) {
                 if (position == profileAdapter.getItemCount() - 1) {
-                    if (!isTablet) {
-                        if (((profileAdapter.getItemCount() - 1) % NUM_COLLUM_PHONE) == 0) {
-                            return NUM_COLLUM_PHONE;
-                        }
-                    } else {
-                        if (((profileAdapter.getItemCount() - 1) % NUM_COLLUM_TABLET) == 0) {
-                            return NUM_COLLUM_TABLET;
-                        }
+                    if (((profileAdapter.getItemCount() - 1) % columnNumber) == 0) {
+                        return columnNumber;
                     }
                 }
                 return 1;
