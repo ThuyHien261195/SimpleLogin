@@ -110,7 +110,7 @@ public class RetrofitAuthenticationInteractor implements AuthenticationInteracto
                     listener.onLoadProfileSuccess(response.body());
                 } else {
                     listener.onLoadProfileFail(
-                            RetrofitUtils.createAuthenException(response.errorBody()));
+                            RetrofitUtils.createLoadProfileException(response.errorBody()));
                 }
             }
 
