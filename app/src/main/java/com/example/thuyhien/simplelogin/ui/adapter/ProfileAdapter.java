@@ -30,7 +30,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public ProfileAdapter(List<Profile> profileList,
                           ProfileActivityListener listener) {
         this.profileList = profileList;
-        listenerWeakReference = new WeakReference<ProfileActivityListener>(listener);
+        listenerWeakReference = new WeakReference<>(listener);
     }
 
     @Override
@@ -97,9 +97,5 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             profileList.add(profile);
             notifyItemChanged(profileList.size() - 1);
         }
-    }
-
-    private ProfileActivityListener getProfileActivityListener() {
-        return listenerWeakReference.get();
     }
 }
