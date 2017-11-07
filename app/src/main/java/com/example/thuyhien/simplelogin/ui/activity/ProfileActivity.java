@@ -163,13 +163,12 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_delete_profile:
+                isDeleting = !isDeleting;
                 if (isDeleting) {
                     item.setIcon(R.mipmap.ic_close_white_24dp);
                 } else {
                     item.setIcon(R.mipmap.ic_delete_white_24dp);
                 }
-
-                isDeleting = !isDeleting;
                 profileAdapter.showDeleteButton(isDeleting);
                 return true;
             default:
