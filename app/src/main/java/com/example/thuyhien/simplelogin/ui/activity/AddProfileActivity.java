@@ -25,7 +25,8 @@ import butterknife.OnClick;
 
 public class AddProfileActivity extends AppCompatActivity implements AddProfileView {
 
-    private boolean addedProfile = false;
+    public static final String BUNDLE_PROFILE = "BundleProfile";
+    public static final String EXTRA_ADDED_PROFILE = "ExtraAddedProfile";
 
     @BindView(R.id.edit_profile_name)
     EditText editTextProfileName;
@@ -56,7 +57,8 @@ public class AddProfileActivity extends AppCompatActivity implements AddProfileV
         if (ex instanceof InvalidInputException) {
             String errorCode = ((InvalidInputException) ex).getErrorCode();
             if (errorCode.equals(InvalidInputException.ERROR_CODE_INVALID_NAME)) {
-                String errorMsg = getString(R.string.error_empty_field, getString(R.string.hint_profile_name));
+                String errorMsg = getString(R.string.error_empty_field,
+                        getString(R.string.hint_profile_name));
                 editTextProfileName.setError(errorMsg);
             }
         } else if (ex instanceof AuthenticationException) {
@@ -68,8 +70,14 @@ public class AddProfileActivity extends AppCompatActivity implements AddProfileV
 
     @Override
     public void displayAddedProfile(Profile profile) {
-        addedProfile = true;
         Toast.makeText(this, R.string.success_add_profile, Toast.LENGTH_SHORT).show();
+
+        Intent resultProfileIntent = this.getIntent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(EXTRA_ADDED_PROFILE, profile);
+        resultProfileIntent.putExtra(BUNDLE_PROFILE, bundle);
+        this.setResult(RESULT_OK, resultProfileIntent);
+        this.finish();
     }
 
     @Override
@@ -77,23 +85,10 @@ public class AddProfileActivity extends AppCompatActivity implements AddProfileV
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
-                onBackPressed();
+                super.onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        returnResultProfileIntent();
-        super.onBackPressed();
-    }
-
-    private void returnResultProfileIntent() {
-        if (addedProfile) {
-            Intent resultProfileIntent = this.getIntent();
-            this.setResult(RESULT_OK, resultProfileIntent);
         }
     }
 

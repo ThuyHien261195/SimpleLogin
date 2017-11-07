@@ -6,8 +6,6 @@ import com.example.thuyhien.simplelogin.presenter.ProfilePresenter;
 import com.example.thuyhien.simplelogin.presenter.impl.ProfilePresenterImpl;
 import com.example.thuyhien.simplelogin.view.ProfileView;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 

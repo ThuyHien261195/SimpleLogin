@@ -100,6 +100,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
+    public void addItem(Profile profile) {
+        if (profile != null) {
+            profileList.add(profile);
+            notifyItemChanged(profileList.size() - 1);
+        }
+    }
+
     private ProfileActivityListener getProfileActivityListener() {
         return listenerWeakReference.get();
     }

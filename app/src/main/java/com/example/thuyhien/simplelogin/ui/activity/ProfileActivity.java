@@ -144,7 +144,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
         switch (requestCode) {
             case REQUEST_CODE_ADD_PROFILE:
                 if (resultCode == RESULT_OK) {
-                    profilePresenter.loadProfileList();
+                    updateProfileAdapter(data.getBundleExtra(AddProfileActivity.BUNDLE_PROFILE));
                 }
                 break;
             default:
@@ -201,6 +201,15 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    private void updateProfileAdapter(Bundle bundle) {
+        if (bundle != null) {
+            Profile profile = (Profile) bundle.getSerializable(AddProfileActivity.EXTRA_ADDED_PROFILE);
+            if (profile != null) {
+                profileAdapter.addItem(profile);
+            }
         }
     }
 }
