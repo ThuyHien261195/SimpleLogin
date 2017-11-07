@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.dagger.module.ProfileModule;
-import com.example.thuyhien.simplelogin.data.network.exception.AuthenticationException;
+import com.example.thuyhien.simplelogin.data.interactor.listener.DeleteProfileListener;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadProfileException;
 import com.example.thuyhien.simplelogin.model.Profile;
 import com.example.thuyhien.simplelogin.presenter.ProfilePresenter;
@@ -73,10 +73,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
 
     @Override
     public void showErrorMessage(Exception ex) {
-        if (ex instanceof LoadProfileException) {
+        if (ex instanceof LoadProfileException || ex instanceof DeleteProfileListener) {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, R.string.error_unknow, Toast.LENGTH_SHORT).show();
+        } else if (isDeleting) {
+            Toast.makeText(this, R.string.error_delete_profile, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -101,16 +101,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     @Override
     public void notifyProfileDeleteSuccess(Profile profile) {
         profileAdapter.deleteItem(profile);
-    }
-
-    @Override
-    public void updatedProfileAdapterAfterDelete() {
         Toast.makeText(this, R.string.success_delete_profile, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void showErrorUpdatedProfileAdapter() {
-        Toast.makeText(this, R.string.error_delete_profile, Toast.LENGTH_SHORT).show();
     }
 
     @Override

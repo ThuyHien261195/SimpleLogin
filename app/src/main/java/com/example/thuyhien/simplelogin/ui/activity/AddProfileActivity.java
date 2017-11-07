@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.dagger.module.AddProfileModule;
-import com.example.thuyhien.simplelogin.data.network.exception.AuthenticationException;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadProfileException;
 import com.example.thuyhien.simplelogin.model.Profile;
 import com.example.thuyhien.simplelogin.presenter.AddProfilePresenter;

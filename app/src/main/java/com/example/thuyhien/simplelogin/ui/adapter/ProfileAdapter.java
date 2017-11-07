@@ -88,15 +88,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         int pos = profileList.indexOf(profile);
         if (pos != -1) {
             profileList.remove(profile);
-            notifyDataSetChanged();
-
-            if (getProfileActivityListener() != null) {
-                getProfileActivityListener().updatedProfileAdapterAfterDelete();
-            }
-        } else {
-            if (getProfileActivityListener() != null) {
-                getProfileActivityListener().showErrorUpdatedProfileAdapter();
-            }
+            notifyItemRemoved(pos);
         }
     }
 

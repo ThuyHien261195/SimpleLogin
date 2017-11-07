@@ -10,8 +10,4 @@ public interface ProfileActivityListener {
     void deleteProfile(Profile profile);
 
     void openAddProfileScreen();
-
-    void updatedProfileAdapterAfterDelete();
-
-    void showErrorUpdatedProfileAdapter();
 }
