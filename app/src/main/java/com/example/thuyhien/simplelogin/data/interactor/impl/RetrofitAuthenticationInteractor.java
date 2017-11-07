@@ -133,7 +133,7 @@ public class RetrofitAuthenticationInteractor implements AuthenticationInteracto
                     listener.onLoadProfileSuccess(response.body().get(0));
                 } else {
                     listener.onLoadProfileFail(
-                            RetrofitUtils.createAuthenException(response.errorBody()));
+                            RetrofitUtils.createLoadProfileException(response.errorBody()));
                 }
             }
 
@@ -153,7 +153,8 @@ public class RetrofitAuthenticationInteractor implements AuthenticationInteracto
                 if (response.isSuccessful()) {
                     listener.onDeleteProfileSuccess(profile);
                 } else {
-                    listener.onDeleteProfileFail(RetrofitUtils.createAuthenException(response.errorBody()));
+                    listener.onDeleteProfileFail(
+                            RetrofitUtils.createLoadProfileException(response.errorBody()));
                 }
             }
 
