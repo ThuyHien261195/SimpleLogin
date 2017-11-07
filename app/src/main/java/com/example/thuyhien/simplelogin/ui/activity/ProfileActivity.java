@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -66,6 +67,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
                 .inject(this);
         ButterKnife.bind(this);
 
+        displayActionBar();
         initViews();
         profilePresenter.loadProfileList();
     }
@@ -162,6 +164,9 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
             case R.id.menu_item_delete_profile:
                 isDeleting = !isDeleting;
                 if (isDeleting) {
@@ -199,5 +204,12 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
                 return 1;
             }
         });
+    }
+
+    private void displayActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 }

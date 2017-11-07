@@ -2,7 +2,9 @@ package com.example.thuyhien.simplelogin.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -40,6 +42,8 @@ public class AddProfileActivity extends AppCompatActivity implements AddProfileV
                 .createAddProfileComponent(new AddProfileModule(this))
                 .inject(this);
         ButterKnife.bind(this);
+
+        displayActionBar();
     }
 
     @OnClick(R.id.button_add_profile)
@@ -69,15 +73,34 @@ public class AddProfileActivity extends AppCompatActivity implements AddProfileV
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         returnResultProfileIntent();
         super.onBackPressed();
     }
 
-    void returnResultProfileIntent() {
+    private void returnResultProfileIntent() {
         if (addedProfile) {
             Intent resultProfileIntent = this.getIntent();
             this.setResult(RESULT_OK, resultProfileIntent);
+        }
+    }
+
+    private void displayActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
 }
