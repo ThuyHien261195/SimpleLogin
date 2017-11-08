@@ -14,7 +14,6 @@ import com.example.thuyhien.simplelogin.ui.viewholder.ProfileViewHolder;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,11 +26,11 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int ADD_PROFILE_TYPE = 1;
 
     private List<Pair<Profile, Boolean>> profileList = new ArrayList<>();
-    private boolean isDeleting = false;
+    private boolean deletingMode = false;
     private WeakReference<ProfileActivityListener> listenerWeakReference;
 
     public ProfileAdapter(List<Profile> profileList,
-                          ProfileActivityListener listener) {
+                          final ProfileActivityListener listener) {
         listenerWeakReference = new WeakReference<>(listener);
         for (Profile profile : profileList) {
             this.profileList.add(new Pair<>(profile, false));
@@ -62,10 +61,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         switch (viewType) {
             case PROFILE_TYPE:
                 ((ProfileViewHolder) holder).bindContentView(profileList.get(position).first,
-                        isDeleting, profileList.get(position).second);
+                        deletingMode, profileList.get(position).second);
                 break;
             case ADD_PROFILE_TYPE:
-                ((AddProfileViewHolder) holder).bindContentView(isDeleting);
+                ((AddProfileViewHolder) holder).bindContentView(deletingMode);
                 break;
             default:
                 break;
@@ -86,9 +85,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return profileList.size() + 1;
     }
 
-    public void showDeleteButton(boolean isDeleting) {
-        this.isDeleting = isDeleting;
+    public void setDeleteMode(boolean isDeleting) {
+        this.deletingMode = isDeleting;
         notifyDataSetChanged();
+    }
+
+    public boolean getDeleteMode() {
+        return deletingMode;
     }
 
     public void deleteItem(Profile profile) {
@@ -104,7 +107,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public void addItem(Profile profile) {
         if (profile != null) {
-            profileList.add(new Pair<Profile, Boolean>(profile, false));
+            profileList.add(new Pair<>(profile, false));
             notifyItemChanged(profileList.size() - 1);
         }
     }
@@ -122,7 +125,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void clearSelectedProfileList() {
         for (int i = 0; i < profileList.size(); i++) {
             if (profileList.get(i).second) {
-                profileList.set(i, new Pair<Profile, Boolean>(profileList.get(i).first, false));
+                profileList.set(i, new Pair<>(profileList.get(i).first, false));
             }
         }
         notifyDataSetChanged();
@@ -130,7 +133,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private int findPositionProfileList(Profile profile) {
         for (int i = 0; i < profileList.size(); i++) {
-            if (profileList.get(i).first == profile) {
+            if (profileList.get(i).first.equals(profile)) {
                 return i;
             }
         }

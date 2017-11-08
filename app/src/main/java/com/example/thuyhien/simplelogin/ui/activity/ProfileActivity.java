@@ -39,7 +39,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
 
     private static final int REQUEST_CODE_ADD_PROFILE = 1;
     private ProfileAdapter profileAdapter;
-    private boolean isDeleting = false;
     private List<Profile> deletedProfileList = new ArrayList<>();
 
     private MenuItem menuItemDeleteProfile;
@@ -79,7 +78,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     public void showErrorMessage(Exception ex) {
         if (ex instanceof LoadProfileException) {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
-        } else if (isDeleting) {
+        } else if (profileAdapter.getDeleteMode()) {
             Toast.makeText(this, R.string.error_delete_profile, Toast.LENGTH_SHORT).show();
         }
     }
@@ -115,10 +114,9 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
 
     @Override
     public void enableDeleteProfileMode(Profile profile) {
-        isDeleting = true;
         deletedProfileList.add(profile);
         profileAdapter.updateSelectedItem(profile, true);
-        showDeletedProfileUI(isDeleting);
+        showDeletedProfileUI(true);
     }
 
     @Override
@@ -172,7 +170,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (isDeleting) {
+                if (profileAdapter.getDeleteMode()) {
                     disableDeleteProfileMode();
                 } else {
                     super.onBackPressed();
@@ -249,21 +247,13 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     }
 
     private void showDeletedProfileUI(boolean isDeleting) {
-        profileAdapter.showDeleteButton(isDeleting);
+        profileAdapter.setDeleteMode(isDeleting);
         menuItemDeleteProfile.setVisible(isDeleting);
-        displayHomeIcon(isDeleting);
-    }
-
-    private void displayHomeIcon(boolean isDeleting) {
-        if (isDeleting) {
-            actionBar.setHomeAsUpIndicator(R.mipmap.ic_close_white_24dp);
-        } else {
-            actionBar.setHomeAsUpIndicator(R.mipmap.ic_arrow_back_white_24dp);
-        }
+        actionBar.setHomeAsUpIndicator(isDeleting ?
+                R.mipmap.ic_close_white_24dp : R.mipmap.ic_arrow_back_white_24dp);
     }
 
     private void disableDeleteProfileMode() {
-        isDeleting = false;
         deletedProfileList.clear();
         profileAdapter.clearSelectedProfileList();
         showDeletedProfileUI(false);
