@@ -76,8 +76,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     public void showErrorMessage(Exception ex) {
         if (ex instanceof LoadProfileException) {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
-        } else if (profileAdapter.getDeletingMode()) {
-            Toast.makeText(this, R.string.error_delete_profile, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, R.string.error_unknow, Toast.LENGTH_SHORT).show();
         }
     }
 

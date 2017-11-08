@@ -66,9 +66,6 @@ public class ProfilePresenterImpl implements ProfilePresenter {
 
                 @Override
                 public void onDeleteProfileFail(Exception ex) {
-                    if (getProfileView() != null) {
-                        getProfileView().updateProfileListAfterDeleting(null);
-                    }
                     ex.printStackTrace();
                 }
             });
