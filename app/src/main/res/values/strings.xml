@@ -72,12 +72,14 @@
     <string name="request_access_email">You must allow app to access your email</string>
 
     <!-- Delete dialog -->
-    <string name="confirm_delete_profile">Are you sure you want to delete this profile?</string>
+    <string name="confirm_delete_profile">Are you sure you want to delete profiles?</string>
     <string name="error_delete_profile">Error when deleting profile.</string>
     <string name="error_add_profile">Error when adding profile</string>
-    <string name="success_delete_profile">Delete profile successfully</string>
+    <string name="success_delete_profile">Delete profiles successfully</string>
     <string name="success_add_profile">Create profile successfully</string>
     <string name="title_menu_item_delete_profile">Delete</string>
+    <string name="error_delete_all_profile">Can not delete all profile</string>
+    <string name="error_choose_profile_delete">Choose at least 1 profile you want to delete</string>
 
     <string-array name="language_name_array">
         <item>English</item>
