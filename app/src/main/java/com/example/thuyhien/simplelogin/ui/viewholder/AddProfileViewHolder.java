@@ -38,6 +38,14 @@ public class AddProfileViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
+    public void bindContentView(boolean isDeleting) {
+        if (isDeleting) {
+            imageButtonAddProfile.setVisibility(View.GONE);
+        } else {
+            imageButtonAddProfile.setVisibility(View.VISIBLE);
+        }
+    }
+
     ProfileActivityListener getProfileActivityListener() {
         return listenerWeakReference.get();
     }
