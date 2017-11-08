@@ -35,4 +35,13 @@ public class Profile implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Profile profile = (Profile) obj;
+        return this.id != null ? this.id.equals(profile.id) : profile.getId() == null;
+    }
 }
