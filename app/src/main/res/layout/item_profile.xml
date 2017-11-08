@@ -33,7 +33,6 @@
                 android:background="@android:color/transparent"
                 android:layout_gravity="right"
                 android:paddingLeft="@dimen/image_delete_profile_left_spacing"
-                android:paddingRight="@dimen/image_delete_profile_right_spacing"
                 android:paddingBottom="@dimen/image_delete_profile_bottom_spacing" />
         </FrameLayout>
 
