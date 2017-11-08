@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.dagger.module.ProfileModule;
-import com.example.thuyhien.simplelogin.data.interactor.listener.DeleteProfileListener;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadProfileException;
 import com.example.thuyhien.simplelogin.model.Profile;
 import com.example.thuyhien.simplelogin.presenter.ProfilePresenter;
@@ -27,6 +26,7 @@ import com.example.thuyhien.simplelogin.ui.adapter.ProfileAdapter;
 import com.example.thuyhien.simplelogin.ui.listener.ProfileActivityListener;
 import com.example.thuyhien.simplelogin.view.ProfileView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -40,6 +40,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     private static final int REQUEST_CODE_ADD_PROFILE = 1;
     private ProfileAdapter profileAdapter;
     private boolean isDeleting = false;
+    private List<Profile> deletedProfileList = new ArrayList<>();
+
+    private MenuItem menuItemDeleteProfile;
+    private ActionBar actionBar;
 
     @BindView(R.id.recycler_view_profile)
     RecyclerView recyclerViewProfile;
@@ -73,7 +77,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
 
     @Override
     public void showErrorMessage(Exception ex) {
-        if (ex instanceof LoadProfileException || ex instanceof DeleteProfileListener) {
+        if (ex instanceof LoadProfileException) {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
         } else if (isDeleting) {
             Toast.makeText(this, R.string.error_delete_profile, Toast.LENGTH_SHORT).show();
@@ -99,30 +103,36 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     }
 
     @Override
-    public void notifyProfileDeleteSuccess(Profile profile) {
+    public void updateProfileListAfterDeleting(Profile profile) {
         profileAdapter.deleteItem(profile);
-        Toast.makeText(this, R.string.success_delete_profile, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void deleteProfile(final Profile profile) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setTitle(R.string.title_delete_profile_dialog)
-                .setMessage(R.string.confirm_delete_profile)
-                .setPositiveButton(R.string.action_ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        profilePresenter.deleteProfile(profile);
-                    }
-                })
-                .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-        builder.create();
-        builder.show();
+    public void deleteProfileListSuccess() {
+        Toast.makeText(this, R.string.success_delete_profile, Toast.LENGTH_SHORT).show();
+        deletedProfileList.clear();
+    }
+
+    @Override
+    public void enableDeleteProfileMode(Profile profile) {
+        isDeleting = true;
+        deletedProfileList.add(profile);
+        profileAdapter.updateSelectedItem(profile, true);
+        showDeletedProfileUI(isDeleting);
+    }
+
+    @Override
+    public void updateSelectDeletedProfile(final Profile profile) {
+        int pos = deletedProfileList.indexOf(profile);
+        if (pos == -1) {
+            deletedProfileList.add(profile);
+        } else {
+            deletedProfileList.remove(pos);
+        }
+
+        profileAdapter.updateSelectedItem(profile, (pos == -1));
+        menuItemDeleteProfile.setVisible(deletedProfileList.size() != 0);
+
     }
 
     @Override
@@ -148,23 +158,28 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_profile, menu);
+
+        findMenuItemDelete(menu);
         return true;
+    }
+
+    private void findMenuItemDelete(Menu menu) {
+        menuItemDeleteProfile = menu.findItem(R.id.menu_item_delete_profile);
+        menuItemDeleteProfile.setVisible(false);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                super.onBackPressed();
+                if (isDeleting) {
+                    disableDeleteProfileMode();
+                } else {
+                    super.onBackPressed();
+                }
                 return true;
             case R.id.menu_item_delete_profile:
-                isDeleting = !isDeleting;
-                if (isDeleting) {
-                    item.setIcon(R.mipmap.ic_close_white_24dp);
-                } else {
-                    item.setIcon(R.mipmap.ic_delete_white_24dp);
-                }
-                profileAdapter.showDeleteButton(isDeleting);
+                deleteProfileList();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -190,7 +205,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     }
 
     private void displayActionBar() {
-        ActionBar actionBar = getSupportActionBar();
+        actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
@@ -203,5 +218,54 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
                 profileAdapter.addItem(profile);
             }
         }
+    }
+
+    private void deleteProfileList() {
+        if (profileAdapter.getItemCount() - 1 == deletedProfileList.size()) {
+            Toast.makeText(this, R.string.error_delete_all_profile, Toast.LENGTH_SHORT).show();
+        } else {
+            createDialogDeleteConfirm();
+        }
+    }
+
+    private void createDialogDeleteConfirm() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle(R.string.title_delete_profile_dialog)
+                .setMessage(R.string.confirm_delete_profile)
+                .setPositiveButton(R.string.action_ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        profilePresenter.deleteProfileList(deletedProfileList);
+                    }
+                })
+                .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+        builder.create();
+        builder.show();
+    }
+
+    private void showDeletedProfileUI(boolean isDeleting) {
+        profileAdapter.showDeleteButton(isDeleting);
+        menuItemDeleteProfile.setVisible(isDeleting);
+        displayHomeIcon(isDeleting);
+    }
+
+    private void displayHomeIcon(boolean isDeleting) {
+        if (isDeleting) {
+            actionBar.setHomeAsUpIndicator(R.mipmap.ic_close_white_24dp);
+        } else {
+            actionBar.setHomeAsUpIndicator(R.mipmap.ic_arrow_back_white_24dp);
+        }
+    }
+
+    private void disableDeleteProfileMode() {
+        isDeleting = false;
+        deletedProfileList.clear();
+        profileAdapter.clearSelectedProfileList();
+        showDeletedProfileUI(false);
     }
 }

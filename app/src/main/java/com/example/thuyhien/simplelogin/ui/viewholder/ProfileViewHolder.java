@@ -14,6 +14,8 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 /**
  * Created by thuyhien on 11/6/17.
@@ -23,6 +25,7 @@ public class ProfileViewHolder extends RecyclerView.ViewHolder {
 
     private WeakReference<ProfileActivityListener> listenerWeakReference;
     private Profile profile;
+    private boolean isSelecting = false;
 
     @BindView(R.id.image_profile)
     ImageView imageProfile;
@@ -37,30 +40,33 @@ public class ProfileViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         this.listenerWeakReference = listenerWeakReference;
         ButterKnife.bind(this, itemView);
-
-        imageButtonDeleteProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ProfileActivityListener listener = getProfileActivityListener();
-                if (listener != null) {
-                    listener.deleteProfile(profile);
-                }
-            }
-        });
     }
 
-    public void bindContentView(Profile profile, boolean isDeleting) {
-        this.profile = profile;
-        textViewName.setText(profile.getName());
-
-        if (isDeleting) {
-            imageButtonDeleteProfile.setVisibility(View.VISIBLE);
-        } else {
-            imageButtonDeleteProfile.setVisibility(View.GONE);
+    @OnClick(R.id.image_button_delete_profile)
+    public void onClickDeleteProfile() {
+        if (getProfileActivityListener() != null) {
+            getProfileActivityListener().updateSelectDeletedProfile(profile);
         }
     }
 
-    ProfileActivityListener getProfileActivityListener() {
+    @OnLongClick(R.id.image_profile)
+    public boolean onLongClickProfile() {
+        if (getProfileActivityListener() != null) {
+            getProfileActivityListener().enableDeleteProfileMode(profile);
+        }
+        return true;
+    }
+
+    public void bindContentView(Profile profile, boolean isDeleting, boolean isSelecting) {
+        this.profile = profile;
+        textViewName.setText(profile.getName());
+
+        imageButtonDeleteProfile.setVisibility(isDeleting ? View.VISIBLE : View.GONE);
+        imageButtonDeleteProfile.setImageResource(isSelecting ?
+                R.mipmap.ic_done_white_24dp : R.mipmap.ic_highlight_off_white_24dp);
+    }
+
+    private ProfileActivityListener getProfileActivityListener() {
         return listenerWeakReference.get();
     }
 }

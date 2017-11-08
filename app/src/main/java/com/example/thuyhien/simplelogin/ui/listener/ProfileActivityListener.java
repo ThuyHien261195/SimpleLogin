@@ -7,7 +7,9 @@ import com.example.thuyhien.simplelogin.model.Profile;
  */
 
 public interface ProfileActivityListener {
-    void deleteProfile(Profile profile);
+    void enableDeleteProfileMode(Profile profile);
+
+    void updateSelectDeletedProfile(Profile profile);
 
     void openAddProfileScreen();
 }

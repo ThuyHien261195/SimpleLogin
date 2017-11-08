@@ -15,5 +15,7 @@ public interface ProfileView extends BaseView {
 
     void displayProfileList(List<Profile> profileList);
 
-    void notifyProfileDeleteSuccess(Profile profile);
+    void updateProfileListAfterDeleting(Profile profile);
+
+    void deleteProfileListSuccess();
 }

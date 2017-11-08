@@ -53,27 +53,29 @@ public class ProfilePresenterImpl implements ProfilePresenter {
     }
 
     @Override
-    public void deleteProfile(final Profile profile) {
-        showLoading();
-
+    public void deleteProfileList(final List<Profile> profileList) {
         String token = userManager.getToken();
-        authenticationInteractor.deleteProfile(token, profile, new DeleteProfileListener() {
-            @Override
-            public void onDeleteProfileSuccess(Profile profile) {
-                if (getProfileView() != null) {
-                    getProfileView().hideLoading();
-                    getProfileView().notifyProfileDeleteSuccess(profile);
+        for (final Profile profile : profileList) {
+            authenticationInteractor.deleteProfile(token, profile, new DeleteProfileListener() {
+                @Override
+                public void onDeleteProfileSuccess(Profile profile) {
+                    if (getProfileView() != null) {
+                        getProfileView().updateProfileListAfterDeleting(profile);
+                    }
                 }
-            }
 
-            @Override
-            public void onDeleteProfileFail(Exception ex) {
-                if (getProfileView() != null) {
-                    getProfileView().hideLoading();
-                    getProfileView().showErrorMessage(ex);
+                @Override
+                public void onDeleteProfileFail(Exception ex) {
+                    if (getProfileView() != null) {
+                        getProfileView().updateProfileListAfterDeleting(null);
+                    }
+                    ex.printStackTrace();
                 }
-            }
-        });
+            });
+        }
+        if (getProfileView() != null) {
+            getProfileView().deleteProfileListSuccess();
+        }
     }
 
     private void showLoading() {
