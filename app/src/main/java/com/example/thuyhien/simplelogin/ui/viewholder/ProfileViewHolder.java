@@ -25,7 +25,7 @@ public class ProfileViewHolder extends RecyclerView.ViewHolder {
 
     private WeakReference<ProfileActivityListener> listenerWeakReference;
     private Profile profile;
-    private boolean isSelecting = false;
+    private boolean isDeleting = false;
 
     @BindView(R.id.image_profile)
     ImageView imageProfile;
@@ -42,10 +42,12 @@ public class ProfileViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    @OnClick(R.id.image_button_delete_profile)
+    @OnClick(R.id.image_profile)
     public void onClickDeleteProfile() {
-        if (getProfileActivityListener() != null) {
-            getProfileActivityListener().updateSelectDeletedProfile(profile);
+        if (isDeleting) {
+            if (getProfileActivityListener() != null) {
+                getProfileActivityListener().updateSelectDeletedProfile(profile);
+            }
         }
     }
 
@@ -59,6 +61,7 @@ public class ProfileViewHolder extends RecyclerView.ViewHolder {
 
     public void bindContentView(Profile profile, boolean isDeleting, boolean isSelecting) {
         this.profile = profile;
+        this.isDeleting = isDeleting;
         textViewName.setText(profile.getName());
 
         imageButtonDeleteProfile.setVisibility(isDeleting ? View.VISIBLE : View.GONE);
