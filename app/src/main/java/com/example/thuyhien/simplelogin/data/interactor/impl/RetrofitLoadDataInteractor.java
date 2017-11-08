@@ -82,7 +82,7 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
                     listener.onLoadDataFail(pair.second);
                 }
             }
-        }.execute();
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
@@ -125,7 +125,7 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
                     listener.onLoadDataFail(pair.second);
                 }
             }
-        }.execute(section);
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, section);
     }
 
     @Override
@@ -158,7 +158,7 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
                     listener.onLoadDataFail(pair.second);
                 }
             }
-        }.execute();
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private String addRangeLoadData(String feedUrl) {
