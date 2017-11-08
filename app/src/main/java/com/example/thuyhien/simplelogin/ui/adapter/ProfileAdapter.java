@@ -12,7 +12,6 @@ import com.example.thuyhien.simplelogin.ui.listener.ProfileActivityListener;
 import com.example.thuyhien.simplelogin.ui.viewholder.AddProfileViewHolder;
 import com.example.thuyhien.simplelogin.ui.viewholder.ProfileViewHolder;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,14 +26,15 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private List<Pair<Profile, Boolean>> profileList = new ArrayList<>();
     private boolean deletingMode = false;
-    private WeakReference<ProfileActivityListener> listenerWeakReference;
+    private ProfileActivityListener listener;
 
     public ProfileAdapter(List<Profile> profileList,
                           final ProfileActivityListener listener) {
-        listenerWeakReference = new WeakReference<>(listener);
         for (Profile profile : profileList) {
             this.profileList.add(new Pair<>(profile, false));
         }
+
+        createListenerFromProfileViewHolder(listener);
     }
 
     @Override
@@ -44,10 +44,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         switch (viewType) {
             case PROFILE_TYPE:
                 view = inflater.inflate(R.layout.item_profile, parent, false);
-                return new ProfileViewHolder(view, listenerWeakReference);
+                return new ProfileViewHolder(view, listener);
             case ADD_PROFILE_TYPE:
                 view = inflater.inflate(R.layout.item_add_profile, parent, false);
-                return new AddProfileViewHolder(view, listenerWeakReference);
+                return new AddProfileViewHolder(view, listener);
             default:
                 break;
         }
@@ -150,5 +150,27 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
         }
         return -1;
+    }
+
+    private void createListenerFromProfileViewHolder(final ProfileActivityListener listener) {
+        this.listener = new ProfileActivityListener() {
+            @Override
+            public void enableDeleteProfileMode(Profile profile) {
+                setDeletingMode(true);
+                updateSelectedItem(profile);
+                listener.enableDeleteProfileMode(profile);
+            }
+
+            @Override
+            public void updateSelectDeletedProfile(Profile profile) {
+                updateSelectedItem(profile);
+                listener.updateSelectDeletedProfile(profile);
+            }
+
+            @Override
+            public void openAddProfileScreen() {
+                listener.openAddProfileScreen();
+            }
+        };
     }
 }

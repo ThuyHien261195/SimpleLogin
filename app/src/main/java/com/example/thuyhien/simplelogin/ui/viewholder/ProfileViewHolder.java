@@ -36,9 +36,9 @@ public class ProfileViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.text_name)
     TextView textViewName;
 
-    public ProfileViewHolder(View itemView, final WeakReference<ProfileActivityListener> listenerWeakReference) {
+    public ProfileViewHolder(View itemView, final ProfileActivityListener listenerWeakReference) {
         super(itemView);
-        this.listenerWeakReference = listenerWeakReference;
+        this.listenerWeakReference = new WeakReference<>(listenerWeakReference);
         ButterKnife.bind(this, itemView);
     }
 

@@ -100,6 +100,17 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     }
 
     @Override
+    public void enableDeleteProfileMode(Profile profile) {
+        showDeletedProfileUI(true);
+    }
+
+    @Override
+    public void updateSelectDeletedProfile(final Profile profile) {
+        menuItemDeleteProfile.setVisible(profileAdapter.getDeletedProfileList().size() != 0);
+
+    }
+
+    @Override
     public void updateProfileListAfterDeleting(Profile profile) {
         profileAdapter.deleteItem(profile);
     }
@@ -107,19 +118,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     @Override
     public void deleteProfileListSuccess() {
         Toast.makeText(this, R.string.success_delete_profile, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void enableDeleteProfileMode(Profile profile) {
-        profileAdapter.updateSelectedItem(profile);
-        showDeletedProfileUI(true);
-    }
-
-    @Override
-    public void updateSelectDeletedProfile(final Profile profile) {
-        profileAdapter.updateSelectedItem(profile);
-        menuItemDeleteProfile.setVisible(profileAdapter.getDeletedProfileList().size() != 0);
-
     }
 
     @Override
@@ -150,16 +148,12 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
         return true;
     }
 
-    private void findMenuItemDelete(Menu menu) {
-        menuItemDeleteProfile = menu.findItem(R.id.menu_item_delete_profile);
-        menuItemDeleteProfile.setVisible(false);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (profileAdapter.getDeletingMode()) {
+                    profileAdapter.setDeletingMode(false);
                     showDeletedProfileUI(false);
                 } else {
                     super.onBackPressed();
@@ -189,6 +183,11 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
                 return 1;
             }
         });
+    }
+
+    private void findMenuItemDelete(Menu menu) {
+        menuItemDeleteProfile = menu.findItem(R.id.menu_item_delete_profile);
+        menuItemDeleteProfile.setVisible(false);
     }
 
     private void displayActionBar() {
@@ -236,7 +235,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     }
 
     private void showDeletedProfileUI(boolean isDeleting) {
-        profileAdapter.setDeletingMode(isDeleting);
         menuItemDeleteProfile.setVisible(isDeleting);
         actionBar.setHomeAsUpIndicator(isDeleting ?
                 R.mipmap.ic_close_white_24dp : R.mipmap.ic_arrow_back_white_24dp);

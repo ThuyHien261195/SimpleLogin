@@ -23,11 +23,11 @@ public class AddProfileViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.image_button_add_profile)
     ImageButton imageButtonAddProfile;
 
-    public AddProfileViewHolder(View itemView, final WeakReference<ProfileActivityListener> listenerWeakReference) {
+    public AddProfileViewHolder(View itemView, final ProfileActivityListener listenerWeakReference) {
         super(itemView);
         ButterKnife.bind(this, itemView);
 
-        this.listenerWeakReference = listenerWeakReference;
+        this.listenerWeakReference = new WeakReference<>(listenerWeakReference);
         imageButtonAddProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
