@@ -85,12 +85,12 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return profileList.size() + 1;
     }
 
-    public void setDeleteMode(boolean isDeleting) {
-        this.deletingMode = isDeleting;
-        notifyDataSetChanged();
+    public void setDeletingMode(boolean deletingMode) {
+        this.deletingMode = deletingMode;
+        clearSelectedProfileList();
     }
 
-    public boolean getDeleteMode() {
+    public boolean getDeletingMode() {
         return deletingMode;
     }
 
@@ -112,17 +112,29 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    public void updateSelectedItem(Profile profile, boolean isSelecting) {
+    public void updateSelectedItem(Profile profile) {
         int pos = findPositionProfileList(profile);
-        if (pos != -1) {
-            Pair<Profile, Boolean> profileBooleanPair =
-                    new Pair<>(profileList.get(pos).first, isSelecting);
-            profileList.set(pos, profileBooleanPair);
-            notifyItemChanged(pos);
+        if (pos == -1) {
+            return;
         }
+
+        Pair<Profile, Boolean> profileBooleanPair =
+                new Pair<>(profileList.get(pos).first, !profileList.get(pos).second);
+        profileList.set(pos, profileBooleanPair);
+        notifyItemChanged(pos);
     }
 
-    public void clearSelectedProfileList() {
+    public List<Profile> getDeletedProfileList() {
+        List<Profile> deletedProfileList = new ArrayList<>();
+        for (Pair<Profile, Boolean> profileItem : profileList) {
+            if (profileItem.second) {
+                deletedProfileList.add(profileItem.first);
+            }
+        }
+        return deletedProfileList;
+    }
+
+    private void clearSelectedProfileList() {
         for (int i = 0; i < profileList.size(); i++) {
             if (profileList.get(i).second) {
                 profileList.set(i, new Pair<>(profileList.get(i).first, false));

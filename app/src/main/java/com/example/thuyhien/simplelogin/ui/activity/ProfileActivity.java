@@ -26,7 +26,6 @@ import com.example.thuyhien.simplelogin.ui.adapter.ProfileAdapter;
 import com.example.thuyhien.simplelogin.ui.listener.ProfileActivityListener;
 import com.example.thuyhien.simplelogin.view.ProfileView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -39,7 +38,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
 
     private static final int REQUEST_CODE_ADD_PROFILE = 1;
     private ProfileAdapter profileAdapter;
-    private List<Profile> deletedProfileList = new ArrayList<>();
 
     private MenuItem menuItemDeleteProfile;
     private ActionBar actionBar;
@@ -78,7 +76,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     public void showErrorMessage(Exception ex) {
         if (ex instanceof LoadProfileException) {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
-        } else if (profileAdapter.getDeleteMode()) {
+        } else if (profileAdapter.getDeletingMode()) {
             Toast.makeText(this, R.string.error_delete_profile, Toast.LENGTH_SHORT).show();
         }
     }
@@ -109,27 +107,18 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     @Override
     public void deleteProfileListSuccess() {
         Toast.makeText(this, R.string.success_delete_profile, Toast.LENGTH_SHORT).show();
-        deletedProfileList.clear();
     }
 
     @Override
     public void enableDeleteProfileMode(Profile profile) {
-        deletedProfileList.add(profile);
-        profileAdapter.updateSelectedItem(profile, true);
+        profileAdapter.updateSelectedItem(profile);
         showDeletedProfileUI(true);
     }
 
     @Override
     public void updateSelectDeletedProfile(final Profile profile) {
-        int pos = deletedProfileList.indexOf(profile);
-        if (pos == -1) {
-            deletedProfileList.add(profile);
-        } else {
-            deletedProfileList.remove(pos);
-        }
-
-        profileAdapter.updateSelectedItem(profile, (pos == -1));
-        menuItemDeleteProfile.setVisible(deletedProfileList.size() != 0);
+        profileAdapter.updateSelectedItem(profile);
+        menuItemDeleteProfile.setVisible(profileAdapter.getDeletedProfileList().size() != 0);
 
     }
 
@@ -170,8 +159,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (profileAdapter.getDeleteMode()) {
-                    disableDeleteProfileMode();
+                if (profileAdapter.getDeletingMode()) {
+                    showDeletedProfileUI(false);
                 } else {
                     super.onBackPressed();
                 }
@@ -219,7 +208,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     }
 
     private void deleteProfileList() {
-        if (profileAdapter.getItemCount() - 1 == deletedProfileList.size()) {
+        if (profileAdapter.getItemCount() - 1 == profileAdapter.getDeletedProfileList().size()) {
             Toast.makeText(this, R.string.error_delete_all_profile, Toast.LENGTH_SHORT).show();
         } else {
             createDialogDeleteConfirm();
@@ -233,7 +222,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
                 .setPositiveButton(R.string.action_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        profilePresenter.deleteProfileList(deletedProfileList);
+                        profilePresenter.deleteProfileList(profileAdapter.getDeletedProfileList());
                     }
                 })
                 .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
@@ -247,15 +236,9 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     }
 
     private void showDeletedProfileUI(boolean isDeleting) {
-        profileAdapter.setDeleteMode(isDeleting);
+        profileAdapter.setDeletingMode(isDeleting);
         menuItemDeleteProfile.setVisible(isDeleting);
         actionBar.setHomeAsUpIndicator(isDeleting ?
                 R.mipmap.ic_close_white_24dp : R.mipmap.ic_arrow_back_white_24dp);
-    }
-
-    private void disableDeleteProfileMode() {
-        deletedProfileList.clear();
-        profileAdapter.clearSelectedProfileList();
-        showDeletedProfileUI(false);
     }
 }
