@@ -55,7 +55,7 @@
     <string name="error_invalid_field">%1$s is invalid</string>
     <string name="error_create_user">Create user account unsuccessfully</string>
     <string name="error_login_user">Login user account unsuccessfully</string>
-    <string name="error_unknow">Unknow error</string>
+    <string name="error_unknown">Unknown error</string>
     <string name="error_refresh_data">Error when refreshing</string>
     <string name="error_open_file">Error when opening file</string>
     <string name="error_empty_file">Empty feed list file</string>

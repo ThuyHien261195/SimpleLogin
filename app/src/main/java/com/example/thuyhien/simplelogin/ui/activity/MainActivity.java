@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
         if (ex != null && ex instanceof LoadDataException) {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, R.string.error_unknow, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.error_unknown, Toast.LENGTH_SHORT).show();
         }
     }
 
