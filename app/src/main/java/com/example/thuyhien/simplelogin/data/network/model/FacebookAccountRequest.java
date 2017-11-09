@@ -8,8 +8,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class FacebookAccountRequest {
     @SerializedName("provider_token")
-    String token;
-    String country;
+    private String token;
+    private String country;
 
     public FacebookAccountRequest(String token) {
         this.token = token;
