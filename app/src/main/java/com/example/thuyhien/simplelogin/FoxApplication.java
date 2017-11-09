@@ -16,9 +16,6 @@ import javax.inject.Inject;
 public class FoxApplication extends Application {
     private AppComponent appComponent;
 
-    @Inject
-    AppManager appManager;
-
     public AppComponent getAppComponent() {
         return appComponent;
     }
