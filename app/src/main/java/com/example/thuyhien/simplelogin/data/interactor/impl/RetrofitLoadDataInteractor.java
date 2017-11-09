@@ -120,9 +120,9 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
             @Override
             protected void onPostExecute(Pair<List<MediaFeed>, Exception> pair) {
                 if (pair.first != null) {
-                    listener.onLoadDataSuccess(section, pair.first);
+                    listener.onLoadFeedListSuccess(section, pair.first);
                 } else {
-                    listener.onLoadDataFail(pair.second);
+                    listener.onLoadFeedListFail(pair.second);
                 }
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, section);
@@ -167,29 +167,5 @@ public class RetrofitLoadDataInteractor implements LoadDataInteractor {
             return DEFAULT_RANGE_LOAD_DATA;
         }
         return null;
-    }
-
-    @Override
-    public void getPoster(final MediaImage imagePost, final LoadDataListener<Bitmap> listener) {
-        Call<ResponseBody> call = dataApiService.getImagePost(imagePost.getImageUrl());
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    InputStream inputStream = response.body().byteStream();
-//                    Bitmap bitmap = ImageUtils.decodeBitMapFromInputStream(inputStream,
-//                            imagePost.getWidth(),
-//                            imagePost.getHeight());
-//                    listener.onLoadDataSuccess(bitmap);
-                } else {
-                    listener.onLoadDataFail(RetrofitUtils.createLoadDataException(response.errorBody()));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                listener.onLoadDataFail(new Exception(t));
-            }
-        });
     }
 }

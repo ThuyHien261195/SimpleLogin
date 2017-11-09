@@ -21,6 +21,4 @@ public interface LoadDataInteractor {
                      final LoadFeedListListener listener);
 
     void getPage(final Page page, final LoadDataListener<Page> listener);
-
-    void getPoster(MediaImage imagePost, final LoadDataListener<Bitmap> listener);
 }
