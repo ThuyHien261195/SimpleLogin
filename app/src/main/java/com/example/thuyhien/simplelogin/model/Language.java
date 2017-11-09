@@ -8,7 +8,7 @@ public class Language {
     private String langCode;
     private String langName;
 
-    public Language(String langCode, String langName, boolean isSelected) {
+    public Language(String langCode, String langName) {
         this.langCode = langCode;
         this.langName = langName;
     }

@@ -111,7 +111,7 @@ public class AppModule {
 
         List<Language> languageList = new ArrayList<>();
         for (int i = 0; i < languageCodeList.length; i++) {
-            languageList.add(new Language(languageCodeList[i], languageNameList[i], false));
+            languageList.add(new Language(languageCodeList[i], languageNameList[i]));
         }
         return languageList;
     }
