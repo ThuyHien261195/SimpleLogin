@@ -76,10 +76,10 @@ public class AppModule {
     @Named(DI_AUTHEN_GSON)
     @Singleton
     Gson provideAuthenGson() {
-        Type profileType = new TypeToken<User>() {
+        Type userType = new TypeToken<User>() {
         }.getType();
         GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(profileType, new UserConverter());
+        gsonBuilder.registerTypeAdapter(userType, new UserConverter());
         return gsonBuilder.create();
     }
 
