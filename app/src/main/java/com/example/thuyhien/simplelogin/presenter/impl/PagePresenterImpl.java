@@ -76,7 +76,7 @@ public class PagePresenterImpl implements PagePresenter {
         for (final Section section : sectionList) {
             loadDataInteractor.getFeedList(section, useCache, new LoadFeedListListener() {
                 @Override
-                public void onLoadDataSuccess(Section section, List<MediaFeed> mediaFeedList) {
+                public void onLoadFeedListSuccess(Section section, List<MediaFeed> mediaFeedList) {
                     if (getPageView() != null) {
                         getPageView().hideLoading();
                         getPageView().displayMediaFeedList(section, mediaFeedList);
@@ -84,7 +84,7 @@ public class PagePresenterImpl implements PagePresenter {
                 }
 
                 @Override
-                public void onLoadDataFail(Exception ex) {
+                public void onLoadFeedListFail(Exception ex) {
                     if (getPageView() != null) {
                         getPageView().hideLoading();
                         getPageView().displayMediaFeedList(section, null);

@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public interface LoadFeedListListener {
-    void onLoadDataSuccess(Section section, List<MediaFeed> mediaFeedList);
+    void onLoadFeedListSuccess(Section section, List<MediaFeed> mediaFeedList);
 
-    void onLoadDataFail(Exception ex);
+    void onLoadFeedListFail(Exception ex);
 }
