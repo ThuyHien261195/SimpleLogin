@@ -45,11 +45,10 @@ public class FeedPostConverter extends BaseDeserializer<MediaFeed> {
                 return new ArrayList<MediaImage>(thumbnails.values());
             }
 
-        } else if (checkValidJsonArray(jsonElement)) {
-            JsonArray jsonArray = jsonElement.getAsJsonArray();
+        } else if (checkValidJsonArray(jsonElement)) {;
             thumbnailType = new TypeToken<List<MediaImage>>() {
             }.getType();
-            List<MediaImage> imagePostList = context.deserialize(jsonArray, thumbnailType);
+            List<MediaImage> imagePostList = context.deserialize(jsonElement, thumbnailType);
             if (imagePostList != null && imagePostList.size() != 0) {
                 return imagePostList;
             }
