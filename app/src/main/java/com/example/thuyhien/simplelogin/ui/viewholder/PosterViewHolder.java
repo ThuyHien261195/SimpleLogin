@@ -29,7 +29,7 @@ public class PosterViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.image_poster)
     ImageView imageViewPoster;
 
-    protected MediaFeed mediaFeed;
+    private MediaFeed mediaFeed;
     private final Picasso picasso;
 
     public PosterViewHolder(final View itemView) {
@@ -63,7 +63,7 @@ public class PosterViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void openMediaFeedDetail(View view, Bundle feedBundle) {
-        Intent feedIntent = new Intent(view.getContext(), MediaFeedActivity.class);
+        Intent feedIntent = new Intent();
         feedIntent.setAction(MainActivity.ACTION_SHOW_FEED_DETAIL);
         feedIntent.putExtra(MainActivity.BUNDLE_MEDIA_FEED, feedBundle);
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(view.getContext());
