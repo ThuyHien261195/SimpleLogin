@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.broadcast.DialogBroadcastReceiver;
+import com.example.thuyhien.simplelogin.broadcast.FeedDetailBroadcastReceiver;
 import com.example.thuyhien.simplelogin.dagger.module.MainModule;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements MainView,
 
     private TextView textViewEmail;
     private View loggedInHeaderView, notLogHeaderView;
+    private BroadcastReceiver broadcastReceiver;
+    private String langCode;
 
     @Inject
     MainPresenter mainPresenter;
@@ -70,8 +72,6 @@ public class MainActivity extends AppCompatActivity implements MainView,
 
     @BindView(R.id.text_title_page)
     TextView textViewTitlePage;
-    private BroadcastReceiver broadcastReceiver;
-    private String langCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -278,7 +278,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
     }
 
     private void registerFeedDialogReceiver() {
-        broadcastReceiver = new DialogBroadcastReceiver(this);
+        broadcastReceiver = new FeedDetailBroadcastReceiver(this);
         IntentFilter intentFilter = new IntentFilter(ACTION_SHOW_FEED_DETAIL);
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
         localBroadcastManager.registerReceiver(broadcastReceiver, intentFilter);
@@ -295,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
         startActivity(feedIntent);
     }
 
-    void showFeedDetailDialog(Bundle feedBundle) {
+    private void showFeedDetailDialog(Bundle feedBundle) {
         MediaFeed mediaFeed = (MediaFeed) feedBundle.getSerializable(MEDIA_FEED);
         if (mediaFeed == null) {
             return;

@@ -14,11 +14,11 @@ import java.lang.ref.WeakReference;
  * Created by thuyhien on 10/27/17.
  */
 
-public class DialogBroadcastReceiver extends BroadcastReceiver {
+public class FeedDetailBroadcastReceiver extends BroadcastReceiver {
 
     private WeakReference<MainActivityListener> mainActivityListenerWeakRef;
 
-    public DialogBroadcastReceiver(MainActivityListener mainActivityListener) {
+    public FeedDetailBroadcastReceiver(MainActivityListener mainActivityListener) {
         mainActivityListenerWeakRef = new WeakReference<MainActivityListener>(mainActivityListener);
     }
 
