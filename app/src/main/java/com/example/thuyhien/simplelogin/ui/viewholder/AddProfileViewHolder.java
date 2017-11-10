@@ -39,11 +39,7 @@ public class AddProfileViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindContentView(boolean isDeleting) {
-        if (isDeleting) {
-            imageButtonAddProfile.setVisibility(View.GONE);
-        } else {
-            imageButtonAddProfile.setVisibility(View.VISIBLE);
-        }
+        imageButtonAddProfile.setVisibility(isDeleting ? View.GONE : View.VISIBLE);
     }
 
     private ProfileActivityListener getProfileActivityListener() {
