@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.dagger.module.AuthenModule;
+import com.example.thuyhien.simplelogin.data.network.exception.AuthenticationException;
 import com.example.thuyhien.simplelogin.data.network.exception.FacebookAuthenticationException;
 import com.example.thuyhien.simplelogin.presenter.AuthenticatePresenter;
 import com.example.thuyhien.simplelogin.ui.exception.InvalidInputException;
@@ -133,8 +134,12 @@ public class SignUpActivity extends AppCompatActivity implements AuthenticationV
             LoginManager.getInstance().logOut();
         }
 
-        String message = ex.getMessage();
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        if (ex instanceof AuthenticationException
+                || ex instanceof FacebookAuthenticationException) {
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, R.string.error_unknown, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

@@ -75,11 +75,8 @@ public class SignUpPresenterImpl implements AuthenticatePresenter, AuthenticateA
 
     @Override
     public void onAuthenticateFail(Exception ex) {
-        if (ex != null && ((ex instanceof AuthenticationException)
-                || (ex instanceof FacebookAuthenticationException))) {
-            if (getSignUpView() != null) {
-                getSignUpView().showErrorMessage(ex);
-            }
+        if (getSignUpView() != null) {
+            getSignUpView().showErrorMessage(ex);
         }
     }
 
