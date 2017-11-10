@@ -147,7 +147,7 @@ public class SignInActivity extends AppCompatActivity implements AuthenticationV
                 Collections.singletonList(PERMISSION_EMAIL));
     }
 
-    void registerFacebookCallback() {
+    private void registerFacebookCallback() {
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
