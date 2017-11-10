@@ -38,24 +38,20 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
 
     private static final int REQUEST_CODE_ADD_PROFILE = 1;
     private ProfileAdapter profileAdapter;
-
     private MenuItem menuItemDeleteProfile;
     private ActionBar actionBar;
-
-    @BindView(R.id.recycler_view_profile)
-    RecyclerView recyclerViewProfile;
-
-    @BindView(R.id.progress_bar_loading)
-    ProgressBar progressBarDialog;
-
-    @BindView(R.id.layout_profile_list)
-    LinearLayout linearLayoutProfileList;
 
     @Inject
     ProfilePresenter profilePresenter;
 
     @Inject
     int columnNumber;
+
+    @BindView(R.id.recycler_view_profile)
+    RecyclerView recyclerViewProfile;
+
+    @BindView(R.id.progress_bar_loading)
+    ProgressBar progressBarDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +103,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     @Override
     public void updateSelectDeletedProfile(final Profile profile) {
         menuItemDeleteProfile.setVisible(profileAdapter.getDeletedProfileList().size() != 0);
-
     }
 
     @Override
@@ -169,7 +164,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
 
     private void initViews() {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, columnNumber);
-        recyclerViewProfile.setHasFixedSize(true);
         recyclerViewProfile.setLayoutManager(gridLayoutManager);
 
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
