@@ -28,11 +28,11 @@ public class AddProfileActivity extends AppCompatActivity implements AddProfileV
     public static final String BUNDLE_PROFILE = "BundleProfile";
     public static final String EXTRA_ADDED_PROFILE = "ExtraAddedProfile";
 
-    @BindView(R.id.edit_profile_name)
-    EditText editTextProfileName;
-
     @Inject
     AddProfilePresenter addProfilePresenter;
+
+    @BindView(R.id.edit_profile_name)
+    EditText editTextProfileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

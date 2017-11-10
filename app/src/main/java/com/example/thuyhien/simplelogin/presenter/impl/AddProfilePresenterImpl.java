@@ -4,6 +4,7 @@ import com.example.thuyhien.simplelogin.data.interactor.AuthenticationInteractor
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadProfileListener;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.data.network.exception.AuthenticationException;
+import com.example.thuyhien.simplelogin.data.network.exception.LoadProfileException;
 import com.example.thuyhien.simplelogin.data.network.model.ProfileRequest;
 import com.example.thuyhien.simplelogin.model.Profile;
 import com.example.thuyhien.simplelogin.presenter.AddProfilePresenter;
@@ -56,10 +57,8 @@ public class AddProfilePresenterImpl implements AddProfilePresenter {
 
                 @Override
                 public void onLoadProfileFail(Exception ex) {
-                    if (ex != null && ex instanceof AuthenticationException) {
-                        if (getAddProfileView() != null) {
-                            getAddProfileView().showErrorMessage(ex);
-                        }
+                    if (getAddProfileView() != null) {
+                        getAddProfileView().showErrorMessage(ex);
                     }
                 }
             });
