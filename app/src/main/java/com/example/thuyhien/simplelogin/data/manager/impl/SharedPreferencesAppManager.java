@@ -19,7 +19,6 @@ public class SharedPreferencesAppManager implements AppManager {
         this.sharedPref = sharedPref;
     }
 
-
     @Override
     public boolean isAlreadyUsedApp() {
         return sharedPref.getBoolean(PREF_ALREADY_USED, false);

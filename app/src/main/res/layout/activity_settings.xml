@@ -11,20 +11,20 @@
         android:id="@+id/layout_language"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@drawable/layout_item_setting_bg"
+        android:orientation="vertical"
         android:paddingBottom="@dimen/item_setting_vertical_spacing">
 
         <TextView
+            style="@style/SettingTextTheme"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/title_setting_language"
-            style="@style/SettingTextTheme" />
+            android:text="@string/title_setting_language" />
 
         <RadioGroup
             android:id="@+id/radio_group_language"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"></RadioGroup>
+            android:orientation="vertical" />
     </LinearLayout>
 </LinearLayout>
