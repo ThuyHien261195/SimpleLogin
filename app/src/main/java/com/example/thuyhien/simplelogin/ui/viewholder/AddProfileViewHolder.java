@@ -46,7 +46,7 @@ public class AddProfileViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    ProfileActivityListener getProfileActivityListener() {
+    private ProfileActivityListener getProfileActivityListener() {
         return listenerWeakReference.get();
     }
 }
