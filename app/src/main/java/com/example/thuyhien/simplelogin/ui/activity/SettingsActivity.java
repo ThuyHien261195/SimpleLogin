@@ -63,7 +63,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView 
     }
 
     View createRadioButtonLanguage(String usedLanguageCode, int i, Language language) {
-        View view = LayoutInflater.from(this)
+        View view = ((LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE))
                 .inflate(R.layout.item_language, radioGroupLanguage, false);
         RadioButton radioButtonLanguage = (RadioButton) view;
         radioButtonLanguage.setId(i);
