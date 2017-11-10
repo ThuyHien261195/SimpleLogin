@@ -112,7 +112,17 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    public void updateSelectedItem(Profile profile) {
+    public List<Profile> getDeletedProfileList() {
+        List<Profile> deletedProfileList = new ArrayList<>();
+        for (Pair<Profile, Boolean> profileItem : profileList) {
+            if (profileItem.second) {
+                deletedProfileList.add(profileItem.first);
+            }
+        }
+        return deletedProfileList;
+    }
+
+    private void updateSelectedItem(Profile profile) {
         int pos = findPositionProfileList(profile);
         if (pos == -1) {
             return;
@@ -122,16 +132,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 new Pair<>(profileList.get(pos).first, !profileList.get(pos).second);
         profileList.set(pos, profileBooleanPair);
         notifyItemChanged(pos);
-    }
-
-    public List<Profile> getDeletedProfileList() {
-        List<Profile> deletedProfileList = new ArrayList<>();
-        for (Pair<Profile, Boolean> profileItem : profileList) {
-            if (profileItem.second) {
-                deletedProfileList.add(profileItem.first);
-            }
-        }
-        return deletedProfileList;
     }
 
     private void clearSelectedProfileList() {
