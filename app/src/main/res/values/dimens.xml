@@ -98,8 +98,6 @@
 
     <!-- Profile screen -->
     <dimen name="item_profile_spacing">@dimen/medium_space</dimen>
-    <dimen name="image_delete_profile_left_spacing">2dp</dimen>
-    <dimen name="image_delete_profile_bottom_spacing">5dp</dimen>
     <dimen name="text_name_profile_vertical_spacing">5dp</dimen>
     <dimen name="tilte_name_text_size">16sp</dimen>
     <dimen name="item_add_profile_spacing">@dimen/medium_space</dimen>
