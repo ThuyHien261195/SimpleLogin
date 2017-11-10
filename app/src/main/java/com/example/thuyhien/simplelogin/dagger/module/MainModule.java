@@ -19,8 +19,8 @@ import dagger.Provides;
 public class MainModule {
     private MainView mainView;
 
-    public MainModule(MainActivity mainActivity) {
-        this.mainView = mainActivity;
+    public MainModule(MainView mainView) {
+        this.mainView = mainView;
     }
 
     @Provides
