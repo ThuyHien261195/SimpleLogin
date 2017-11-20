@@ -10,13 +10,11 @@ import com.example.thuyhien.simplelogin.data.manager.AppManager;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.data.manager.impl.SharedPreferencesAppManager;
 import com.example.thuyhien.simplelogin.data.manager.impl.SharedPreferencesUserManager;
-import com.example.thuyhien.simplelogin.model.Profile;
 
 import javax.inject.Singleton;
 
 import dagger.Binds;
 import dagger.Module;
-import dagger.multibindings.IntoMap;
 
 /**
  * Created by thuyhien on 11/20/17.

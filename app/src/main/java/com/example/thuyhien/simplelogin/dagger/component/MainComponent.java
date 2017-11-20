@@ -16,7 +16,8 @@ public interface MainComponent {
     void inject(MainActivity mainActivity);
 
     @Subcomponent.Builder
-    interface Builder extends BaseSubComponentBuilder<MainComponent>{
-        @BindsInstance Builder bindsMainActivity(MainView mainView);
+    interface Builder extends BaseSubComponentBuilder<MainComponent> {
+        @BindsInstance
+        Builder bindsMainActivity(MainView mainView);
     }
 }

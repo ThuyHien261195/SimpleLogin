@@ -17,6 +17,7 @@ public interface AddProfileComponent {
 
     @Subcomponent.Builder
     interface Builder extends BaseSubComponentBuilder<AddProfileComponent> {
-        @BindsInstance  Builder bindsAddProfileActivity(AddProfileView addProfileView);
+        @BindsInstance
+        Builder bindsAddProfileActivity(AddProfileView addProfileView);
     }
 }

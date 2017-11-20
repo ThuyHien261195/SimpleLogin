@@ -12,7 +12,6 @@ import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.dagger.component.AddProfileComponent;
 import com.example.thuyhien.simplelogin.dagger.component.AppComponent;
-import com.example.thuyhien.simplelogin.dagger.module.AddProfileModule;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadProfileException;
 import com.example.thuyhien.simplelogin.model.Profile;
 import com.example.thuyhien.simplelogin.presenter.AddProfilePresenter;

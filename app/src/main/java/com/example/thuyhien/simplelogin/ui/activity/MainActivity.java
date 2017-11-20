@@ -26,7 +26,6 @@ import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.broadcast.FeedDetailBroadcastReceiver;
 import com.example.thuyhien.simplelogin.dagger.component.AppComponent;
 import com.example.thuyhien.simplelogin.dagger.component.MainComponent;
-import com.example.thuyhien.simplelogin.dagger.module.MainModule;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.Page;

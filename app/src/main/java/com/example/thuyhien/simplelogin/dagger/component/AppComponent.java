@@ -3,18 +3,10 @@ package com.example.thuyhien.simplelogin.dagger.component;
 import android.content.Context;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
-import com.example.thuyhien.simplelogin.dagger.module.AddProfileModule;
 import com.example.thuyhien.simplelogin.dagger.module.AppModule;
-import com.example.thuyhien.simplelogin.dagger.module.AuthenModule;
 import com.example.thuyhien.simplelogin.dagger.module.DataCacheModule;
-import com.example.thuyhien.simplelogin.dagger.module.MainModule;
 import com.example.thuyhien.simplelogin.dagger.module.NetModule;
-import com.example.thuyhien.simplelogin.dagger.module.PageModule;
-import com.example.thuyhien.simplelogin.dagger.module.ProfileModule;
-import com.example.thuyhien.simplelogin.dagger.module.SettingsModule;
-import com.example.thuyhien.simplelogin.dagger.module.SplashModule;
 import com.example.thuyhien.simplelogin.ui.fragment.MediaFeedDialogFragment;
-import com.example.thuyhien.simplelogin.view.AddProfileView;
 
 import javax.inject.Singleton;
 
@@ -41,6 +33,8 @@ public interface AppComponent {
     @Component.Builder
     interface Builder {
         AppComponent build();
-        @BindsInstance Builder bindsApplication(Context context);
+
+        @BindsInstance
+        Builder bindsApplication(Context context);
     }
 }
