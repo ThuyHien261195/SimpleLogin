@@ -2,7 +2,6 @@ package com.example.thuyhien.simplelogin.data.network.converter;
 
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.MediaImage;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -45,7 +44,7 @@ public class FeedPostConverter extends BaseDeserializer<MediaFeed> {
                 return new ArrayList<MediaImage>(thumbnails.values());
             }
 
-        } else if (checkValidJsonArray(jsonElement)) {;
+        } else if (checkValidJsonArray(jsonElement)) {
             thumbnailType = new TypeToken<List<MediaImage>>() {
             }.getType();
             List<MediaImage> imagePostList = context.deserialize(jsonElement, thumbnailType);

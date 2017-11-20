@@ -1,6 +1,5 @@
 package com.example.thuyhien.simplelogin.data.interactor.impl;
 
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Pair;
 
@@ -10,18 +9,14 @@ import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListene
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadFeedListListener;
 import com.example.thuyhien.simplelogin.data.network.retrofit.DataEndpointInterface;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
-import com.example.thuyhien.simplelogin.model.MediaImage;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.utils.RetrofitUtils;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 /**

@@ -1,10 +1,7 @@
 package com.example.thuyhien.simplelogin.data.interactor;
 
-import android.graphics.Bitmap;
-
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadDataListener;
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadFeedListListener;
-import com.example.thuyhien.simplelogin.model.MediaImage;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.model.Section;
 

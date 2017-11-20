@@ -3,8 +3,6 @@ package com.example.thuyhien.simplelogin.presenter.impl;
 import com.example.thuyhien.simplelogin.data.interactor.AuthenticationInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.LoadProfileListener;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
-import com.example.thuyhien.simplelogin.data.network.exception.AuthenticationException;
-import com.example.thuyhien.simplelogin.data.network.exception.LoadProfileException;
 import com.example.thuyhien.simplelogin.data.network.model.ProfileRequest;
 import com.example.thuyhien.simplelogin.model.Profile;
 import com.example.thuyhien.simplelogin.presenter.AddProfilePresenter;

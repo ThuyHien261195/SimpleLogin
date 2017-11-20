@@ -3,8 +3,6 @@ package com.example.thuyhien.simplelogin.presenter.impl;
 import com.example.thuyhien.simplelogin.data.interactor.AuthenticationInteractor;
 import com.example.thuyhien.simplelogin.data.interactor.listener.AuthenticateAccountListener;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
-import com.example.thuyhien.simplelogin.data.network.exception.AuthenticationException;
-import com.example.thuyhien.simplelogin.data.network.exception.FacebookAuthenticationException;
 import com.example.thuyhien.simplelogin.data.network.model.AccountRequest;
 import com.example.thuyhien.simplelogin.data.network.model.FacebookAccountRequest;
 import com.example.thuyhien.simplelogin.model.User;

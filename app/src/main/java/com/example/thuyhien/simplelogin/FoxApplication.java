@@ -6,8 +6,6 @@ import com.example.thuyhien.simplelogin.dagger.component.AppComponent;
 import com.example.thuyhien.simplelogin.dagger.component.DaggerAppComponent;
 import com.example.thuyhien.simplelogin.dagger.module.AppModule;
 
-import javax.inject.Inject;
-
 /**
  * Created by thuyhien on 10/10/17.
  */

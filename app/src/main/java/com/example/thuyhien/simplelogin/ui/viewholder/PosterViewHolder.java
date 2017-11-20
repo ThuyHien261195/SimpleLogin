@@ -12,7 +12,6 @@ import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.MediaImage;
 import com.example.thuyhien.simplelogin.ui.activity.MainActivity;
-import com.example.thuyhien.simplelogin.ui.activity.MediaFeedActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

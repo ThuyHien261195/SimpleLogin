@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
         ((FoxApplication) getApplication()).getAppComponent()
                 .createMainComponent(new MainModule(this))
                 .inject(this);
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
