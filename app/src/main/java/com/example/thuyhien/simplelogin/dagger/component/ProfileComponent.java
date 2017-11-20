@@ -12,4 +12,9 @@ import dagger.Subcomponent;
 @Subcomponent(modules = {ProfileModule.class})
 public interface ProfileComponent {
     void inject(ProfileActivity profileActivity);
+
+    @Subcomponent.Builder
+    interface Builder extends BaseSubComponentBuilder<ProfileComponent> {
+        Builder profileModule(ProfileModule profileModule);
+    }
 }

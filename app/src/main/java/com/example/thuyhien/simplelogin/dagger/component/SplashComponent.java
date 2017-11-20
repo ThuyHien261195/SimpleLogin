@@ -12,4 +12,9 @@ import dagger.Subcomponent;
 @Subcomponent(modules = {SplashModule.class})
 public interface SplashComponent {
     void inject(SplashActivity splashActivity);
+
+    @Subcomponent.Builder
+    interface Builder extends BaseSubComponentBuilder<SplashComponent> {
+        Builder splashModule(SplashModule splashModule);
+    }
 }

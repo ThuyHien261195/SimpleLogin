@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.example.thuyhien.simplelogin.dagger.component.AppComponent;
 import com.example.thuyhien.simplelogin.dagger.component.DaggerAppComponent;
-import com.example.thuyhien.simplelogin.dagger.module.AppModule;
 
 /**
  * Created by thuyhien on 10/10/17.
@@ -22,7 +21,7 @@ public class FoxApplication extends Application {
         super.onCreate();
 
         appComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule(this))
+                .bindsApplication(this)
                 .build();
         appComponent.inject(this);
     }

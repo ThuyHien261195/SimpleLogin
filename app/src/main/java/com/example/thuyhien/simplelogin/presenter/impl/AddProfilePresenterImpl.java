@@ -12,6 +12,8 @@ import com.example.thuyhien.simplelogin.view.AddProfileView;
 
 import java.lang.ref.WeakReference;
 
+import javax.inject.Inject;
+
 /**
  * Created by thuyhien on 11/6/17.
  */
@@ -22,6 +24,7 @@ public class AddProfilePresenterImpl implements AddProfilePresenter {
     private AuthenticationInteractor authenticationInteractor;
     private WeakReference<AddProfileView> addProfileViewWeakRef;
 
+    @Inject
     public AddProfilePresenterImpl(UserManager userManager,
                                    AuthenticationInteractor authenticationInteractor,
                                    AddProfileView addProfileView) {

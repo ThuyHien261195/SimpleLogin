@@ -1,5 +1,7 @@
 package com.example.thuyhien.simplelogin.dagger.component;
 
+import android.content.Context;
+
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.dagger.module.AddProfileModule;
 import com.example.thuyhien.simplelogin.dagger.module.AppModule;
@@ -12,9 +14,11 @@ import com.example.thuyhien.simplelogin.dagger.module.ProfileModule;
 import com.example.thuyhien.simplelogin.dagger.module.SettingsModule;
 import com.example.thuyhien.simplelogin.dagger.module.SplashModule;
 import com.example.thuyhien.simplelogin.ui.fragment.MediaFeedDialogFragment;
+import com.example.thuyhien.simplelogin.view.AddProfileView;
 
 import javax.inject.Singleton;
 
+import dagger.BindsInstance;
 import dagger.Component;
 
 /**
@@ -28,17 +32,15 @@ public interface AppComponent {
 
     void inject(MediaFeedDialogFragment mediaFeedDialogFragment);
 
-    MainComponent createMainComponent(MainModule mainModule);
+    AddProfileComponent.Builder addProfileBuilder();
 
-    AuthenComponent createAuthenComponent(AuthenModule authenModule);
+    AuthenComponent.Builder authenBuilder();
 
-    SplashComponent createSplashComponent(SplashModule splashModule);
+    MainComponent.Builder mainBuilder();
 
-    PageComponent createPageComponent(PageModule pageModule);
-
-    SettingsComponent createSettingsComponent(SettingsModule settingsModule);
-
-    AddProfileComponent createAddProfileComponent(AddProfileModule addProfileModule);
-
-    ProfileComponent createProfileComponent(ProfileModule profileModule);
+    @Component.Builder
+    interface Builder {
+        AppComponent build();
+        @BindsInstance Builder bindsApplication(Context context);
+    }
 }

@@ -13,6 +13,8 @@ import com.example.thuyhien.simplelogin.view.AuthenticationView;
 
 import java.lang.ref.WeakReference;
 
+import javax.inject.Inject;
+
 /**
  * Created by thuyhien on 10/9/17.
  */
@@ -23,6 +25,7 @@ public class SignInPresenterImpl implements AuthenticatePresenter, AuthenticateA
     private AuthenticationInteractor signInInteractor;
     private UserManager userManager;
 
+    @Inject
     public SignInPresenterImpl(AuthenticationView signInView,
                                UserManager userManager,
                                AuthenticationInteractor signInInteractor) {

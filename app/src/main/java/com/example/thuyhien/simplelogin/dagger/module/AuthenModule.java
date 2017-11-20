@@ -9,6 +9,7 @@ import com.example.thuyhien.simplelogin.view.AuthenticationView;
 
 import javax.inject.Named;
 
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 
@@ -17,26 +18,15 @@ import dagger.Provides;
  */
 
 @Module
-public class AuthenModule {
+public abstract class AuthenModule {
     public static final String DI_SIGN_IN_PRESENTER = "sign_in_presenter";
     public static final String DI_SIGN_UP_PRESENTER = "sign_up_presenter";
-    private AuthenticationView authenticationView;
 
-    public AuthenModule(AuthenticationView authenticationView) {
-        this.authenticationView = authenticationView;
-    }
-
-    @Provides
+    @Binds
     @Named(DI_SIGN_IN_PRESENTER)
-    AuthenticatePresenter provideSignInPresenter(AuthenticationInteractor authenInteractor,
-                                                 UserManager userManager) {
-        return new SignInPresenterImpl(authenticationView, userManager, authenInteractor);
-    }
+    abstract AuthenticatePresenter provideSignInPresenter(SignInPresenterImpl signInPresenter);
 
-    @Provides
+    @Binds
     @Named(DI_SIGN_UP_PRESENTER)
-    AuthenticatePresenter provideSignUpPresenter(AuthenticationInteractor authenInteractor,
-                                                 UserManager userManager) {
-        return new SignUpPresenterImpl(authenticationView, userManager, authenInteractor);
-    }
+    abstract AuthenticatePresenter provideSignUpPresenter(SignUpPresenterImpl signUpPresenter);
 }

@@ -12,4 +12,9 @@ import dagger.Subcomponent;
 @Subcomponent(modules = {PageModule.class})
 public interface PageComponent {
     void inject(PageFragment pageFragment);
+
+    @Subcomponent.Builder
+    interface Builder extends BaseSubComponentBuilder<PageComponent>{
+        Builder pageModule(PageModule pageModule);
+    }
 }

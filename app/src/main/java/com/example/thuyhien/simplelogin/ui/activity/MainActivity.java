@@ -24,6 +24,8 @@ import android.widget.Toast;
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.broadcast.FeedDetailBroadcastReceiver;
+import com.example.thuyhien.simplelogin.dagger.component.AppComponent;
+import com.example.thuyhien.simplelogin.dagger.component.MainComponent;
 import com.example.thuyhien.simplelogin.dagger.module.MainModule;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
     private View loggedInHeaderView, notLogHeaderView;
     private BroadcastReceiver broadcastReceiver;
     private String langCode;
+    private MainComponent mainComponent;
 
     @Inject
     MainPresenter mainPresenter;
@@ -77,9 +80,11 @@ public class MainActivity extends AppCompatActivity implements MainView,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ((FoxApplication) getApplication()).getAppComponent()
-                .createMainComponent(new MainModule(this))
-                .inject(this);
+        AppComponent appComponent = ((FoxApplication) getApplication()).getAppComponent();
+        mainComponent = appComponent.mainBuilder()
+                .bindsMainActivity(this)
+                .build();
+        mainComponent.inject(this);
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);

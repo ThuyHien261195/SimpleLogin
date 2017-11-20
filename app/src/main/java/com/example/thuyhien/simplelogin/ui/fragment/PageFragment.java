@@ -83,11 +83,6 @@ public class PageFragment extends Fragment implements PageView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        ((FoxApplication) getActivity().getApplication()).getAppComponent()
-                .createPageComponent(new PageModule(this))
-                .inject(this);
-
         getSectionBundle();
     }
 

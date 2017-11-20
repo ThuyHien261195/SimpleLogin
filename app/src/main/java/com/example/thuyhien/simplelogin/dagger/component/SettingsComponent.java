@@ -12,4 +12,9 @@ import dagger.Subcomponent;
 @Subcomponent(modules = {SettingsModule.class})
 public interface SettingsComponent {
     void inject(SettingsActivity settingsActivity);
+
+    @Subcomponent.Builder
+    interface Builder extends BaseSubComponentBuilder<SettingsComponent> {
+        Builder settingsModule(SettingsModule settingsModule);
+    }
 }

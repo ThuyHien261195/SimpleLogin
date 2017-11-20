@@ -11,6 +11,8 @@ import com.example.thuyhien.simplelogin.view.MainView;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by thuyhien on 10/9/17.
  */
@@ -22,6 +24,7 @@ public class MainPresenterImpl implements MainPresenter {
     private UserManager userManager;
     private AppManager appManager;
 
+    @Inject
     public MainPresenterImpl(MainView mainView,
                              LoadDataInteractor loadDataInteractor,
                              UserManager userManager,

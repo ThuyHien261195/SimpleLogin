@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
+import com.example.thuyhien.simplelogin.dagger.component.AppComponent;
+import com.example.thuyhien.simplelogin.dagger.component.AuthenComponent;
 import com.example.thuyhien.simplelogin.dagger.module.AuthenModule;
 import com.example.thuyhien.simplelogin.data.network.exception.AuthenticationException;
 import com.example.thuyhien.simplelogin.data.network.exception.FacebookAuthenticationException;
@@ -33,6 +35,7 @@ import butterknife.OnClick;
 public class SignUpActivity extends AppCompatActivity implements AuthenticationView {
 
     private CallbackManager callbackManager;
+    private AuthenComponent authenComponent;
 
     @Inject
     @Named("sign_up_presenter")
@@ -63,9 +66,11 @@ public class SignUpActivity extends AppCompatActivity implements AuthenticationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ((FoxApplication) getApplication()).getAppComponent()
-                .createAuthenComponent(new AuthenModule(this))
-                .inject(this);
+        AppComponent appComponent = ((FoxApplication) getApplication()).getAppComponent();
+        authenComponent = appComponent.authenBuilder()
+                .bindsAuthenActivity(this)
+                .build();
+        authenComponent.inject(this);
 
         setContentView(R.layout.activity_sign_up);
         ButterKnife.bind(this);

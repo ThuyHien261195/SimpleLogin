@@ -6,6 +6,7 @@ import com.example.thuyhien.simplelogin.presenter.AddProfilePresenter;
 import com.example.thuyhien.simplelogin.presenter.impl.AddProfilePresenterImpl;
 import com.example.thuyhien.simplelogin.view.AddProfileView;
 
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 
@@ -14,17 +15,8 @@ import dagger.Provides;
  */
 
 @Module
-public class AddProfileModule {
+public abstract class AddProfileModule {
 
-    private final AddProfileView addProfileView;
-
-    public AddProfileModule(AddProfileView addProfileView) {
-        this.addProfileView = addProfileView;
-    }
-
-    @Provides
-    AddProfilePresenter provideAddProfilePresenter(UserManager userManager,
-                                                   AuthenticationInteractor authenticationInteractor) {
-        return new AddProfilePresenterImpl(userManager, authenticationInteractor, addProfileView);
-    }
+    @Binds
+    abstract AddProfilePresenter provideAddProfilePresenter(AddProfilePresenterImpl addProfilePresenter);
 }

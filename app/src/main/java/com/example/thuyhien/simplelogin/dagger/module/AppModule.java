@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.dagger.component.ActivityBindingModule;
 import com.example.thuyhien.simplelogin.data.network.converter.FeedPostConverter;
 import com.example.thuyhien.simplelogin.data.network.converter.FeedPostListConverter;
 import com.example.thuyhien.simplelogin.data.network.converter.ImagePostConverter;
@@ -33,33 +32,22 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by thuyhien on 10/24/17.
  */
 
-@Module(includes = ActivityBindingModule.class)
+@Module(includes = AppBindingModule.class)
 public class AppModule {
     private static final String PREF_DATA_FILE_NAME = "FoxSharedPreferData";
     public static final String DI_AUTHEN_GSON = "authen_gson";
     public static final String DI_DATA_GSON = "data_gson";
-    private Context context;
-
-    public AppModule(Context context) {
-        this.context = context;
-    }
 
     @Provides
     @Singleton
-    Context provideApplication() {
-        return context;
-    }
-
-    @Provides
-    @Singleton
-    SharedPreferences provideSharedPref() {
+    static SharedPreferences provideSharedPref(Context context) {
         return context.getSharedPreferences(PREF_DATA_FILE_NAME, MODE_PRIVATE);
     }
 
     @Provides
     @Named(DI_AUTHEN_GSON)
     @Singleton
-    Gson provideAuthenGson() {
+    static Gson provideAuthenGson() {
         Type userType = new TypeToken<User>() {
         }.getType();
         GsonBuilder gsonBuilder = new GsonBuilder();
@@ -70,7 +58,7 @@ public class AppModule {
     @Provides
     @Named(DI_DATA_GSON)
     @Singleton
-    Gson provideDataGson() {
+    static Gson provideDataGson() {
         Type feedListType = new TypeToken<List<MediaFeed>>() {
         }.getType();
 
@@ -83,13 +71,13 @@ public class AppModule {
 
     @Provides
     @Singleton
-    Boolean provideIsTablet() {
+    static Boolean provideIsTablet(Context context) {
         return context.getResources().getBoolean(R.bool.is_tablet);
     }
 
     @Provides
     @Singleton
-    List<Language> provideLanguageList() {
+    static List<Language> provideLanguageList(Context context) {
         String[] languageCodeList = context.getResources().getStringArray(R.array.language_code_array);
         String[] languageNameList = context.getResources().getStringArray(R.array.language_name_array);
 
