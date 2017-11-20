@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 
 import com.example.thuyhien.simplelogin.data.manager.AppManager;
 
+import javax.inject.Inject;
+
 /**
  * Created by thuyhien on 10/10/17.
  */
@@ -15,6 +17,7 @@ public class SharedPreferencesAppManager implements AppManager {
 
     private SharedPreferences sharedPref;
 
+    @Inject
     public SharedPreferencesAppManager(SharedPreferences sharedPref) {
         this.sharedPref = sharedPref;
     }

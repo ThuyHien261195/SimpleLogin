@@ -3,12 +3,8 @@ package com.example.thuyhien.simplelogin.dagger.module;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.data.manager.AppManager;
-import com.example.thuyhien.simplelogin.data.manager.UserManager;
-import com.example.thuyhien.simplelogin.data.manager.impl.SharedPreferencesAppManager;
-import com.example.thuyhien.simplelogin.data.manager.impl.SharedPreferencesUserManager;
+import com.example.thuyhien.simplelogin.dagger.component.ActivityBindingModule;
 import com.example.thuyhien.simplelogin.data.network.converter.FeedPostConverter;
 import com.example.thuyhien.simplelogin.data.network.converter.FeedPostListConverter;
 import com.example.thuyhien.simplelogin.data.network.converter.ImagePostConverter;
@@ -37,14 +33,14 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by thuyhien on 10/24/17.
  */
 
-@Module
+@Module(includes = ActivityBindingModule.class)
 public class AppModule {
     private static final String PREF_DATA_FILE_NAME = "FoxSharedPreferData";
     public static final String DI_AUTHEN_GSON = "authen_gson";
     public static final String DI_DATA_GSON = "data_gson";
     private Context context;
 
-    public AppModule(FoxApplication context) {
+    public AppModule(Context context) {
         this.context = context;
     }
 
@@ -58,18 +54,6 @@ public class AppModule {
     @Singleton
     SharedPreferences provideSharedPref() {
         return context.getSharedPreferences(PREF_DATA_FILE_NAME, MODE_PRIVATE);
-    }
-
-    @Provides
-    @Singleton
-    UserManager provideSharedPrefUserManager(SharedPreferences sharedPreferences) {
-        return new SharedPreferencesUserManager(sharedPreferences);
-    }
-
-    @Provides
-    @Singleton
-    AppManager providerSharedPrefAppManager(SharedPreferences sharedPreferences) {
-        return new SharedPreferencesAppManager(sharedPreferences);
     }
 
     @Provides
