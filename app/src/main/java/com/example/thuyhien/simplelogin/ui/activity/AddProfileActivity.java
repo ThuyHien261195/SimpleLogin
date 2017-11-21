@@ -38,17 +38,16 @@ public class AddProfileActivity extends AppCompatActivity implements AddProfileV
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_profile);
-
         AppComponent appComponent = ((FoxApplication) getApplication()).getAppComponent();
         addProfileComponent = appComponent.addProfileBuilder()
                 .bindsAddProfileActivity(this)
                 .build();
         addProfileComponent.inject(this);
 
-        ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_profile);
 
+        ButterKnife.bind(this);
         displayActionBar();
     }
 

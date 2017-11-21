@@ -9,6 +9,8 @@ import com.example.thuyhien.simplelogin.view.SettingsView;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by thuyhien on 11/1/17.
  */
@@ -19,6 +21,7 @@ public class SettingsPresenterImpl implements SettingsPresenter {
     private AppManager appManager;
     private List<Language> languageList;
 
+    @Inject
     public SettingsPresenterImpl(SettingsView settingsView, AppManager appManager,
                                  List<Language> languageList) {
         this.appManager = appManager;

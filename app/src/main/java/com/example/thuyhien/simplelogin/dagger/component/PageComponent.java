@@ -2,7 +2,9 @@ package com.example.thuyhien.simplelogin.dagger.component;
 
 import com.example.thuyhien.simplelogin.dagger.module.PageModule;
 import com.example.thuyhien.simplelogin.ui.fragment.PageFragment;
+import com.example.thuyhien.simplelogin.view.PageView;
 
+import dagger.BindsInstance;
 import dagger.Subcomponent;
 
 /**
@@ -15,6 +17,7 @@ public interface PageComponent {
 
     @Subcomponent.Builder
     interface Builder extends BaseSubComponentBuilder<PageComponent> {
-        Builder pageModule(PageModule pageModule);
+        @BindsInstance
+        Builder bindsPageActivity(PageView pageView);
     }
 }

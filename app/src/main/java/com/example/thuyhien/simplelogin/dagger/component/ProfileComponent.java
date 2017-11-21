@@ -2,7 +2,9 @@ package com.example.thuyhien.simplelogin.dagger.component;
 
 import com.example.thuyhien.simplelogin.dagger.module.ProfileModule;
 import com.example.thuyhien.simplelogin.ui.activity.ProfileActivity;
+import com.example.thuyhien.simplelogin.view.ProfileView;
 
+import dagger.BindsInstance;
 import dagger.Subcomponent;
 
 /**
@@ -15,6 +17,7 @@ public interface ProfileComponent {
 
     @Subcomponent.Builder
     interface Builder extends BaseSubComponentBuilder<ProfileComponent> {
-        Builder profileModule(ProfileModule profileModule);
+        @BindsInstance
+        Builder bindsProfileActivity(ProfileView profileView);
     }
 }

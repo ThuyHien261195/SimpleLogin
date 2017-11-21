@@ -13,6 +13,8 @@ import com.example.thuyhien.simplelogin.view.PageView;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by thuyhien on 10/12/17.
  */
@@ -23,6 +25,7 @@ public class PagePresenterImpl implements PagePresenter {
     private LoadDataInteractor loadDataInteractor;
     private AppManager appManager;
 
+    @Inject
     public PagePresenterImpl(PageView pageView,
                              LoadDataInteractor loadDataInteractor, AppManager appManager) {
         this.pageViewWeakReference = new WeakReference<PageView>(pageView);

@@ -30,6 +30,14 @@ public interface AppComponent {
 
     MainComponent.Builder mainBuilder();
 
+    PageComponent.Builder pageBuilder();
+
+    ProfileComponent.Builder profileBuilder();
+
+    SettingsComponent.Builder settingsBuilder();
+
+    SplashComponent.Builder splashBuilder();
+
     @Component.Builder
     interface Builder {
         AppComponent build();

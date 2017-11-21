@@ -28,14 +28,14 @@ public class DataCacheModule {
 
     @Provides
     @Named(DI_PAGE_DIR)
-    static File getPageDir(Context application) {
-        return getDirectory(application, PAGE_FOLDER);
+    static File getPageDir(Context context) {
+        return getDirectory(context, PAGE_FOLDER);
     }
 
     @Provides
     @Named(DI_FEED_DIR)
-    static File getFeedDir(Context application) {
-        return getDirectory(application, FEED_LIST_FOLDER);
+    static File getFeedDir(Context context) {
+        return getDirectory(context, FEED_LIST_FOLDER);
     }
 
     @Provides

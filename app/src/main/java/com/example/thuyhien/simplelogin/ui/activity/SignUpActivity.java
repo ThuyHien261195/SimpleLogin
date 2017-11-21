@@ -63,17 +63,16 @@ public class SignUpActivity extends AppCompatActivity implements AuthenticationV
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         AppComponent appComponent = ((FoxApplication) getApplication()).getAppComponent();
         authenComponent = appComponent.authenBuilder()
                 .bindsAuthenActivity(this)
                 .build();
         authenComponent.inject(this);
 
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        ButterKnife.bind(this);
 
+        ButterKnife.bind(this);
         callbackFacebookLogin();
     }
 

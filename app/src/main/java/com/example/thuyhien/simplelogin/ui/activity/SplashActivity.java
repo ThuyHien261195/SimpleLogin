@@ -6,7 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.dagger.module.SplashModule;
+import com.example.thuyhien.simplelogin.dagger.component.AppComponent;
+import com.example.thuyhien.simplelogin.dagger.component.SplashComponent;
 import com.example.thuyhien.simplelogin.presenter.SplashPresenter;
 import com.example.thuyhien.simplelogin.view.SplashView;
 
@@ -14,17 +15,20 @@ import javax.inject.Inject;
 
 public class SplashActivity extends AppCompatActivity implements SplashView {
 
+    private SplashComponent splashComponent;
+
     @Inject
     SplashPresenter splashPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AppComponent appComponent = ((FoxApplication) getApplication()).getAppComponent();
+        splashComponent = appComponent.splashBuilder()
+                .bindsSplashActivity(this)
+                .build();
+        splashComponent.inject(this);
+
         super.onCreate(savedInstanceState);
-
-        ((FoxApplication) getApplication()).getAppComponent()
-                .createSplashComponent(new SplashModule(this))
-                .inject(this);
-
         setContentView(R.layout.activity_splash);
         splashPresenter.loadData();
     }

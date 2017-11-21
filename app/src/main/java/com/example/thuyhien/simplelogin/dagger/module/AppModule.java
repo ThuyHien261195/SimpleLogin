@@ -4,6 +4,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.thuyhien.simplelogin.R;
+import com.example.thuyhien.simplelogin.dagger.component.AuthenComponent;
+import com.example.thuyhien.simplelogin.dagger.component.MainComponent;
+import com.example.thuyhien.simplelogin.dagger.component.PageComponent;
+import com.example.thuyhien.simplelogin.dagger.component.ProfileComponent;
+import com.example.thuyhien.simplelogin.dagger.component.SettingsComponent;
+import com.example.thuyhien.simplelogin.dagger.component.SplashComponent;
+import com.example.thuyhien.simplelogin.data.manager.AppManager;
+import com.example.thuyhien.simplelogin.data.manager.UserManager;
+import com.example.thuyhien.simplelogin.data.manager.impl.SharedPreferencesAppManager;
+import com.example.thuyhien.simplelogin.data.manager.impl.SharedPreferencesUserManager;
 import com.example.thuyhien.simplelogin.data.network.converter.FeedPostConverter;
 import com.example.thuyhien.simplelogin.data.network.converter.FeedPostListConverter;
 import com.example.thuyhien.simplelogin.data.network.converter.ImagePostConverter;
@@ -23,6 +33,7 @@ import java.util.List;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 
@@ -32,8 +43,10 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by thuyhien on 10/24/17.
  */
 
-@Module(includes = AppBindingModule.class)
-public class AppModule {
+@Module(subcomponents = {AuthenComponent.class, MainComponent.class,
+        PageComponent.class, ProfileComponent.class,
+        SettingsComponent.class, SplashComponent.class})
+public abstract class AppModule {
     private static final String PREF_DATA_FILE_NAME = "FoxSharedPreferData";
     public static final String DI_AUTHEN_GSON = "authen_gson";
     public static final String DI_DATA_GSON = "data_gson";
@@ -43,6 +56,14 @@ public class AppModule {
     static SharedPreferences provideSharedPref(Context context) {
         return context.getSharedPreferences(PREF_DATA_FILE_NAME, MODE_PRIVATE);
     }
+
+    @Binds
+    @Singleton
+    abstract UserManager provideSharedPrefUserManager(SharedPreferencesUserManager sharedPrefUserManager);
+
+    @Binds
+    @Singleton
+    abstract AppManager providerSharedPrefAppManager(SharedPreferencesAppManager sharedPrefAppManager);
 
     @Provides
     @Named(DI_AUTHEN_GSON)

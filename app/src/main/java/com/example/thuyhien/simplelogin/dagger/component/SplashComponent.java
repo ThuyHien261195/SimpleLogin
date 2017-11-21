@@ -2,7 +2,9 @@ package com.example.thuyhien.simplelogin.dagger.component;
 
 import com.example.thuyhien.simplelogin.dagger.module.SplashModule;
 import com.example.thuyhien.simplelogin.ui.activity.SplashActivity;
+import com.example.thuyhien.simplelogin.view.SplashView;
 
+import dagger.BindsInstance;
 import dagger.Subcomponent;
 
 /**
@@ -15,6 +17,7 @@ public interface SplashComponent {
 
     @Subcomponent.Builder
     interface Builder extends BaseSubComponentBuilder<SplashComponent> {
-        Builder splashModule(SplashModule splashModule);
+        @BindsInstance
+        Builder bindsSplashActivity(SplashView splashView);
     }
 }

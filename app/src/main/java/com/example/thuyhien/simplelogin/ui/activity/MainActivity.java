@@ -77,17 +77,16 @@ public class MainActivity extends AppCompatActivity implements MainView,
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         AppComponent appComponent = ((FoxApplication) getApplication()).getAppComponent();
-        mainComponent = appComponent.mainBuilder()
+        MainComponent mainComponent = appComponent.mainBuilder()
                 .bindsMainActivity(this)
                 .build();
         mainComponent.inject(this);
 
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
 
+        ButterKnife.bind(this);
         initViews();
         mainPresenter.getCurrentLangCode();
         mainPresenter.checkIsLoggedIn();

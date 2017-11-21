@@ -13,6 +13,8 @@ import com.example.thuyhien.simplelogin.view.SplashView;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by thuyhien on 10/9/17.
  */
@@ -24,6 +26,7 @@ public class SplashPresenterImpl implements SplashPresenter {
     private LoadDataInteractor loadDataInteractor;
     private Context context;
 
+    @Inject
     public SplashPresenterImpl(SplashView splashView, AppManager appManager,
                                LoadDataInteractor loadDataInteractor, Context context) {
         this.splashViewWeakReference = new WeakReference<SplashView>(splashView);

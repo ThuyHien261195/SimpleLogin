@@ -14,7 +14,10 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
+import com.example.thuyhien.simplelogin.dagger.component.AppComponent;
+import com.example.thuyhien.simplelogin.dagger.component.PageComponent;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.Page;
@@ -44,6 +47,7 @@ public class PageFragment extends Fragment implements PageView {
     private SectionAdapter sectionAdapter;
     private MainActivityListener mainActivityListener;
     private String langCode;
+    private PageComponent pageComponent;
 
     @Inject
     PagePresenter pagePresenter;
@@ -81,6 +85,13 @@ public class PageFragment extends Fragment implements PageView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AppComponent appComponent = ((FoxApplication) getActivity().getApplication()).getAppComponent();
+        pageComponent = appComponent.pageBuilder()
+                .bindsPageActivity(this)
+                .build();
+        pageComponent.inject(this);
+
         getSectionBundle();
     }
 

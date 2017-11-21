@@ -17,7 +17,8 @@ import android.widget.Toast;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.dagger.module.ProfileModule;
+import com.example.thuyhien.simplelogin.dagger.component.AppComponent;
+import com.example.thuyhien.simplelogin.dagger.component.ProfileComponent;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadProfileException;
 import com.example.thuyhien.simplelogin.model.Profile;
 import com.example.thuyhien.simplelogin.presenter.ProfilePresenter;
@@ -39,6 +40,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     private ProfileAdapter profileAdapter;
     private MenuItem menuItemDeleteProfile;
     private ActionBar actionBar;
+    private ProfileComponent profileComponent;
 
     @Inject
     ProfilePresenter profilePresenter;
@@ -48,20 +50,21 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
 
     @BindView(R.id.recycler_view_profile)
     RecyclerView recyclerViewProfile;
-
     @BindView(R.id.progress_bar_loading)
     ProgressBar progressBarDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AppComponent appComponent = ((FoxApplication) getApplication()).getAppComponent();
+        profileComponent = appComponent.profileBuilder()
+                .bindsProfileActivity(this)
+                .build();
+        profileComponent.inject(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        ((FoxApplication) getApplication()).getAppComponent()
-                .createProfileComponent(new ProfileModule(this))
-                .inject(this);
         ButterKnife.bind(this);
-
         displayActionBar();
         initViews();
         profilePresenter.loadProfileList();

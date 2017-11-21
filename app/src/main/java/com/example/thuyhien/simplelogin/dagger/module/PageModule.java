@@ -1,28 +1,17 @@
 package com.example.thuyhien.simplelogin.dagger.module;
 
-import com.example.thuyhien.simplelogin.data.interactor.LoadDataInteractor;
-import com.example.thuyhien.simplelogin.data.manager.AppManager;
 import com.example.thuyhien.simplelogin.presenter.PagePresenter;
 import com.example.thuyhien.simplelogin.presenter.impl.PagePresenterImpl;
-import com.example.thuyhien.simplelogin.view.PageView;
 
+import dagger.Binds;
 import dagger.Module;
-import dagger.Provides;
 
 /**
  * Created by thuyhien on 10/25/17.
  */
 
 @Module
-public class PageModule {
-    private PageView pageView;
-
-    public PageModule(PageView pageView) {
-        this.pageView = pageView;
-    }
-
-    @Provides
-    PagePresenter providePagePresenter(LoadDataInteractor loadDataInteractor, AppManager appManager) {
-        return new PagePresenterImpl(pageView, loadDataInteractor, appManager);
-    }
+public abstract class PageModule {
+    @Binds
+    abstract PagePresenter providePagePresenter(PagePresenterImpl pagePresenter);
 }

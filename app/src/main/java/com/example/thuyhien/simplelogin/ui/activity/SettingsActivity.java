@@ -13,7 +13,8 @@ import android.widget.RadioGroup;
 
 import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.dagger.module.SettingsModule;
+import com.example.thuyhien.simplelogin.dagger.component.AppComponent;
+import com.example.thuyhien.simplelogin.dagger.component.SettingsComponent;
 import com.example.thuyhien.simplelogin.model.Language;
 import com.example.thuyhien.simplelogin.presenter.SettingsPresenter;
 import com.example.thuyhien.simplelogin.view.SettingsView;
@@ -27,6 +28,8 @@ import butterknife.ButterKnife;
 
 public class SettingsActivity extends AppCompatActivity implements SettingsView {
 
+    private SettingsComponent settingsComponent;
+
     @Inject
     SettingsPresenter settingsPresenter;
 
@@ -35,14 +38,16 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AppComponent appComponent = ((FoxApplication) getApplication()).getAppComponent();
+        settingsComponent = appComponent.settingsBuilder()
+                .bindsSettingsActivity(this)
+                .build();
+        settingsComponent.inject(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        ((FoxApplication) getApplication()).getAppComponent()
-                .createSettingsComponent(new SettingsModule(this))
-                .inject(this);
         ButterKnife.bind(this);
-
         settingsPresenter.getLanguageList();
     }
 
