@@ -6,6 +6,7 @@ import com.example.thuyhien.simplelogin.data.interactor.listener.LoadProfileList
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.model.Profile;
 import com.example.thuyhien.simplelogin.presenter.ProfilePresenter;
+import com.example.thuyhien.simplelogin.ui.activity.ProfileActivity;
 import com.example.thuyhien.simplelogin.view.ProfileView;
 
 import java.lang.ref.WeakReference;
@@ -25,10 +26,10 @@ public class ProfilePresenterImpl implements ProfilePresenter {
 
     @Inject
     public ProfilePresenterImpl(UserManager userManager, AuthenticationInteractor authenticationInteractor,
-                                ProfileView profileView) {
+                                ProfileActivity profileActivity) {
         this.userManager = userManager;
         this.authenticationInteractor = authenticationInteractor;
-        this.profileViewWeakReference = new WeakReference<ProfileView>(profileView);
+        this.profileViewWeakReference = new WeakReference<ProfileView>(profileActivity);
     }
 
     @Override

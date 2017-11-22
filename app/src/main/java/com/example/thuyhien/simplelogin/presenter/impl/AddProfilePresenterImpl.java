@@ -6,6 +6,7 @@ import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.data.network.model.ProfileRequest;
 import com.example.thuyhien.simplelogin.model.Profile;
 import com.example.thuyhien.simplelogin.presenter.AddProfilePresenter;
+import com.example.thuyhien.simplelogin.ui.activity.AddProfileActivity;
 import com.example.thuyhien.simplelogin.ui.exception.InvalidInputException;
 import com.example.thuyhien.simplelogin.utils.AuthenticationUtils;
 import com.example.thuyhien.simplelogin.view.AddProfileView;
@@ -27,10 +28,10 @@ public class AddProfilePresenterImpl implements AddProfilePresenter {
     @Inject
     public AddProfilePresenterImpl(UserManager userManager,
                                    AuthenticationInteractor authenticationInteractor,
-                                   AddProfileView addProfileView) {
+                                   AddProfileActivity addProfileActivity) {
         this.userManager = userManager;
         this.authenticationInteractor = authenticationInteractor;
-        this.addProfileViewWeakRef = new WeakReference<AddProfileView>(addProfileView);
+        this.addProfileViewWeakRef = new WeakReference<AddProfileView>(addProfileActivity);
     }
 
     @Override

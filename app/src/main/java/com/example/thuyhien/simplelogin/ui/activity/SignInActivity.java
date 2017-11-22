@@ -6,10 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.dagger.component.AppComponent;
-import com.example.thuyhien.simplelogin.dagger.component.AuthenComponent;
 import com.example.thuyhien.simplelogin.data.network.exception.AuthenticationException;
 import com.example.thuyhien.simplelogin.data.network.exception.FacebookAuthenticationException;
 import com.example.thuyhien.simplelogin.presenter.AuthenticatePresenter;
@@ -31,12 +28,12 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.android.AndroidInjection;
 
 public class SignInActivity extends AppCompatActivity implements AuthenticationView {
 
     public static final String PERMISSION_EMAIL = "email";
     private CallbackManager callbackManager;
-    private AuthenComponent authenComponent;
 
     @Inject
     @Named("sign_in_presenter")
@@ -50,11 +47,7 @@ public class SignInActivity extends AppCompatActivity implements AuthenticationV
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AppComponent appComponent = ((FoxApplication) getApplication()).getAppComponent();
-        authenComponent = appComponent.authenBuilder()
-                .bindsAuthenActivity(this)
-                .build();
-        authenComponent.inject(this);
+        AndroidInjection.inject(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);

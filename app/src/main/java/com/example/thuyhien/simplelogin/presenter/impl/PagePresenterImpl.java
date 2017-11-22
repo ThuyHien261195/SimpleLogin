@@ -8,6 +8,7 @@ import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.presenter.PagePresenter;
+import com.example.thuyhien.simplelogin.ui.fragment.PageFragment;
 import com.example.thuyhien.simplelogin.view.PageView;
 
 import java.lang.ref.WeakReference;
@@ -26,9 +27,9 @@ public class PagePresenterImpl implements PagePresenter {
     private AppManager appManager;
 
     @Inject
-    public PagePresenterImpl(PageView pageView,
+    public PagePresenterImpl(PageFragment pageFragment,
                              LoadDataInteractor loadDataInteractor, AppManager appManager) {
-        this.pageViewWeakReference = new WeakReference<PageView>(pageView);
+        this.pageViewWeakReference = new WeakReference<PageView>(pageFragment);
         this.loadDataInteractor = loadDataInteractor;
         this.appManager = appManager;
     }

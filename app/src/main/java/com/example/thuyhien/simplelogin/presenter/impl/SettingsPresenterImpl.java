@@ -4,6 +4,7 @@ package com.example.thuyhien.simplelogin.presenter.impl;
 import com.example.thuyhien.simplelogin.data.manager.AppManager;
 import com.example.thuyhien.simplelogin.model.Language;
 import com.example.thuyhien.simplelogin.presenter.SettingsPresenter;
+import com.example.thuyhien.simplelogin.ui.activity.SettingsActivity;
 import com.example.thuyhien.simplelogin.view.SettingsView;
 
 import java.lang.ref.WeakReference;
@@ -22,11 +23,11 @@ public class SettingsPresenterImpl implements SettingsPresenter {
     private List<Language> languageList;
 
     @Inject
-    public SettingsPresenterImpl(SettingsView settingsView, AppManager appManager,
+    public SettingsPresenterImpl(SettingsActivity settingsActivity, AppManager appManager,
                                  List<Language> languageList) {
         this.appManager = appManager;
         this.languageList = languageList;
-        this.settingsViewWeakReference = new WeakReference<SettingsView>(settingsView);
+        this.settingsViewWeakReference = new WeakReference<SettingsView>(settingsActivity);
     }
 
     @Override

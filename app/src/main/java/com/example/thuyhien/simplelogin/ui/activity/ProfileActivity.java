@@ -15,10 +15,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.dagger.component.AppComponent;
-import com.example.thuyhien.simplelogin.dagger.component.ProfileComponent;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadProfileException;
 import com.example.thuyhien.simplelogin.model.Profile;
 import com.example.thuyhien.simplelogin.presenter.ProfilePresenter;
@@ -32,6 +29,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
 
 public class ProfileActivity extends AppCompatActivity implements ProfileView,
         ProfileActivityListener {
@@ -40,7 +38,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
     private ProfileAdapter profileAdapter;
     private MenuItem menuItemDeleteProfile;
     private ActionBar actionBar;
-    private ProfileComponent profileComponent;
 
     @Inject
     ProfilePresenter profilePresenter;
@@ -55,11 +52,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AppComponent appComponent = ((FoxApplication) getApplication()).getAppComponent();
-        profileComponent = appComponent.profileBuilder()
-                .bindsProfileActivity(this)
-                .build();
-        profileComponent.inject(this);
+        AndroidInjection.inject(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);

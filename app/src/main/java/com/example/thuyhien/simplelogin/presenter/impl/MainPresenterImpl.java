@@ -6,6 +6,7 @@ import com.example.thuyhien.simplelogin.data.manager.AppManager;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.presenter.MainPresenter;
+import com.example.thuyhien.simplelogin.ui.activity.MainActivity;
 import com.example.thuyhien.simplelogin.view.MainView;
 
 import java.lang.ref.WeakReference;
@@ -25,11 +26,11 @@ public class MainPresenterImpl implements MainPresenter {
     private AppManager appManager;
 
     @Inject
-    public MainPresenterImpl(MainView mainView,
+    public MainPresenterImpl(MainActivity mainActivity,
                              LoadDataInteractor loadDataInteractor,
                              UserManager userManager,
                              AppManager appManager) {
-        this.mainViewWeakReference = new WeakReference<>(mainView);
+        this.mainViewWeakReference = new WeakReference<MainView>(mainActivity);
         this.loadDataInteractor = loadDataInteractor;
         this.userManager = userManager;
         this.appManager = appManager;

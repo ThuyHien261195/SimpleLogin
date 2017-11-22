@@ -14,10 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.dagger.component.AppComponent;
-import com.example.thuyhien.simplelogin.dagger.component.PageComponent;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.Page;
@@ -35,6 +32,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.support.AndroidSupportInjection;
 
 /**
  * Created by thuyhien on 10/11/17.
@@ -47,7 +45,6 @@ public class PageFragment extends Fragment implements PageView {
     private SectionAdapter sectionAdapter;
     private MainActivityListener mainActivityListener;
     private String langCode;
-    private PageComponent pageComponent;
 
     @Inject
     PagePresenter pagePresenter;
@@ -75,6 +72,8 @@ public class PageFragment extends Fragment implements PageView {
     @Override
     public void onAttach(Context context) {
         try {
+            AndroidSupportInjection.inject(this);
+
             mainActivityListener = (MainActivityListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + getString(R.string.error_implement_main_activity_listener));
@@ -85,13 +84,6 @@ public class PageFragment extends Fragment implements PageView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        AppComponent appComponent = ((FoxApplication) getActivity().getApplication()).getAppComponent();
-        pageComponent = appComponent.pageBuilder()
-                .bindsPageActivity(this)
-                .build();
-        pageComponent.inject(this);
-
         getSectionBundle();
     }
 

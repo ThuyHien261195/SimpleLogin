@@ -8,10 +8,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.dagger.component.AddProfileComponent;
-import com.example.thuyhien.simplelogin.dagger.component.AppComponent;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadProfileException;
 import com.example.thuyhien.simplelogin.model.Profile;
 import com.example.thuyhien.simplelogin.presenter.AddProfilePresenter;
@@ -23,12 +20,12 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.android.AndroidInjection;
 
 public class AddProfileActivity extends AppCompatActivity implements AddProfileView {
 
     public static final String BUNDLE_PROFILE = "BundleProfile";
     public static final String EXTRA_ADDED_PROFILE = "ExtraAddedProfile";
-    private AddProfileComponent addProfileComponent;
 
     @Inject
     AddProfilePresenter addProfilePresenter;
@@ -38,11 +35,7 @@ public class AddProfileActivity extends AppCompatActivity implements AddProfileV
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AppComponent appComponent = ((FoxApplication) getApplication()).getAppComponent();
-        addProfileComponent = appComponent.addProfileBuilder()
-                .bindsAddProfileActivity(this)
-                .build();
-        addProfileComponent.inject(this);
+        AndroidInjection.inject(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_profile);

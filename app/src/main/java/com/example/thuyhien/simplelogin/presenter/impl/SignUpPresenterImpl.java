@@ -7,6 +7,7 @@ import com.example.thuyhien.simplelogin.data.network.model.AccountRequest;
 import com.example.thuyhien.simplelogin.data.network.model.FacebookAccountRequest;
 import com.example.thuyhien.simplelogin.model.User;
 import com.example.thuyhien.simplelogin.presenter.AuthenticatePresenter;
+import com.example.thuyhien.simplelogin.ui.activity.SignUpActivity;
 import com.example.thuyhien.simplelogin.ui.exception.InvalidInputException;
 import com.example.thuyhien.simplelogin.utils.AuthenticationUtils;
 import com.example.thuyhien.simplelogin.view.AuthenticationView;
@@ -26,10 +27,10 @@ public class SignUpPresenterImpl implements AuthenticatePresenter, AuthenticateA
     private UserManager userManager;
 
     @Inject
-    public SignUpPresenterImpl(AuthenticationView signUpView,
+    public SignUpPresenterImpl(SignUpActivity signUpActivity,
                                UserManager userManager,
                                AuthenticationInteractor signUpInteractor) {
-        this.signUpViewWeakPref = new WeakReference<AuthenticationView>(signUpView);
+        this.signUpViewWeakPref = new WeakReference<AuthenticationView>(signUpActivity);
         this.signUpInteractor = signUpInteractor;
         this.userManager = userManager;
     }

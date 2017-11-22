@@ -12,7 +12,6 @@ import dagger.Module;
 
 @Module
 public abstract class AddProfileModule {
-
     @Binds
     abstract AddProfilePresenter provideAddProfilePresenter(AddProfilePresenterImpl addProfilePresenter);
 }

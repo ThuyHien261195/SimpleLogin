@@ -11,10 +11,7 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.dagger.component.AppComponent;
-import com.example.thuyhien.simplelogin.dagger.component.SettingsComponent;
 import com.example.thuyhien.simplelogin.model.Language;
 import com.example.thuyhien.simplelogin.presenter.SettingsPresenter;
 import com.example.thuyhien.simplelogin.view.SettingsView;
@@ -25,10 +22,9 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
 
 public class SettingsActivity extends AppCompatActivity implements SettingsView {
-
-    private SettingsComponent settingsComponent;
 
     @Inject
     SettingsPresenter settingsPresenter;
@@ -38,11 +34,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AppComponent appComponent = ((FoxApplication) getApplication()).getAppComponent();
-        settingsComponent = appComponent.settingsBuilder()
-                .bindsSettingsActivity(this)
-                .build();
-        settingsComponent.inject(this);
+        AndroidInjection.inject(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);

@@ -17,6 +17,9 @@ import dagger.Module;
 public abstract class AuthenModule {
     public static final String DI_SIGN_IN_PRESENTER = "sign_in_presenter";
     public static final String DI_SIGN_UP_PRESENTER = "sign_up_presenter";
+    public static final String DI_SIGN_IN_VIEW = "sign_in_view";
+    public static final String DI_SIGN_UP_VIEW = "sign_up_view";
+
 
     @Binds
     @Named(DI_SIGN_IN_PRESENTER)

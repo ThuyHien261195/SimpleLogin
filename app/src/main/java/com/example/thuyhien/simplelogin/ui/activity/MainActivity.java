@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -21,10 +22,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.broadcast.FeedDetailBroadcastReceiver;
-import com.example.thuyhien.simplelogin.dagger.component.AppComponent;
 import com.example.thuyhien.simplelogin.dagger.component.MainComponent;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
@@ -42,10 +41,15 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 
 public class MainActivity extends AppCompatActivity implements MainView,
         NavigationView.OnNavigationItemSelectedListener,
-        MainActivityListener {
+        MainActivityListener,
+        HasSupportFragmentInjector {
     public static final String ACTION_SHOW_FEED_DETAIL = "com.example.thuyhien.simplelogin.SHOW_FEED_DETAIL";
     public static final String BUNDLE_MEDIA_FEED = "BundleMediaFeed";
     public static final String MEDIA_FEED = "MediaFeed";
@@ -56,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements MainView,
     private BroadcastReceiver broadcastReceiver;
     private String langCode;
     private MainComponent mainComponent;
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
 
     @Inject
     MainPresenter mainPresenter;
@@ -75,13 +82,13 @@ public class MainActivity extends AppCompatActivity implements MainView,
     @BindView(R.id.text_title_page)
     TextView textViewTitlePage;
 
+    public MainComponent getMainComponent() {
+        return mainComponent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AppComponent appComponent = ((FoxApplication) getApplication()).getAppComponent();
-        MainComponent mainComponent = appComponent.mainBuilder()
-                .bindsMainActivity(this)
-                .build();
-        mainComponent.inject(this);
+        AndroidInjection.inject(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -191,6 +198,11 @@ public class MainActivity extends AppCompatActivity implements MainView,
     @Override
     public void getCurrentLangCode(String langCode) {
         this.langCode = langCode;
+    }
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return fragmentDispatchingAndroidInjector;
     }
 
     private void displayHeaderView(boolean isLogIn) {
