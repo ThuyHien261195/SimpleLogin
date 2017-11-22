@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.broadcast.FeedDetailBroadcastReceiver;
-import com.example.thuyhien.simplelogin.dagger.component.MainComponent;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
 import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.Page;
@@ -59,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements MainView,
     private View loggedInHeaderView, notLogHeaderView;
     private BroadcastReceiver broadcastReceiver;
     private String langCode;
-    private MainComponent mainComponent;
 
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
@@ -81,10 +79,6 @@ public class MainActivity extends AppCompatActivity implements MainView,
 
     @BindView(R.id.text_title_page)
     TextView textViewTitlePage;
-
-    public MainComponent getMainComponent() {
-        return mainComponent;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

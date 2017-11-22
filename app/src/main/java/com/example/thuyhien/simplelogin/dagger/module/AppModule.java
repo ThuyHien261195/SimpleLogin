@@ -4,12 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.thuyhien.simplelogin.R;
-import com.example.thuyhien.simplelogin.dagger.component.MainComponent;
-import com.example.thuyhien.simplelogin.dagger.component.ProfileComponent;
-import com.example.thuyhien.simplelogin.dagger.component.SettingsComponent;
-import com.example.thuyhien.simplelogin.dagger.component.SignInComponent;
-import com.example.thuyhien.simplelogin.dagger.component.SignUpComponent;
-import com.example.thuyhien.simplelogin.dagger.component.SplashComponent;
 import com.example.thuyhien.simplelogin.data.manager.AppManager;
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.data.manager.impl.SharedPreferencesAppManager;
@@ -43,12 +37,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by thuyhien on 10/24/17.
  */
 
-@Module(subcomponents = {SignInComponent.class,
-        SignUpComponent.class,
-        MainComponent.class,
-        ProfileComponent.class,
-        SettingsComponent.class,
-        SplashComponent.class})
+@Module
 public abstract class AppModule {
     private static final String PREF_DATA_FILE_NAME = "FoxSharedPreferData";
     public static final String DI_AUTHEN_GSON = "authen_gson";

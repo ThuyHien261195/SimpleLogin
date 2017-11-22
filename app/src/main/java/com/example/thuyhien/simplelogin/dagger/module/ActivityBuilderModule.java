@@ -1,13 +1,6 @@
 package com.example.thuyhien.simplelogin.dagger.module;
 
-import android.app.Activity;
-
-import com.example.thuyhien.simplelogin.dagger.component.MainComponent;
-import com.example.thuyhien.simplelogin.dagger.component.ProfileComponent;
-import com.example.thuyhien.simplelogin.dagger.component.SettingsComponent;
-import com.example.thuyhien.simplelogin.dagger.component.SignInComponent;
-import com.example.thuyhien.simplelogin.dagger.component.SignUpComponent;
-import com.example.thuyhien.simplelogin.dagger.component.SplashComponent;
+import com.example.thuyhien.simplelogin.ui.activity.AddProfileActivity;
 import com.example.thuyhien.simplelogin.ui.activity.MainActivity;
 import com.example.thuyhien.simplelogin.ui.activity.ProfileActivity;
 import com.example.thuyhien.simplelogin.ui.activity.SettingsActivity;
@@ -15,11 +8,8 @@ import com.example.thuyhien.simplelogin.ui.activity.SignInActivity;
 import com.example.thuyhien.simplelogin.ui.activity.SignUpActivity;
 import com.example.thuyhien.simplelogin.ui.activity.SplashActivity;
 
-import dagger.Binds;
 import dagger.Module;
-import dagger.android.ActivityKey;
-import dagger.android.AndroidInjector;
-import dagger.multibindings.IntoMap;
+import dagger.android.ContributesAndroidInjector;
 
 /**
  * Created by thuyhien on 11/22/17.
@@ -28,33 +18,24 @@ import dagger.multibindings.IntoMap;
 @Module
 public abstract class ActivityBuilderModule {
 
-    @Binds
-    @IntoMap
-    @ActivityKey(MainActivity.class)
-    abstract AndroidInjector.Factory<? extends Activity> bindsMainActivity(MainComponent.Builder builder);
+    @ContributesAndroidInjector(modules = MainModule.class)
+    abstract MainActivity bindsMainActivity();
 
-    @Binds
-    @IntoMap
-    @ActivityKey(SignInActivity.class)
-    abstract AndroidInjector.Factory<? extends Activity> bindsSignInActivity(SignInComponent.Builder builder);
+    @ContributesAndroidInjector(modules = AuthenModule.class)
+    abstract SignInActivity bindsSignInActivity();
 
-    @Binds
-    @IntoMap
-    @ActivityKey(SignUpActivity.class)
-    abstract AndroidInjector.Factory<? extends Activity> bindsSignUpActivity(SignUpComponent.Builder builder);
+    @ContributesAndroidInjector(modules = AuthenModule.class)
+    abstract SignUpActivity bindsSignUpActivity();
 
-    @Binds
-    @IntoMap
-    @ActivityKey(ProfileActivity.class)
-    abstract AndroidInjector.Factory<? extends Activity> bindsProfileActivity(ProfileComponent.Builder builder);
+    @ContributesAndroidInjector(modules = ProfileModule.class)
+    abstract ProfileActivity bindsProfileActivity();
 
-    @Binds
-    @IntoMap
-    @ActivityKey(SettingsActivity.class)
-    abstract AndroidInjector.Factory<? extends Activity> bindsSettingsActivity(SettingsComponent.Builder builder);
+    @ContributesAndroidInjector(modules = SettingsModule.class)
+    abstract SettingsActivity bindsSettingsActivity();
 
-    @Binds
-    @IntoMap
-    @ActivityKey(SplashActivity.class)
-    abstract AndroidInjector.Factory<? extends Activity> bindsSplashActivity(SplashComponent.Builder builder);
+    @ContributesAndroidInjector(modules = SplashModule.class)
+    abstract SplashActivity bindsSplashActivity();
+
+    @ContributesAndroidInjector(modules = AddProfileModule.class)
+    abstract AddProfileActivity bindsAddProfileActivity();
 }
