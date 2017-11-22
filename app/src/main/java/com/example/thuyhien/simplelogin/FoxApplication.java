@@ -11,34 +11,23 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
+import dagger.android.support.DaggerApplication;
 
 /**
  * Created by thuyhien on 10/10/17.
  */
 
-public class FoxApplication extends Application implements HasActivityInjector {
-
-    @Inject
-    DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
-
-    private AppComponent appComponent;
-
-    public AppComponent getAppComponent() {
-        return appComponent;
-    }
+public class FoxApplication extends DaggerApplication {
 
     @Override
     public void onCreate() {
         super.onCreate();
-
-        appComponent = DaggerAppComponent.builder()
-                .bindsApplication(this)
-                .build();
-        appComponent.inject(this);
     }
 
     @Override
-    public AndroidInjector<Activity> activityInjector() {
-        return dispatchingAndroidInjector;
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        return DaggerAppComponent.builder()
+                .bindsApplication(this)
+                .build();
     }
 }

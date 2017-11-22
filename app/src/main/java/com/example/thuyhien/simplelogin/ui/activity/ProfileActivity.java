@@ -30,8 +30,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
+import dagger.android.support.DaggerAppCompatActivity;
 
-public class ProfileActivity extends AppCompatActivity implements ProfileView,
+public class ProfileActivity extends DaggerAppCompatActivity implements ProfileView,
         ProfileActivityListener {
 
     private static final int REQUEST_CODE_ADD_PROFILE = 1;
@@ -52,8 +53,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView,
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AndroidInjection.inject(this);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 

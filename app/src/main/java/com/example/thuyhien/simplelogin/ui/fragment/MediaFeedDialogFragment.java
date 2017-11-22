@@ -61,8 +61,6 @@ public class MediaFeedDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((FoxApplication) getActivity().getApplication()).getAppComponent()
-                .inject(this);
         getFeedBundle();
     }
 

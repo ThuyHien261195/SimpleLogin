@@ -3,6 +3,9 @@ package com.example.thuyhien.simplelogin.dagger.module;
 import com.example.thuyhien.simplelogin.presenter.AuthenticatePresenter;
 import com.example.thuyhien.simplelogin.presenter.impl.SignInPresenterImpl;
 import com.example.thuyhien.simplelogin.presenter.impl.SignUpPresenterImpl;
+import com.example.thuyhien.simplelogin.ui.activity.SignInActivity;
+import com.example.thuyhien.simplelogin.ui.activity.SignUpActivity;
+import com.example.thuyhien.simplelogin.view.AuthenticationView;
 
 import javax.inject.Named;
 
@@ -20,6 +23,13 @@ public abstract class AuthenModule {
     public static final String DI_SIGN_IN_VIEW = "sign_in_view";
     public static final String DI_SIGN_UP_VIEW = "sign_up_view";
 
+    @Binds
+    @Named(DI_SIGN_IN_VIEW)
+    abstract AuthenticationView provideAuthenticationView(SignInActivity signInActivity);
+
+    @Binds
+    @Named(DI_SIGN_UP_VIEW)
+    abstract AuthenticationView provideAuthenticationView(SignUpActivity signUpActivity);
 
     @Binds
     @Named(DI_SIGN_IN_PRESENTER)

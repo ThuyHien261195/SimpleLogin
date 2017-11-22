@@ -28,8 +28,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.AndroidInjection;
+import dagger.android.support.DaggerAppCompatActivity;
 
-public class SignUpActivity extends AppCompatActivity implements AuthenticationView {
+public class SignUpActivity extends DaggerAppCompatActivity implements AuthenticationView {
 
     private CallbackManager callbackManager;
 
@@ -60,8 +61,6 @@ public class SignUpActivity extends AppCompatActivity implements AuthenticationV
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AndroidInjection.inject(this);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 

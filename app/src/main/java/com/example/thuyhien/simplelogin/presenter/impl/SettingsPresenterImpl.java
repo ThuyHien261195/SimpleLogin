@@ -23,11 +23,11 @@ public class SettingsPresenterImpl implements SettingsPresenter {
     private List<Language> languageList;
 
     @Inject
-    public SettingsPresenterImpl(SettingsActivity settingsActivity, AppManager appManager,
+    public SettingsPresenterImpl(SettingsView settingsView, AppManager appManager,
                                  List<Language> languageList) {
         this.appManager = appManager;
         this.languageList = languageList;
-        this.settingsViewWeakReference = new WeakReference<SettingsView>(settingsActivity);
+        this.settingsViewWeakReference = new WeakReference<SettingsView>(settingsView);
     }
 
     @Override

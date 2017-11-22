@@ -28,9 +28,9 @@ public class SplashPresenterImpl implements SplashPresenter {
     private Context context;
 
     @Inject
-    public SplashPresenterImpl(SplashActivity splashActivity, AppManager appManager,
+    public SplashPresenterImpl(SplashView splashView, AppManager appManager,
                                LoadDataInteractor loadDataInteractor, Context context) {
-        this.splashViewWeakReference = new WeakReference<SplashView>(splashActivity);
+        this.splashViewWeakReference = new WeakReference<SplashView>(splashView);
         this.appManager = appManager;
         this.loadDataInteractor = loadDataInteractor;
         this.context = context;

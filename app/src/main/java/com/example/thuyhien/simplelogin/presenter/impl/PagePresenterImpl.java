@@ -27,9 +27,9 @@ public class PagePresenterImpl implements PagePresenter {
     private AppManager appManager;
 
     @Inject
-    public PagePresenterImpl(PageFragment pageFragment,
+    public PagePresenterImpl(PageView pageView,
                              LoadDataInteractor loadDataInteractor, AppManager appManager) {
-        this.pageViewWeakReference = new WeakReference<PageView>(pageFragment);
+        this.pageViewWeakReference = new WeakReference<PageView>(pageView);
         this.loadDataInteractor = loadDataInteractor;
         this.appManager = appManager;
     }

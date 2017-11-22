@@ -23,8 +23,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
+import dagger.android.support.DaggerAppCompatActivity;
 
-public class SettingsActivity extends AppCompatActivity implements SettingsView {
+public class SettingsActivity extends DaggerAppCompatActivity implements SettingsView {
 
     @Inject
     SettingsPresenter settingsPresenter;
@@ -34,8 +35,6 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AndroidInjection.inject(this);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 

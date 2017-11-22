@@ -26,10 +26,10 @@ public class ProfilePresenterImpl implements ProfilePresenter {
 
     @Inject
     public ProfilePresenterImpl(UserManager userManager, AuthenticationInteractor authenticationInteractor,
-                                ProfileActivity profileActivity) {
+                                ProfileView profileView) {
         this.userManager = userManager;
         this.authenticationInteractor = authenticationInteractor;
-        this.profileViewWeakReference = new WeakReference<ProfileView>(profileActivity);
+        this.profileViewWeakReference = new WeakReference<ProfileView>(profileView);
     }
 
     @Override

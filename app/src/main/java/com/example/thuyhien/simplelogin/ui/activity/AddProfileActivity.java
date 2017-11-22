@@ -21,8 +21,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.AndroidInjection;
+import dagger.android.support.DaggerAppCompatActivity;
 
-public class AddProfileActivity extends AppCompatActivity implements AddProfileView {
+public class AddProfileActivity extends DaggerAppCompatActivity implements AddProfileView {
 
     public static final String BUNDLE_PROFILE = "BundleProfile";
     public static final String EXTRA_ADDED_PROFILE = "ExtraAddedProfile";
@@ -35,8 +36,6 @@ public class AddProfileActivity extends AppCompatActivity implements AddProfileV
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AndroidInjection.inject(this);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_profile);
 

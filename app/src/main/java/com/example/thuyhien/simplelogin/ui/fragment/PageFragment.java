@@ -33,12 +33,13 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
+import dagger.android.support.DaggerFragment;
 
 /**
  * Created by thuyhien on 10/11/17.
  */
 
-public class PageFragment extends Fragment implements PageView {
+public class PageFragment extends DaggerFragment implements PageView {
 
     public static final String BUNDLE_PAGE = "Page";
     private Page page;
@@ -72,8 +73,6 @@ public class PageFragment extends Fragment implements PageView {
     @Override
     public void onAttach(Context context) {
         try {
-            AndroidSupportInjection.inject(this);
-
             mainActivityListener = (MainActivityListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + getString(R.string.error_implement_main_activity_listener));
@@ -186,6 +185,7 @@ public class PageFragment extends Fragment implements PageView {
     private void getSectionBundle() {
         if (getArguments() != null) {
             page = (Page) getArguments().getSerializable(BUNDLE_PAGE);
+            // May bind in PageModule if PagePresenter has param Page in constructor.
         }
     }
 }

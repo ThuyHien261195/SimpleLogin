@@ -26,11 +26,11 @@ public class MainPresenterImpl implements MainPresenter {
     private AppManager appManager;
 
     @Inject
-    public MainPresenterImpl(MainActivity mainActivity,
+    public MainPresenterImpl(MainView mainView,
                              LoadDataInteractor loadDataInteractor,
                              UserManager userManager,
                              AppManager appManager) {
-        this.mainViewWeakReference = new WeakReference<MainView>(mainActivity);
+        this.mainViewWeakReference = new WeakReference<MainView>(mainView);
         this.loadDataInteractor = loadDataInteractor;
         this.userManager = userManager;
         this.appManager = appManager;

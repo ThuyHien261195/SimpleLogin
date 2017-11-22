@@ -13,7 +13,9 @@ import javax.inject.Singleton;
 
 import dagger.BindsInstance;
 import dagger.Component;
+import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
+import dagger.android.support.DaggerApplication;
 
 /**
  * Created by thuyhien on 10/24/17.
@@ -25,10 +27,9 @@ import dagger.android.support.AndroidSupportInjectionModule;
         DataCacheModule.class,
         ActivityBuilderModule.class,
         AndroidSupportInjectionModule.class})
-public interface AppComponent {
-    void inject(FoxApplication application);
+public interface AppComponent extends AndroidInjector<DaggerApplication>{
 
-    void inject(MediaFeedDialogFragment mediaFeedDialogFragment);
+    boolean isTablet();
 
     @Component.Builder
     interface Builder {
