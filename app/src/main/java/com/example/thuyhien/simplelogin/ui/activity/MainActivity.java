@@ -12,6 +12,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.R;
 import com.example.thuyhien.simplelogin.broadcast.FeedDetailBroadcastReceiver;
 import com.example.thuyhien.simplelogin.data.network.exception.LoadDataException;
@@ -30,6 +32,8 @@ import com.example.thuyhien.simplelogin.ui.adapter.MediaFragmentPagerAdapter;
 import com.example.thuyhien.simplelogin.ui.fragment.MediaFeedDialogFragment;
 import com.example.thuyhien.simplelogin.ui.listener.MainActivityListener;
 import com.example.thuyhien.simplelogin.view.MainView;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.List;
 
@@ -52,6 +56,7 @@ public class MainActivity extends DaggerAppCompatActivity implements MainView,
     private View loggedInHeaderView, notLogHeaderView;
     private BroadcastReceiver broadcastReceiver;
     private String langCode;
+    private Tracker tracker;
 
     @Inject
     MainPresenter mainPresenter;
@@ -67,7 +72,6 @@ public class MainActivity extends DaggerAppCompatActivity implements MainView,
 
     @BindView(R.id.view_pager_post)
     ViewPager viewPagerPost;
-
     @BindView(R.id.text_title_page)
     TextView textViewTitlePage;
 
@@ -75,6 +79,8 @@ public class MainActivity extends DaggerAppCompatActivity implements MainView,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        tracker = ((FoxApplication) getApplication()).getDefaultTracker();
 
         ButterKnife.bind(this);
         initViews();
@@ -236,7 +242,10 @@ public class MainActivity extends DaggerAppCompatActivity implements MainView,
 
             @Override
             public void onPageSelected(int position) {
-
+                CharSequence pageTitle = viewPagerPost.getAdapter().getPageTitle(position);
+                Log.e("Tracker", "Page: " + pageTitle);
+                tracker.setScreenName("Screen name " + pageTitle);
+                tracker.send(new HitBuilders.ScreenViewBuilder().build());
             }
 
             @Override

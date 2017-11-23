@@ -3,7 +3,6 @@ package com.example.thuyhien.simplelogin.service;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
 import com.example.thuyhien.simplelogin.R;
@@ -27,14 +26,14 @@ public class NewsFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
-    @Override
-    public void handleIntent(Intent intent) {
-        Bundle bundle = intent.getExtras();
-        String message = bundle.getString("gcm.notification.body");
-        if (message != null && !message.equals("")) {
-            showNotification(message);
-        }
-    }
+//    @Override
+//    public void handleIntent(Intent intent) {
+//        Bundle bundle = intent.getExtras();
+//        String message = bundle.getString("gcm.notification.body");
+//        if (message != null && !message.equals("")) {
+//            showNotification(message);
+//        }
+//    }
 
     public void showNotification(String message) {
         int notificationId = 0;
