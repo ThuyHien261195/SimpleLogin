@@ -7,7 +7,6 @@ import com.example.thuyhien.simplelogin.data.network.model.AccountRequest;
 import com.example.thuyhien.simplelogin.data.network.model.FacebookAccountRequest;
 import com.example.thuyhien.simplelogin.model.User;
 import com.example.thuyhien.simplelogin.presenter.AuthenticatePresenter;
-import com.example.thuyhien.simplelogin.ui.activity.SignUpActivity;
 import com.example.thuyhien.simplelogin.ui.exception.InvalidInputException;
 import com.example.thuyhien.simplelogin.utils.AuthenticationUtils;
 import com.example.thuyhien.simplelogin.view.AuthenticationView;

@@ -2,12 +2,10 @@ package com.example.thuyhien.simplelogin.dagger.component;
 
 import android.content.Context;
 
-import com.example.thuyhien.simplelogin.FoxApplication;
 import com.example.thuyhien.simplelogin.dagger.module.ActivityBuilderModule;
 import com.example.thuyhien.simplelogin.dagger.module.AppModule;
 import com.example.thuyhien.simplelogin.dagger.module.DataCacheModule;
 import com.example.thuyhien.simplelogin.dagger.module.NetModule;
-import com.example.thuyhien.simplelogin.ui.fragment.MediaFeedDialogFragment;
 
 import javax.inject.Singleton;
 
@@ -27,7 +25,7 @@ import dagger.android.support.DaggerApplication;
         DataCacheModule.class,
         ActivityBuilderModule.class,
         AndroidSupportInjectionModule.class})
-public interface AppComponent extends AndroidInjector<DaggerApplication>{
+public interface AppComponent extends AndroidInjector<DaggerApplication> {
 
     boolean isTablet();
 

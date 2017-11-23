@@ -22,8 +22,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -34,9 +32,7 @@ import butterknife.OnClick;
 
 public class MediaFeedDialogFragment extends DialogFragment {
     private MediaFeed mediaFeed;
-
-    @Inject
-    boolean isTablet;
+    private boolean isTablet;
 
     @BindView(R.id.image_poster)
     ImageView imageViewPoster;
@@ -61,6 +57,7 @@ public class MediaFeedDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isTablet = ((FoxApplication) getActivity().getApplication()).getAppComponent().isTablet();
         getFeedBundle();
     }
 

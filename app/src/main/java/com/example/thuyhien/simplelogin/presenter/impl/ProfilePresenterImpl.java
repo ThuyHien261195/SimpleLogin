@@ -6,7 +6,6 @@ import com.example.thuyhien.simplelogin.data.interactor.listener.LoadProfileList
 import com.example.thuyhien.simplelogin.data.manager.UserManager;
 import com.example.thuyhien.simplelogin.model.Profile;
 import com.example.thuyhien.simplelogin.presenter.ProfilePresenter;
-import com.example.thuyhien.simplelogin.ui.activity.ProfileActivity;
 import com.example.thuyhien.simplelogin.view.ProfileView;
 
 import java.lang.ref.WeakReference;

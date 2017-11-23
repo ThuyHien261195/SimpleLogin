@@ -1,13 +1,13 @@
 package com.example.thuyhien.simplelogin.dagger.module;
 
+import com.example.thuyhien.simplelogin.dagger.scope.ActivityScope;
 import com.example.thuyhien.simplelogin.presenter.AddProfilePresenter;
 import com.example.thuyhien.simplelogin.presenter.impl.AddProfilePresenterImpl;
-import com.example.thuyhien.simplelogin.ui.activity.MainActivity;
-import com.example.thuyhien.simplelogin.view.MainView;
+import com.example.thuyhien.simplelogin.ui.activity.AddProfileActivity;
+import com.example.thuyhien.simplelogin.view.AddProfileView;
 
 import dagger.Binds;
 import dagger.Module;
-import dagger.Provides;
 
 /**
  * Created by thuyhien on 11/6/17.
@@ -16,8 +16,9 @@ import dagger.Provides;
 @Module
 public abstract class AddProfileModule {
 
+    @ActivityScope
     @Binds
-    abstract MainView provideMainView(MainActivity mainActivity);
+    abstract AddProfileView provideProfileView(AddProfileActivity addProfileActivity);
 
     @Binds
     abstract AddProfilePresenter provideAddProfilePresenter(AddProfilePresenterImpl addProfilePresenter);

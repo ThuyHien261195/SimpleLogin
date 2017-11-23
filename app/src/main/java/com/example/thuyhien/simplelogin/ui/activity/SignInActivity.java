@@ -2,7 +2,6 @@ package com.example.thuyhien.simplelogin.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,13 +21,11 @@ import com.facebook.login.LoginResult;
 import java.util.Collections;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import dagger.android.AndroidInjection;
 import dagger.android.support.DaggerAppCompatActivity;
 
 public class SignInActivity extends DaggerAppCompatActivity implements AuthenticationView {
@@ -37,7 +34,6 @@ public class SignInActivity extends DaggerAppCompatActivity implements Authentic
     private CallbackManager callbackManager;
 
     @Inject
-    @Named("sign_in_presenter")
     AuthenticatePresenter signInPresenter;
 
     @BindView(R.id.edit_email)

@@ -1,5 +1,7 @@
 package com.example.thuyhien.simplelogin.dagger.module;
 
+import com.example.thuyhien.simplelogin.dagger.scope.ActivityScope;
+import com.example.thuyhien.simplelogin.dagger.scope.FragmentScope;
 import com.example.thuyhien.simplelogin.presenter.MainPresenter;
 import com.example.thuyhien.simplelogin.presenter.impl.MainPresenterImpl;
 import com.example.thuyhien.simplelogin.ui.activity.MainActivity;
@@ -17,12 +19,14 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class MainModule {
 
+    @ActivityScope
     @Binds
     abstract MainView provideMainView(MainActivity mainActivity);
 
     @Binds
     abstract MainPresenter provideMainPresenter(MainPresenterImpl mainPresenter);
 
+    @FragmentScope
     @ContributesAndroidInjector(modules = PageModule.class)
     abstract PageFragment bindsPageFragment();
 }

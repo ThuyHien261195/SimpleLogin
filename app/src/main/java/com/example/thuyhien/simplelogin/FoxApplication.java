@@ -1,16 +1,9 @@
 package com.example.thuyhien.simplelogin;
 
-import android.app.Activity;
-import android.app.Application;
-
 import com.example.thuyhien.simplelogin.dagger.component.AppComponent;
 import com.example.thuyhien.simplelogin.dagger.component.DaggerAppComponent;
 
-import javax.inject.Inject;
-
 import dagger.android.AndroidInjector;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.HasActivityInjector;
 import dagger.android.support.DaggerApplication;
 
 /**
@@ -19,6 +12,12 @@ import dagger.android.support.DaggerApplication;
 
 public class FoxApplication extends DaggerApplication {
 
+    private AppComponent appComponent;
+
+    public AppComponent getAppComponent() {
+        return appComponent;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -26,8 +25,9 @@ public class FoxApplication extends DaggerApplication {
 
     @Override
     protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-        return DaggerAppComponent.builder()
+        appComponent = DaggerAppComponent.builder()
                 .bindsApplication(this)
                 .build();
+        return appComponent;
     }
 }

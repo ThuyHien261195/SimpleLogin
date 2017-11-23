@@ -8,7 +8,6 @@ import com.example.thuyhien.simplelogin.model.MediaFeed;
 import com.example.thuyhien.simplelogin.model.Page;
 import com.example.thuyhien.simplelogin.model.Section;
 import com.example.thuyhien.simplelogin.presenter.PagePresenter;
-import com.example.thuyhien.simplelogin.ui.fragment.PageFragment;
 import com.example.thuyhien.simplelogin.view.PageView;
 
 import java.lang.ref.WeakReference;
