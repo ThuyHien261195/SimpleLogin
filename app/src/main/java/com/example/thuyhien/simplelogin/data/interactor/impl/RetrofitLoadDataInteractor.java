@@ -25,7 +25,7 @@ import retrofit2.Response;
 
 public class RetrofitLoadDataInteractor implements LoadDataInteractor {
 
-    public static final String DEFAULT_RANGE_LOAD_DATA = "1-20";
+    private static final String DEFAULT_RANGE_LOAD_DATA = "1-20";
 
     private DataEndpointInterface dataApiService;
 
