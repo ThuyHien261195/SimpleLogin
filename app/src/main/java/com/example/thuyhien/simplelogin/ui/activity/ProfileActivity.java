@@ -139,7 +139,7 @@ public class ProfileActivity extends DaggerAppCompatActivity implements ProfileV
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (profileAdapter.getDeletingMode()) {
+                if (profileAdapter != null && profileAdapter.getDeletingMode()) {
                     profileAdapter.setDeletingMode(false);
                     showDeletedProfileUI(false);
                 } else {
