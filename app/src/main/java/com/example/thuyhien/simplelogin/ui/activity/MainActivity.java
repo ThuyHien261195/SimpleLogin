@@ -12,7 +12,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -243,9 +242,11 @@ public class MainActivity extends DaggerAppCompatActivity implements MainView,
             @Override
             public void onPageSelected(int position) {
                 CharSequence pageTitle = viewPagerPost.getAdapter().getPageTitle(position);
-                Log.e("Tracker", "Page: " + pageTitle);
-                tracker.setScreenName("Screen name " + pageTitle);
-                tracker.send(new HitBuilders.ScreenViewBuilder().build());
+//                tracker.setScreenName("Screen name " + pageTitle);
+                tracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("PageSelected " + pageTitle + " " + 1)
+                        .build());
             }
 
             @Override
@@ -293,12 +294,14 @@ public class MainActivity extends DaggerAppCompatActivity implements MainView,
     }
 
     private void showFeedDetailScreen(Bundle feedBundle) {
+        sendTrackViewMediaFeedDetail("Show screen");
         Intent feedIntent = new Intent(this, MediaFeedActivity.class);
         feedIntent.putExtra(BUNDLE_MEDIA_FEED, feedBundle);
         startActivity(feedIntent);
     }
 
     private void showFeedDetailDialog(Bundle feedBundle) {
+        sendTrackViewMediaFeedDetail("Show dialog");
         MediaFeed mediaFeed = (MediaFeed) feedBundle.getSerializable(MEDIA_FEED);
         if (mediaFeed == null) {
             return;
@@ -310,5 +313,12 @@ public class MainActivity extends DaggerAppCompatActivity implements MainView,
     private void openSettingsScreen() {
         Intent settingsIntent = new Intent(this, SettingsActivity.class);
         startActivity(settingsIntent);
+    }
+
+    private void sendTrackViewMediaFeedDetail(String content) {
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Show feed detail")
+                .setAction(content)
+                .build());
     }
 }
