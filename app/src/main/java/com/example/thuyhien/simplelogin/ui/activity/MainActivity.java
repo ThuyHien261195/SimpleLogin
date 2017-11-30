@@ -12,6 +12,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,6 +43,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.support.DaggerAppCompatActivity;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends DaggerAppCompatActivity implements MainView,
         NavigationView.OnNavigationItemSelectedListener,
@@ -86,6 +93,7 @@ public class MainActivity extends DaggerAppCompatActivity implements MainView,
         mainPresenter.getCurrentLangCode();
         mainPresenter.checkIsLoggedIn();
         registerFeedDialogReceiver();
+        createObservableEx();
     }
 
     @Override
@@ -320,5 +328,42 @@ public class MainActivity extends DaggerAppCompatActivity implements MainView,
                 .setCategory("Show feed detail")
                 .setAction(content)
                 .build());
+    }
+
+    private void createObservableEx() {
+        Observable<Integer> observable = Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                e.onNext(1);
+                e.onNext(2);
+                e.onNext(3);
+                e.onNext(4);
+                e.onComplete();
+            }
+        });
+
+        Observer<Integer> observer = new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                Log.e("RxJava", "onSubscribe");
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                Log.e("RxJava", "onNext: " + integer);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("RxJava", "onError: " + e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                Log.e("RxJava", "onComplete: All done!");
+            }
+        };
+
+        observable.subscribe(observer);
     }
 }
